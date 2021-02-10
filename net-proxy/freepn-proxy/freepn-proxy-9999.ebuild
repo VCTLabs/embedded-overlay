@@ -33,7 +33,7 @@ RDEPEND="
 	dev-python/adblockparser[${PYTHON_USEDEP}]
 	>=dev-python/beautifulsoup-4.4.1[${PYTHON_USEDEP}]
 	>=dev-python/psutil-5.7.0[${PYTHON_USEDEP}]
-	>=dev-python/py-re2-0.3.2[${PYTHON_USEDEP}]
+	>=dev-python/py-re2-0.3.3[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep 'dev-python/importlib_metadata[${PYTHON_USEDEP}]' python3_{6,7,8} )
 "
 
@@ -59,5 +59,5 @@ python_prepare_all() {
 python_test() {
 	distutils_install_for_testing
 	freepn-proxy --test || die "Selftest failed with ${EPYTHON}"
-	${EPYTHON} ${S}/freepn/adblock/test/adblock_test.py
+	${EPYTHON} "${S}"/freepn/adblock/test/adblock_test.py
 }
