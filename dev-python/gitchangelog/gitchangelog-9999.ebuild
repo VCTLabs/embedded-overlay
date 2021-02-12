@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..9} )
-DISTUTULS_USE_SETUPTOOLS="rdepend"
+PYTHON_COMPAT=( python3_{6..8} )
+DISTUTULS_USE_SETUPTOOLS="no"
 
 inherit distutils-r1
 
@@ -28,7 +28,7 @@ IUSE="test"
 
 RDEPEND="${PYTHON_DEPS}"
 
-BDEPEND="
+DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/pystache[${PYTHON_USEDEP}]
 	dev-python/mako[${PYTHON_USEDEP}]
