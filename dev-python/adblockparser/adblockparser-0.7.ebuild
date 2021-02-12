@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..8} )
+PYTHON_COMPAT=( python3_{6..9} )
 DISTUTILS_USE_SETUPTOOLS=bdepend
 inherit distutils-r1
 
@@ -25,9 +25,11 @@ SLOT="0"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="${PYTHON_DEPS}"
-DEPEND="${RDEPEND}
+RDEPEND="${PYTHON_DEPS}
 	dev-python/py-re2[${PYTHON_USEDEP}]
+"
+
+DEPEND="
 	test? ( >=dev-python/pytest-3.0.3[${PYTHON_USEDEP}] )
 "
 

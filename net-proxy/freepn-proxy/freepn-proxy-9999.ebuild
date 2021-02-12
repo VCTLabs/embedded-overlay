@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{6..9} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 PYTHON_REQ_USE='ssl,threads(+)'
 
@@ -25,19 +25,18 @@ LICENSE="AGPL-3"
 SLOT="0"
 IUSE="test"
 
-RDEPEND="${PYTHON_DEPS}
+RDEPEND="
 	net-misc/wget
 	dev-libs/nss
 	dev-python/lxml[${PYTHON_USEDEP}]
 	>=net-proxy/mitmproxy-5.3.0[${PYTHON_USEDEP}]
-	dev-python/adblockparser[${PYTHON_USEDEP}]
 	>=dev-python/beautifulsoup-4.4.1[${PYTHON_USEDEP}]
-	>=dev-python/psutil-5.7.0[${PYTHON_USEDEP}]
-	>=dev-python/py-re2-0.3.3[${PYTHON_USEDEP}]
-	$(python_gen_cond_dep 'dev-python/importlib_metadata[${PYTHON_USEDEP}]' python3_{6,7,8} )
 "
-
-DEPEND="${RDEPEND}
+BDEPEND="
+	>=dev-python/psutil-5.7.0[${PYTHON_USEDEP}]
+	$(python_gen_cond_dep 'dev-python/importlib_metadata[${PYTHON_USEDEP}]' python3_{6,7,8} )
+	>=dev-python/py-re2-0.3.3[${PYTHON_USEDEP}]
+	dev-python/adblockparser[${PYTHON_USEDEP}]
 	>=dev-python/appdirs-1.4.4[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
