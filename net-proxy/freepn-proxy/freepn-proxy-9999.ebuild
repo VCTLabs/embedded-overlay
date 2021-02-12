@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..9} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 PYTHON_REQ_USE='ssl,threads(+)'
 
@@ -25,7 +25,7 @@ LICENSE="AGPL-3"
 SLOT="0"
 IUSE="test"
 
-RDEPEND="
+RDEPEND="${PYTHON_DEPS}
 	net-misc/wget
 	dev-libs/nss
 	dev-python/lxml[${PYTHON_USEDEP}]
@@ -37,7 +37,7 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/importlib_metadata[${PYTHON_USEDEP}]' python3_{6,7,8} )
 "
 
-BDEPEND="${PYTHON_DEPS}
+DEPEND="${RDEPEND}
 	>=dev-python/appdirs-1.4.4[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
