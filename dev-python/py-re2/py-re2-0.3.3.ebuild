@@ -8,19 +8,20 @@ DISTUTILS_USE_SETUPTOOLS=bdepend
 
 inherit distutils-r1 cmake
 
+MY_PV="${PV/_p/-}"
+MY_PN="pyre2"
+
 DESCRIPTION="Python bindings for dev-libs/re2"
 HOMEPAGE="https://github.com/andreasvc/pyre2/"
 
 if [[ ${PV} = *9999* ]]; then
-	EGIT_REPO_URI="https://github.com/freepn/py-re2.git"
+	EGIT_REPO_URI="https://github.com/sarnold/${MY_PN}.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
 	KEYWORDS=""
 else
-	MY_PV="${PV/_p/-}"
-	SRC_URI="https://github.com/freepn/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
+	SRC_URI="https://github.com/andreasvc/${MY_PN}/archive/v${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
-	S="${WORKDIR}/${PN}-${MY_PV}"
 fi
 
 LICENSE="BSD"
@@ -41,6 +42,8 @@ BDEPEND=">=dev-util/cmake-3.15
 DOCS=( AUTHORS README.rst CHANGELOG.rst )
 
 RESTRICT="!test? ( test )"
+
+S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
 src_configure() {
 	python_setup
