@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..8} )
+PYTHON_COMPAT=( python3_{7..8} )
 
 inherit distutils-r1
 
@@ -27,14 +27,15 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="test"
 
-RDEPEND="${PYTHON_DEPS}"
+RDEPEND="${PYTHON_DEPS}
+	dev-libs/libdatrie:=
+"
 
-DEPEND="${PYTHON_DEPS}
-	dev-libs/libdatrie
+DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep '>=dev-python/cython-0.20[${PYTHON_USEDEP}]' 'python*')
 	test? ( dev-python/pytest[${PYTHON_USEDEP}]
-		<=dev-python/hypothesis-4.57.1[${PYTHON_USEDEP}] )
+		>=dev-python/hypothesis-4.57.1[${PYTHON_USEDEP}] )
 "
 
 distutils_enable_tests pytest

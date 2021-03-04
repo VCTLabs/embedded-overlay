@@ -3,13 +3,13 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..8} )
-
-inherit distutils-r1
+PYTHON_COMPAT=( python3_{7..8} )
+DISTUTILS_USE_SETUPTOOLS=bdepend
+inherit distutils-r1 cmake
 
 if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/freepn/datrie.git"
+	EGIT_REPO_URI="https://github.com/sarnold/datrie.git"
 	EGIT_BRANCH="master"
 	SRC_URI=""
 	KEYWORDS=""
@@ -26,14 +26,36 @@ HOMEPAGE="https://github.com/pytries/datrie"
 LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="test"
+RESTRICT="!test? ( test )"
 
-RDEPEND="${PYTHON_DEPS}"
+RDEPEND="dev-libs/libdatrie:="
 
-DEPEND="${PYTHON_DEPS}
-	dev-libs/libdatrie
-	dev-python/setuptools[${PYTHON_USEDEP}]
+DEPEND="${RDEPEND}"
+
+BDEPEND="dev-python/cython[${PYTHON_USEDEP}]
+	dev-python/pybind11[${PYTHON_USEDEP}]
 	test? ( dev-python/pytest[${PYTHON_USEDEP}]
-		<=dev-python/hypothesis-4.57.1[${PYTHON_USEDEP}] )
+		>=dev-python/hypothesis-4.57.1[${PYTHON_USEDEP}] )
 "
 
-distutils_enable_tests pytest
+src_configure() {
+	python_setup
+	cmake_src_configure
+	distutils-r1_src_configure
+}
+
+src_compile() {
+	distutils-r1_src_compile
+}
+
+src_install() {
+	distutils-r1_src_install
+}
+
+python_test() {
+	pytest -v
+}
+
+src_test() {
+	python_test
+}
