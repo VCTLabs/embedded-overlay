@@ -6,7 +6,7 @@ EAPI=7
 CMAKE_IN_SOURCE_BUILD="true"
 CMAKE_VERBOSE=ON
 
-PYTHON_COMPAT=( python2_7 python3_{5,6} )
+PYTHON_COMPAT=( python3_{6..9} )
 PYTHON_REQ_USE='threads(+)'
 
 inherit cmake eutils flag-o-matic python-r1 toolchain-funcs
