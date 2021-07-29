@@ -24,5 +24,5 @@ SLOT="0"
 DOCS=( README.rst CHANGELOG.txt )
 
 python_test() {
-	"${PYTHON}" -m doctest -v minimock.py || die "Tests fail with ${EPYTHON}"
+	"${PYTHON}" -m doctest -v minimock.py || die "Test fail with ${EPYTHON}"
 }
