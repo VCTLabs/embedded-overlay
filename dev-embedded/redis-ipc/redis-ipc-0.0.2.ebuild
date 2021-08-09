@@ -11,8 +11,8 @@ DESCRIPTION="A client library for using redis as IPC msg/event bus."
 HOMEPAGE="https://github.com/VCTLabs/redis-ipc"
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/sarnold/redis-ipc.git"
-	EGIT_BRANCH="flake8"
+	EGIT_REPO_URI="https://github.com/VCTLabs/redis-ipc.git"
+	EGIT_BRANCH="master"
 	inherit git-r3
 	KEYWORDS=""
 else
