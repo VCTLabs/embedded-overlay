@@ -12,7 +12,7 @@ HOMEPAGE="https://github.com/VCTLabs/redis-ipc"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/VCTLabs/redis-ipc.git"
-	EGIT_BRANCH="master"
+	EGIT_BRANCH="process"
 	inherit git-r3
 	KEYWORDS=""
 else
@@ -46,8 +46,9 @@ python_check_deps() {
 }
 
 src_prepare() {
-	default
+	sed -i -e "s|/lib|/$(get_libdir)|" "${S}"/redis-ipc.pc.in || die
 
+	default
 	eautoreconf
 }
 
@@ -64,6 +65,9 @@ src_install() {
 	default
 
 	prune_libtool_files --all
+
+	#insinto /usr/$(get_libdir)/pkgconfig
+	#doins ${PN}.pc
 
 	# redis_ipc.py
 	if use python; then
