@@ -21,7 +21,7 @@ fi
 
 LICENSE="BSD-2"
 SLOT="0"
-IUSE="+cxx11 +ack-tracker +wpa2 +dot11 static-libs"
+IUSE="+cxx11 +ack-tracker +wpa2 +dot11 +static-libs"
 
 REQUIRED_USE="
 	wpa2? ( dot11 )
@@ -36,6 +36,8 @@ RDEPEND="${DEPEND}
 "
 
 RESTRICT="mirror"
+
+PATCHES=( "${FILESDIR}/${P}-multilib-hack.patch" )
 
 src_prepare() {
 	cmake_src_prepare
