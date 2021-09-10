@@ -9,16 +9,18 @@ DISTUTILS_USE_SETUPTOOLS=bdepend
 inherit distutils-r1 git-r3
 
 DESCRIPTION="RE2 Python bindings from google"
-HOMEPAGE="https://github.com/freepn/google-re2"
-EGIT_REPO_URI="https://github.com/freepn/google-re2.git"
+HOMEPAGE="https://github.com/sarnold/google-re2"
+EGIT_REPO_URI="https://github.com/sarnold/google-re2.git"
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/freepn/google-re2.git"
+	EGIT_REPO_URI="https://github.com/sarnold/google-re2.git"
 	EGIT_BRANCH="main"
 	KEYWORDS=""
 else
-	EGIT_COMMIT="${PV/_p/-}"
+	MY_PV="${PV/_p/-}"
+	SRC_URI="https://github.com/sarnold/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	S="${WORKDIR}/${PN}-${MY_PV}"
 fi
 
 LICENSE="BSD"

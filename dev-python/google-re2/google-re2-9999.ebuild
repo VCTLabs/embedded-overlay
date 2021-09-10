@@ -6,19 +6,21 @@ EAPI=7
 PYTHON_COMPAT=( python3_{7,8} )
 DISTUTILS_USE_SETUPTOOLS=bdepend
 
-inherit distutils-r1
+inherit distutils-r1 git-r3
 
 DESCRIPTION="RE2 Python bindings from google"
-HOMEPAGE="https://github.com/freepn/google-re2"
+HOMEPAGE="https://github.com/sarnold/google-re2"
+EGIT_REPO_URI="https://github.com/sarnold/google-re2.git"
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/freepn/google-re2.git"
-	EGIT_BRANCH="cmake_build"
-	inherit git-r3
+	EGIT_REPO_URI="https://github.com/sarnold/google-re2.git"
+	EGIT_BRANCH="main"
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/freepn/google-re2/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	MY_PV="${PV/_p/-}"
+	SRC_URI="https://github.com/sarnold/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	S="${WORKDIR}/${PN}-${MY_PV}"
 fi
 
 LICENSE="BSD"
