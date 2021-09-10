@@ -1,0 +1,6 @@
+# pkgcheck
+**/md5-cache
+
+# vim
+.*.sw[a-z]
+tags
