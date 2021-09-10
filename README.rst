@@ -1,8 +1,9 @@
 embedded-overlay
 ================
 
-.. image:: https://travis-ci.org/VCTLabs/embedded-overlay.svg?branch=master
-    :target: https://travis-ci.org/VCTLabs/embedded-overlay
+.. image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml
+    :alt: PkgCheck CI status
 
 VCTLabs portage overlay for embedded and (extra) Python packages.
 
