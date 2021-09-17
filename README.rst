@@ -1,9 +1,9 @@
 embedded-overlay
 ================
 
-.. image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml/badge.svg
-    :target: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml
-    :alt: PkgCheck CI status
+|pre|
+
+|ci|
 
 VCTLabs portage overlay for embedded and (extra) Python packages.
 
@@ -37,3 +37,11 @@ Adjust the path in the ``location`` field as needed, then save and exit nano.
 Run the following command to sync the repo::
 
   # emaint sync --repo embedded-overlay
+
+.. |ci| image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml
+    :alt: PkgCheck CI status
+
+.. |pre| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+   :target: https://github.com/pre-commit/pre-commit
+   :alt: pre-commit enabled
