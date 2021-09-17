@@ -37,4 +37,3 @@ Adjust the path in the ``location`` field as needed, then save and exit nano.
 Run the following command to sync the repo::
 
   # emaint sync --repo embedded-overlay
-

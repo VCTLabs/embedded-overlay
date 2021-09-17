@@ -4,4 +4,3 @@
 #rc_need="dhcpcd"
 #rc_need="net.eth0"
 #rc_need="NetworkManager"
-
