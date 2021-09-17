@@ -1,9 +1,9 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7,8,9} )
 PYTHON_REQ_USE='threads(+)'
 
 inherit flag-o-matic python-r1 waf-utils systemd
@@ -48,7 +48,7 @@ RDEPEND="${CDEPEND}
 	acct-user/ntp
 "
 DEPEND="${CDEPEND}
-	>=app-text/asciidoc-8.6.8
+	app-text/asciidoc
 	dev-libs/libxslt
 	app-text/docbook-xsl-stylesheets
 	sys-devel/bison
@@ -56,22 +56,15 @@ DEPEND="${CDEPEND}
 	rclock_pps? ( net-misc/pps-tools )
 "
 
-PATCHES=(
-	"${FILESDIR}/${PN}-1.1.8-fix-missing-scmp_sys-on-aarch64.patch"
-	"${FILESDIR}/${PN}-1.1.9-remove-asciidoctor-from-config.patch"
-)
-
 WAF_BINARY="${S}/waf"
 
 src_prepare() {
 	default
 	# Remove autostripping of binaries
-	sed -i -e '/Strip binaries/d' wscript
+	sed -i -e '/Strip binaries/d' wscript || die
 	if ! use libbsd ; then
-		epatch "${FILESDIR}/${PN}-no-bsd.patch"
+		eapply "${FILESDIR}/${PN}-no-bsd.patch"
 	fi
-	# remove extra default pool servers
-	sed -i '/use-pool/s/^/#/' "${S}"/etc/ntp.d/default.conf
 	python_copy_sources
 }
 
@@ -92,10 +85,9 @@ src_configure() {
 	local myconf=(
 		--nopyc
 		--nopyo
-		--enable-pylib ext
 		--refclock="${CLOCKSTRING}"
 		--build-epoch="$(date +%s)"
-		$(use doc	|| echo "--disable-doc")
+		$(use doc	&& echo "--enable-doc")
 		$(use early	&& echo "--enable-early-droproot")
 		$(use gdb	&& echo "--enable-debug-gdb")
 		$(use samba	&& echo "--enable-mssntp")

@@ -1,9 +1,9 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..9} )
 PYTHON_REQ_USE='threads(+)'
 DISTUTILS_USE_SETUPTOOLS=no
 
@@ -15,7 +15,7 @@ if [[ ${PV} == *9999* ]]; then
 else
 	SRC_URI="ftp://ftp.ntpsec.org/pub/releases/${PN}-${PV}.tar.gz"
 	RESTRICT="mirror"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	KEYWORDS="amd64 arm arm64 ~x86"
 fi
 
 DESCRIPTION="The NTP reference implementation, refactored"
@@ -60,19 +60,22 @@ DEPEND="${CDEPEND}
 PATCHES=(
 	"${FILESDIR}/${PN}-1.1.8-fix-missing-scmp_sys-on-aarch64.patch"
 	"${FILESDIR}/${PN}-1.1.9-remove-asciidoctor-from-config.patch"
+	"${FILESDIR}/${PN}-1.2.0-move-newfstatat.patch"
+	"${FILESDIR}/${PN}-1.2.0-seccomp.patch"
 )
 
 WAF_BINARY="${S}/waf"
 
 src_prepare() {
 	default
+
 	# Remove autostripping of binaries
-	sed -i -e '/Strip binaries/d' wscript
+	sed -i -e '/Strip binaries/d' wscript || die
 	if ! use libbsd ; then
-		epatch "${FILESDIR}/${PN}-no-bsd.patch"
+		eapply "${FILESDIR}/${PN}-no-bsd.patch"
 	fi
 	# remove extra default pool servers
-	sed -i '/use-pool/s/^/#/' "${S}"/etc/ntp.d/default.conf
+	sed -i '/use-pool/s/^/#/' "${S}"/etc/ntp.d/default.conf || die
 
 	python_copy_sources
 }
@@ -96,7 +99,7 @@ src_configure() {
 		--nopyo
 		--enable-pylib ext
 		--refclock="${CLOCKSTRING}"
-		--build-epoch="$(date +%s)"
+		#--build-epoch="$(date +%s)"
 		$(use doc	|| echo "--disable-doc")
 		$(use early	&& echo "--enable-early-droproot")
 		$(use gdb	&& echo "--enable-debug-gdb")
