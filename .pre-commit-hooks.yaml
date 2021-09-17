@@ -1,0 +1,5 @@
+- id: pkgcheck
+  name: pkgcheck
+  entry: pkgcheck ci
+  language: system
+  require_serial: true

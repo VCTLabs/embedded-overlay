@@ -1,0 +1,31 @@
+# To install the git pre-commit hook run:
+#   pre-commit install
+# To update the pre-commit hooks run:
+#   pre-commit install-hooks
+repos:
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
+      - id: check-hooks-apply
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.patch$'
+      - id: end-of-file-fixer
+        exclude: '\.patch$'
+      - id: mixed-line-ending
+        exclude: '\.patch$'
+        args: [--fix=lf]
+      - id: check-xml
+      - id: check-yaml
+  - repo: https://github.com/pkgcore/pkgcheck
+    rev: v0.10.7
+    hooks:
+      - id: pkgcheck
+        name: pkgcheck
+        entry: pkgcheck ci
+        language: system
+        types: [text]
+        files: '\.ebuild$'
+        args: ["--quiet",]
