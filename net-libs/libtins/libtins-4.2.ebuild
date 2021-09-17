@@ -20,7 +20,7 @@ else
 fi
 
 LICENSE="BSD-2"
-SLOT="0"
+SLOT="0/4"
 IUSE="+cxx11 +ack-tracker +wpa2 +dot11 static-libs"
 
 REQUIRED_USE="
