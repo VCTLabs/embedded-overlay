@@ -36,6 +36,8 @@ DEPEND="${PYTHON_DEPS}
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 "
 
+RESTRICT="!test? ( test )"
+
 distutils_enable_sphinx doc
 
 python_test() {

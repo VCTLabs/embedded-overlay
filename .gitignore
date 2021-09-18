@@ -1,5 +1,6 @@
 # pkgcheck
 **/md5-cache
+failures.json
 
 # vim
 .*.sw[a-z]
