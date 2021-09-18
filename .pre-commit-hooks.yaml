@@ -1,5 +1,15 @@
 - id: pkgcheck
   name: pkgcheck
-  entry: pkgcheck ci
+  entry: pkgcheck
   language: system
+  types: [text]
   require_serial: true
+
+- id: pkgcheck_replay
+  name: pkgcheck replay failures
+  entry: pkgcheck
+  language: system
+  pass_filenames: false
+  types: [text]
+  require_serial: true
+  #additional_dependencies: ["pkgcheck==0.10.7"]

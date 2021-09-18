@@ -6,7 +6,7 @@ repos:
   - repo: meta
     hooks:
       - id: check-useless-excludes
-      - id: check-hooks-apply
+      # - id: check-hooks-apply
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
@@ -23,9 +23,19 @@ repos:
     rev: v0.10.7
     hooks:
       - id: pkgcheck
-        name: pkgcheck
-        entry: pkgcheck ci
-        language: system
-        types: [text]
         files: '\.ebuild$'
-        args: ["--quiet",]
+        args:
+          [
+            "ci",
+            "--exit=GentooCI",
+            "--color=n",
+            "--failures=failures.json",
+          ]
+      - id: pkgcheck_replay
+        files: '\.json$'
+        args:
+          [
+            "replay",
+            "--color=y",
+            "failures.json",
+          ]
