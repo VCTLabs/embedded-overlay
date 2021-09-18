@@ -31,11 +31,3 @@ repos:
             "--color=n",
             "--failures=failures.json",
           ]
-      - id: pkgcheck_replay
-        files: '\.json$'
-        args:
-          [
-            "replay",
-            "--color=y",
-            "failures.json",
-          ]

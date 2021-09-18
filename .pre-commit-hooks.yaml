@@ -1,15 +1,8 @@
 - id: pkgcheck
   name: pkgcheck
+  description: Check for ebuild errors (create failures.json on error)
   entry: pkgcheck
-  language: system
+  language: python
   types: [text]
-  require_serial: true
-
-- id: pkgcheck_replay
-  name: pkgcheck replay failures
-  entry: pkgcheck
-  language: system
   pass_filenames: false
-  types: [text]
   require_serial: true
-  #additional_dependencies: ["pkgcheck==0.10.7"]
