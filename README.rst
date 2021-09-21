@@ -1,9 +1,9 @@
 embedded-overlay
 ================
 
-|pre|
-
 |ci|
+
+|pre|
 
 VCTLabs portage overlay for embedded and (extra) Python packages.
 
@@ -23,7 +23,7 @@ and add the following content to the new file::
 
   [embedded-overlay]
 
-  # Various python ebuilds for FreePN
+  # Various embedded and python ebuilds for project work
   # Maintainer: nerdboy (nerdboy@gentoo.org)
 
   location = /var/db/repos/embedded-overlay
@@ -37,6 +37,14 @@ Adjust the path in the ``location`` field as needed, then save and exit nano.
 Run the following command to sync the repo::
 
   # emaint sync --repo embedded-overlay
+
+This repo is now pre-commit_ enabled for pkgcheck and file-type linting.  The
+checks run automatically on commit and will fail the commit (if not clean) and
+perform simple file corrections.  If pkgcheck fails on commit, the failure
+data is provided in the ``failures.json`` file for inspection. Note you must
+fix any fatal errors for the commit to succeed.
+
+.. _pre-commit: https://pre-commit.com/index.html
 
 .. |ci| image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml/badge.svg
     :target: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml
