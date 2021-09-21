@@ -6,8 +6,12 @@
 		<name>Stephen L Arnold</name>
 	</maintainer>
 	<longdescription lang="en">
-		Client library for using redis as IPC msg/event bus.
+		Convenience library for using redis server and JSON as IPC
+		mechanism (command queues, broadcast events).
 	</longdescription>
+	<use>
+		<flag name="pic">Build with/without PIC</flag>
+	</use>
 	<upstream>
 		<remote-id type="github">VCTLabs/redis-ipc</remote-id>
 	</upstream>
