@@ -25,7 +25,7 @@ BDEPEND="virtual/pkgconfig
 
 REQUIRED_USE="graph? ( doc )"
 
-PATCHES=( "${FILESDIR}/${PN}-fix-configure-ac.patch" )
+PATCHES=( "${FILESDIR}/${P}-fix-configure-ac.patch" )
 
 ECONF_SOURCE=${S}
 
