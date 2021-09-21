@@ -3,19 +3,18 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..8} )
+PYTHON_COMPAT=( python3_{6..9} )
 
 inherit distutils-r1
 
 if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/freepn/datrie.git"
+	EGIT_REPO_URI="https://github.com/freepn/sarnold.git"
 	EGIT_BRANCH="master"
 	SRC_URI=""
-	KEYWORDS=""
 else
 	MY_PV="${PV/_p/-}"
-	SRC_URI="https://github.com/freepn/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
+	SRC_URI="https://github.com/sarnold/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 	S="${WORKDIR}/${PN}-${MY_PV}"
 fi

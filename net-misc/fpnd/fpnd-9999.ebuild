@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8} )
+PYTHON_COMPAT=( python3_{6..9} )
 PYTHON_REQ_USE="sqlite"
 #DISTUTILS_SINGLE_IMPL=1
 
@@ -16,9 +16,7 @@ HOMEPAGE="https://github.com/freepn/fpnd"
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/freepn/fpnd.git"
 	EGIT_BRANCH="master"
-#	EGIT_COMMIT="89571b4694a19a1180b658ea1684a3bc4f69beab"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/freepn/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
@@ -26,7 +24,7 @@ fi
 
 LICENSE="AGPL-3"
 SLOT="0"
-IUSE="-adhoc examples polkit sched systemd sudo test"
+IUSE="adhoc examples polkit sched systemd sudo test"
 
 RDEPEND="
 	sched? ( sys-process/at )
