@@ -44,6 +44,12 @@ perform simple file corrections.  If pkgcheck fails on commit, the failure
 data is provided in the ``failures.json`` file for inspection. Note you must
 fix any fatal errors for the commit to succeed.
 
+To view any fatal errors, you can re-run the pkgcheck command in replay mode
+with the JSON data file using the following command::
+
+  $ pkgcheck replay failures.json
+
+
 .. _pre-commit: https://pre-commit.com/index.html
 
 .. |ci| image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml/badge.svg
