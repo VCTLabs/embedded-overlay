@@ -5,7 +5,7 @@ EAPI=7
 
 _SRCURI_P="${P/%_beta1/-beta.1}"
 
-inherit cmake fcaps systemd
+inherit cmake fcaps systemd tmpfiles
 
 DESCRIPTION="Modern asynchronous DNS API"
 HOMEPAGE="https://getdnsapi.net/"
@@ -13,9 +13,8 @@ SRC_URI="https://getdnsapi.net/releases/${_SRCURI_P//./-}/${_SRCURI_P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
-# use gnutls[dane,openssl] needs more work on ~arm ~arm64
-IUSE="doc examples +getdns-query +getdns-server-mon +idn libev libevent libuv static-libs stubby +unbound"
+KEYWORDS="amd64 ~arm ~arm64 x86"
+IUSE="doc examples +getdns-query +getdns-server-mon +idn libev libevent libuv static-libs stubby test +unbound"
 
 S="${WORKDIR}/${_SRCURI_P}"
 
@@ -24,7 +23,6 @@ S="${WORKDIR}/${_SRCURI_P}"
 RESTRICT="test"
 
 DEPEND="
-	dev-libs/check
 	dev-libs/libbsd
 	dev-libs/libyaml
 	dev-libs/openssl:=
@@ -33,6 +31,7 @@ DEPEND="
 	libevent? ( dev-libs/libevent:= )
 	libuv? ( dev-libs/libuv:= )
 	>=net-dns/unbound-1.5.9:=
+	test? ( dev-libs/check )
 "
 RDEPEND="
 	${DEPEND}
@@ -69,8 +68,9 @@ src_configure() {
 		-DBUILD_GETDNS_SERVER_MON=$(usex getdns-server-mon)
 		-DBUILD_STUBBY=$(usex stubby)
 		-DENABLE_STATIC=$(usex static-libs)
+		-DBUILD_TESTING:BOOL=$(usex test)
 		-DENABLE_UNBOUND_EVENT_API=$(usex unbound)
-		-DUSE_GNUTLS=no
+		-DUSE_GNUTLS=OFF
 		-DUSE_LIBEV=$(usex libev)
 		-DUSE_LIBEVENT2=$(usex libevent)
 		-DUSE_LIBIDN2=$(usex idn)
@@ -88,12 +88,13 @@ src_install() {
 		insinto /etc/logrotate.d
 		newins "${FILESDIR}"/stubby.logrotate stubby
 		systemd_dounit "${S}"/stubby/systemd/stubby.service
-		systemd_dotmpfilesd "${S}"/stubby/systemd/stubby.conf
+		dotmpfiles "${S}"/stubby/systemd/stubby.conf
 	fi
 }
 
 pkg_postinst() {
 	if use stubby; then
 		fcaps cap_net_bind_service=ei /usr/bin/stubby
+		tmpfiles_process stubby.conf
 	fi
 }
