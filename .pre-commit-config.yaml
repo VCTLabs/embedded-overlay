@@ -19,8 +19,8 @@ repos:
         args: [--fix=lf]
       - id: check-xml
       - id: check-yaml
-  # we need some upstream hooks
-  # for repo: https://github.com/pkgcore/pkgcheck
+  # we need some upstream hooks for https://github.com/pkgcore/pkgcheck
+  # so use mirror-maker for now
   - repo: https://github.com/sarnold/mirrors-pkgcheck.git
     rev: v0.10.8
     hooks:
