@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/VCTLabs/redis-ipc"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/VCTLabs/redis-ipc.git"
-	EGIT_BRANCH="master"
+	EGIT_BRANCH="develop"
 	inherit git-r3
 else
 	SRC_URI="https://github.com/VCTLabs/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
