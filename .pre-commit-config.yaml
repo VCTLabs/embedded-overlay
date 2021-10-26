@@ -6,7 +6,7 @@ repos:
   - repo: meta
     hooks:
       - id: check-useless-excludes
-      # - id: check-hooks-apply
+      - id: check-hooks-apply
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
@@ -19,15 +19,9 @@ repos:
         args: [--fix=lf]
       - id: check-xml
       - id: check-yaml
-  - repo: https://github.com/pkgcore/pkgcheck
-    rev: v0.10.7
+  # we need some upstream hooks
+  # for repo: https://github.com/pkgcore/pkgcheck
+  - repo: https://github.com/sarnold/mirrors-pkgcheck.git
+    rev: v0.10.8
     hooks:
       - id: pkgcheck
-        files: '\.ebuild$'
-        args:
-          [
-            "ci",
-            "--exit=GentooCI",
-            "--color=n",
-            "--failures=failures.json",
-          ]

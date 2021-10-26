@@ -1,8 +1,0 @@
-- id: pkgcheck
-  name: pkgcheck
-  description: Check for ebuild errors (create failures.json on error)
-  entry: pkgcheck
-  language: python
-  types: [text]
-  pass_filenames: false
-  require_serial: true
