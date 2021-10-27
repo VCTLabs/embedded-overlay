@@ -5,7 +5,7 @@ EAPI=7
 
 # TODO: Figure out how to test all this and maybe support other versions
 ADA_COMPAT=( gnat_2019 )
-inherit ada multiprocessing llvm
+inherit ada llvm
 
 DESCRIPTION="The GHDL VHDL simulator."
 HOMEPAGE="http://ghdl.free.fr/"
@@ -18,10 +18,10 @@ IUSE="test"
 
 RESTRICT="!test? ( test )"
 
-LLVM_MAX_SLOT=12
+LLVM_MAX_SLOT=11
 
 RDEPEND="${ADA_DEPS}
-	<=sys-devel/llvm-11.1:=
+	<sys-devel/llvm-$((${LLVM_MAX_SLOT} + 1)):=
 "
 DEPEND="
 	${RDEPEND}
@@ -51,4 +51,9 @@ src_configure() {
 
 src_test() {
 	GHDL_PREFIX="${S}/ghdl" default
+}
+
+src_install() {
+	default
+	rmdir "${ED}"/usr/ghdl
 }
