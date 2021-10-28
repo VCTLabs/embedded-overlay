@@ -66,7 +66,6 @@ pre-commit check::
 
   tox -e scan
 
-
 Pre-commit
 ----------
 
@@ -94,6 +93,30 @@ then install it into the repo you just cloned::
 It's usually a good idea to update the hooks to the latest version::
 
     pre-commit autoupdate
+
+Most (but not all) of the pre-commit checks will make corrections for you,
+however, some will only report errors, so these you will need to correct
+manually.
+
+Automatic-fix checks include Doc8, the json/yaml/xml format checks, and the
+miscellaneous file fixers. If any of these fail, you can review the changes
+with ``git diff`` and just add them to your commit and continue.
+
+If any of the ``pkgcheck`` or ``rst`` checks fail, you will get a report,
+and you must fix any errors before you can continue adding/committing.
+
+To see any fatal ``pkgcheck`` errors, run::
+
+  $ tox -ci,replay
+
+to see a replay of just the errors that need to be fixed.  Then make the
+appropriate fixes, add the result, and commit.
+
+To see a "replay" of any ``rst`` check errors, run::
+
+  $ pre-commit run rst-backticks -a
+  $ pre-commit run rst-directive-colons -a
+  $ pre-commit run rst-inline-touching-normal -a
 
 
 .. _tox: https://github.com/tox-dev/tox

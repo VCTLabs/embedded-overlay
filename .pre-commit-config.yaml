@@ -19,6 +19,22 @@ repos:
         args: [--fix=lf]
       - id: check-xml
       - id: check-yaml
+
+  - repo: https://github.com/PyCQA/doc8
+    rev: 0.9.1
+    hooks:
+      - id: doc8
+        args:
+          - '--max-line-length=90'
+          - '--ignore=D001'
+
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.9.0
+    hooks:
+      - id: rst-backticks
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
+
   # we need some upstream hooks for https://github.com/pkgcore/pkgcheck
   # so use mirror-maker for now
   - repo: https://github.com/sarnold/mirrors-pkgcheck.git
