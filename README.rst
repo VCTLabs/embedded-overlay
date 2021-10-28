@@ -67,7 +67,8 @@ pre-commit check::
   tox -e scan
 
 
-**Pre-commit**
+Pre-commit
+----------
 
 This repo is now pre-commit_ enabled for pkgcheck_ and file-type linting.
 The checks run automatically on commit and will fail the commit (if not
