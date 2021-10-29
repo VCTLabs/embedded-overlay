@@ -20,7 +20,12 @@ DEPEND="dev-python/decor[${PYTHON_USEDEP}]"
 
 RDEPEND="${DEPEND}"
 
-distutils_enable_tests pytest
+distutils_enable_tests --install pytest
+
+python_test() {
+	cd "${S}"/tests || die
+	epytest
+}
 
 python_install_all() {
 	distutils-r1_python_install_all
