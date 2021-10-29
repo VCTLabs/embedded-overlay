@@ -28,7 +28,7 @@ DEPEND="
 	test? (
 		dev-python/pytest
 		dev-python/decor
-		>=sci-electronics/pyVHDLModel-0.8.0
+		<=sci-electronics/pyVHDLModel-0.10.5
 	)
 "
 
@@ -45,11 +45,17 @@ pkg_setup() {
 }
 
 src_configure() {
+	# shorten test suite for default tests
+	sed -i "s|suite.sh|suite.sh sanity pyunit vpi|g" Makefile.in || die
+
 	local llvm_config="$(get_llvm_prefix "$LLVM_MAX_SLOT")/bin/llvm-config"
 	econf --with-llvm-config=${llvm_config}
 }
 
 src_test() {
+	# tests use gcc from gnat, so are sensitive to user FLAGS for
+	# newer toolchains. also the full testsuite is much too big...
+	local -x CFLAGS= CXXFLAGS= LDFLAGS=
 	GHDL_PREFIX="${S}/ghdl" default
 }
 
