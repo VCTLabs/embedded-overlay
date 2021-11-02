@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>nerdboy@gentoo.org</email>
+		<name>Stephen L Arnold</name>
+	</maintainer>
+	<longdescription lang="en">
+		ABC is a large collection of mathematical provers/solvers in one
+		shared library/binary interface. Can be used stand-alone or as a
+		(tool) dependency of other tools, eg, yosys.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">berkeley-abc/abc</remote-id>
+	</upstream>
+	<use>
+		<flag name="cpp">
+			Use C++ namespace for build (you probably want this)
+		</flag>
+	</use>
+</pkgmetadata>

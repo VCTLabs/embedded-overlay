@@ -1,0 +1,23 @@
+From 965cd09c68f62a688d938fef616d3de5b1c369c0 Mon Sep 17 00:00:00 2001
+From: Malte Schledjewski <schledjewski@react.uni-saarland.de>
+Date: Wed, 6 May 2020 18:23:54 +0200
+Subject: [PATCH] add gia.c to module.make
+
+---
+ src/aig/gia/module.make | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/aig/gia/module.make b/src/aig/gia/module.make
+index d801a243..ad1ed762 100644
+--- a/src/aig/gia/module.make
++++ b/src/aig/gia/module.make
+@@ -1,4 +1,5 @@
+-SRC +=    src/aig/gia/giaAig.c \
++SRC +=    src/aig/gia/gia.c \
++    src/aig/gia/giaAig.c \
+     src/aig/gia/giaAgi.c \
+     src/aig/gia/giaAiger.c \
+     src/aig/gia/giaAigerExt.c \
+-- 
+2.32.0
+

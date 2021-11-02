@@ -1,0 +1,215 @@
+From 7ffeaa8829720dbdae68e0a13b54781efb632760 Mon Sep 17 00:00:00 2001
+From: Stephen L Arnold <nerdboy@gentoo.org>
+Date: Sat, 17 Jul 2021 16:31:19 -0700
+Subject: [PATCH] * cleanup makefile, add separate shared library/test targets
+ * add makefile overrides and a soname, make library symlinks * fix a handful
+ of warnings (very low fruit...) * add -fvisibility=hidden to cxxflags, makes
+ build result much smaller * add visibility pragma for demo consumer
+
+Signed-off-by: Stephen L Arnold <nerdboy@gentoo.org>
+---
+ Makefile                   | 54 +++++++++++++++++++++++++++++---------
+ src/base/abci/abc.c        |  2 +-
+ src/base/acb/acbTest.c     |  2 +-
+ src/base/main/mainReal.c   |  4 +--
+ src/map/mapper/mapperLib.c |  2 +-
+ src/map/mio/mio.c          |  2 +-
+ 6 files changed, 48 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bdea392a..9b7b55f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,8 +1,10 @@
+ 
+-CC   := gcc
+-CXX  := g++
+-AR   := ar
+-LD   := $(CXX)
++CC   ?= gcc
++CXX  ?= g++
++AR   ?= ar
++LD   := $(CC)
++LN   ?= ln
++MV   ?= mv
+ 
+ MSG_PREFIX ?=
+ ABCSRC = .
+@@ -15,6 +17,10 @@ $(info $(MSG_PREFIX)Using LD=$(LD))
+ PROG := abc
+ OS := $(shell uname -s)
+ 
++VERSION ?= 1.1.0
++SOVERSION ?= 1
++SONAME := lib$(PROG).so.$(SOVERSION)
++
+ MODULES := \
+ 	$(wildcard src/ext*) \
+ 	src/base/abc src/base/abci src/base/cmd src/base/io src/base/main src/base/exor \
+@@ -63,9 +69,13 @@ endif
+ 
+ # compile ABC using the C++ comipler and put everything in the namespace $(ABC_NAMESPACE)
+ ifdef ABC_USE_NAMESPACE
+-  CFLAGS += -DABC_NAMESPACE=$(ABC_USE_NAMESPACE) -fpermissive
++  CFLAGS += -DABC_NAMESPACE=$(ABC_USE_NAMESPACE) -std=c++11 -fvisibility=hidden -fpermissive
+   CC := $(CXX)
++  LD = $(CXX)
++  DLIBS := -lstdc++
+   $(info $(MSG_PREFIX)Compiling in namespace $(ABC_NAMESPACE))
++else
++  ABC_USE_LIBSTDCXX := 1
+ endif
+ 
+ # compile CUDD with ABC
+@@ -129,9 +139,12 @@ CFLAGS += -Wno-unused-but-set-variable
+ endif
+ else
+ $(info $(MSG_PREFIX)Found GCC_MAJOR>=5)
++CLANG_HEADER=$(shell $(CC) --version | grep -w clang)
++ifeq (,$(CLANG_HEADER))
+ CFLAGS += -Wno-unused-but-set-variable
+ endif
+ endif
++endif
+ 
+ endif
+ 
+@@ -154,7 +167,7 @@ $(info $(MSG_PREFIX)Using CFLAGS=$(CFLAGS))
+ CXXFLAGS += $(CFLAGS)
+ 
+ SRC  :=
+-GARBAGE := core core.* *.stackdump ./tags $(PROG) arch_flags
++GARBAGE := core core.* *.stackdump ./tags $(PROG) demo arch_flags
+ 
+ .PHONY: all default tags clean docs cmake_info
+ 
+@@ -167,6 +180,8 @@ OBJ := \
+ 	$(patsubst %.y, %.o,  $(filter %.y, $(SRC)))
+ 
+ LIBOBJ := $(filter-out src/base/main/main.o,$(OBJ))
++MAINOBJ := src/base/main/main.o
++DEMOOBJ := src/demo.o
+ 
+ DEP := $(OBJ:.o=.d)
+ 
+@@ -206,22 +221,37 @@ depend: $(DEP)
+ 
+ clean:
+ 	@echo "$(MSG_PREFIX)\`\` Cleaning up..."
+-	$(VERBOSE)rm -rvf $(PROG) lib$(PROG).a $(OBJ) $(GARBAGE) $(OBJ:.o=.d)
++	$(VERBOSE)rm -rvf lib$(PROG).* $(OBJ) $(GARBAGE) $(OBJ:.o=.d)
+ 
+ tags:
+ 	etags `find . -type f -regex '.*\.\(c\|h\)'`
+ 
+-$(PROG): $(OBJ)
+-	@echo "$(MSG_PREFIX)\`\` Building binary:" $(notdir $@)
+-	$(VERBOSE)$(LD) -o $@ $^ $(LDFLAGS) $(LIBS)
++lib: lib$(PROG).so.$(VERSION)
++
++test: demo
++	LD_LIBRARY_PATH=. ./abc -c "r i10.aig; b; ps; b; rw -l; rw -lz; b; rw -lz; b; ps; cec"
++	LD_LIBRARY_PATH=. ./demo i10.aig
++
++demo: $(DEMOOBJ) lib$(PROG).a
++	@echo "$(MSG_PREFIX)\`\` Linking binary:" $(notdir $@)
++	+$(VERBOSE)$(LD) -o $@ $(DEMOOBJ) lib$(PROG).a $(LDFLAGS) $(DLIBS) $(LIBS)
++
++$(PROG): $(MAINOBJ) lib$(PROG).so
++	@echo "$(MSG_PREFIX)\`\` Linking binary:" $(notdir $@)
++	+$(VERBOSE)$(LD) -o $@ $(MAINOBJ) -L. -l$(PROG) $(LDFLAGS) $(LIBS)
+ 
+ lib$(PROG).a: $(LIBOBJ)
+ 	@echo "$(MSG_PREFIX)\`\` Linking:" $(notdir $@)
+ 	$(VERBOSE)$(AR) rsv $@ $?
+ 
+-lib$(PROG).so: $(LIBOBJ)
++lib$(PROG).so.$(VERSION): $(LIBOBJ)
+ 	@echo "$(MSG_PREFIX)\`\` Linking:" $(notdir $@)
+-	$(VERBOSE)$(CXX) -shared -o $@ $^ $(LIBS)
++	+$(VERBOSE)$(LD) -shared -Wl,-soname=$(SONAME) -o $@ $^ $(LIBS)
++
++lib$(PROG).so: lib$(PROG).so.$(VERSION)
++	ldconfig -v -n .
++	@$(LN) -sf lib$(PROG).so.$(VERSION) lib$(PROG).so
++	@$(LN) -sf lib$(PROG).so.$(VERSION) $(SONAME)
+ 
+ docs:
+ 	@echo "$(MSG_PREFIX)\`\` Building documentation." $(notdir $@)
+diff --git a/src/base/abci/abc.c b/src/base/abci/abc.c
+index 29732bc6..e53e7d54 100644
+--- a/src/base/abci/abc.c
++++ b/src/base/abci/abc.c
+@@ -33748,7 +33748,7 @@ usage:
+ ***********************************************************************/
+ int Abc_CommandAbc9SimRsb( Abc_Frame_t * pAbc, int argc, char ** argv )
+ {
+-    extern void Gia_ManSimRsb( Gia_Man_t * p, int nCands, int fVerbose );
++    extern int Gia_ManSimRsb( Gia_Man_t * p, int nCands, int fVerbose );
+     int c, nCands = 32, fVerbose = 0;
+     Extra_UtilGetoptReset();
+     while ( ( c = Extra_UtilGetopt( argc, argv, "Nvh" ) ) != EOF )
+diff --git a/src/base/acb/acbTest.c b/src/base/acb/acbTest.c
+index 1faea72a..6290b88e 100644
+--- a/src/base/acb/acbTest.c
++++ b/src/base/acb/acbTest.c
+@@ -466,7 +466,7 @@ Gia_Man_t * Acb_NtkGiaDeriveMiter( Gia_Man_t * pOne, Gia_Man_t * pTwo, int Type
+ ***********************************************************************/
+ void Acb_OutputFile( char * pFileName, Acb_Ntk_t * pNtkF, int * pModel )
+ {
+-    char * pFileName0 = pFileName? pFileName : "output";
++    const char * pFileName0 = pFileName? pFileName : "output";
+     FILE * pFile = fopen( pFileName0, "wb" );
+     if ( pFile == NULL )
+     {
+diff --git a/src/base/main/mainReal.c b/src/base/main/mainReal.c
+index 922e0521..8345ec37 100644
+--- a/src/base/main/mainReal.c
++++ b/src/base/main/mainReal.c
+@@ -57,9 +57,9 @@ SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ #include "mainInt.h"
+ #include "base/wlc/wlc.h"
+ 
++#pragma GCC visibility push(default)
+ ABC_NAMESPACE_IMPL_START
+ 
+-
+ ////////////////////////////////////////////////////////////////////////
+ ///                        DECLARATIONS                              ///
+ ////////////////////////////////////////////////////////////////////////
+@@ -420,5 +420,5 @@ static int TypeCheck( Abc_Frame_t * pAbc, const char * s )
+ ///                       END OF FILE                                ///
+ ////////////////////////////////////////////////////////////////////////
+ 
+-
+ ABC_NAMESPACE_IMPL_END
++#pragma GCC visibility pop
+diff --git a/src/map/mapper/mapperLib.c b/src/map/mapper/mapperLib.c
+index 6356e2f3..a9c2119b 100644
+--- a/src/map/mapper/mapperLib.c
++++ b/src/map/mapper/mapperLib.c
+@@ -15,7 +15,7 @@
+   Revision    [$Id: mapperLib.c,v 1.6 2005/01/23 06:59:44 alanmi Exp $]
+ 
+ ***********************************************************************/
+-#define _BSD_SOURCE
++#define _DEFAULT_SOURCE
+ 
+ #ifndef WIN32
+ #include <unistd.h>
+diff --git a/src/map/mio/mio.c b/src/map/mio/mio.c
+index 3010bbd3..583c9291 100644
+--- a/src/map/mio/mio.c
++++ b/src/map/mio/mio.c
+@@ -16,7 +16,7 @@
+ 
+ ***********************************************************************/
+ 
+-#define _BSD_SOURCE
++#define _DEFAULT_SOURCE
+ 
+ #ifndef WIN32
+ #include <unistd.h>
+-- 
+2.32.0
+

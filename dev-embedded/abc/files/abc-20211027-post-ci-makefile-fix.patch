@@ -1,0 +1,66 @@
+diff --git a/Makefile b/Makefile
+index 9b7b55f7..1a421ae0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,18 +2,13 @@
+ CC   ?= gcc
+ CXX  ?= g++
+ AR   ?= ar
+-LD   := $(CC)
++LD   := $(CXX)
+ LN   ?= ln
+ MV   ?= mv
+ 
+ MSG_PREFIX ?=
+ ABCSRC = .
+ 
+-$(info $(MSG_PREFIX)Using CC=$(CC))
+-$(info $(MSG_PREFIX)Using CXX=$(CXX))
+-$(info $(MSG_PREFIX)Using AR=$(AR))
+-$(info $(MSG_PREFIX)Using LD=$(LD))
+-
+ PROG := abc
+ OS := $(shell uname -s)
+ 
+@@ -71,7 +66,6 @@ endif
+ ifdef ABC_USE_NAMESPACE
+   CFLAGS += -DABC_NAMESPACE=$(ABC_USE_NAMESPACE) -std=c++11 -fvisibility=hidden -fpermissive
+   CC := $(CXX)
+-  LD = $(CXX)
+   DLIBS := -lstdc++
+   $(info $(MSG_PREFIX)Compiling in namespace $(ABC_NAMESPACE))
+ else
+@@ -129,7 +123,7 @@ GCC_VERSION=$(shell $(CC) -dumpversion)
+ GCC_MAJOR=$(word 1,$(subst .,$(space),$(GCC_VERSION)))
+ GCC_MINOR=$(word 2,$(subst .,$(space),$(GCC_VERSION)))
+ 
+-$(info $(MSG_PREFIX)Found GCC_VERSION $(GCC_VERSION))
++$(info $(MSG_PREFIX)Found CC_VERSION $(GCC_VERSION))
+ ifeq ($(findstring $(GCC_MAJOR),0 1 2 3),)
+ ifeq ($(GCC_MAJOR),4)
+ $(info $(MSG_PREFIX)Found GCC_MAJOR==4)
+@@ -163,8 +157,14 @@ ifdef ABC_USE_LIBSTDCXX
+    $(info $(MSG_PREFIX)Using explicit -lstdc++)
+ endif
+ 
++$(info $(MSG_PREFIX)Using CC=$(CC))
++$(info $(MSG_PREFIX)Using CXX=$(CXX))
++$(info $(MSG_PREFIX)Using AR=$(AR))
++$(info $(MSG_PREFIX)Using LD=$(LD))
++
+ $(info $(MSG_PREFIX)Using CFLAGS=$(CFLAGS))
+ CXXFLAGS += $(CFLAGS)
++$(info $(MSG_PREFIX)Using CXXFLAGS=$(CXXFLAGS))
+ 
+ SRC  :=
+ GARBAGE := core core.* *.stackdump ./tags $(PROG) demo arch_flags
+@@ -229,8 +229,7 @@ tags:
+ lib: lib$(PROG).so.$(VERSION)
+ 
+ test: demo
+-	LD_LIBRARY_PATH=. ./abc -c "r i10.aig; b; ps; b; rw -l; rw -lz; b; rw -lz; b; ps; cec"
+-	LD_LIBRARY_PATH=. ./demo i10.aig
++	./demo i10.aig
+ 
+ demo: $(DEMOOBJ) lib$(PROG).a
+ 	@echo "$(MSG_PREFIX)\`\` Linking binary:" $(notdir $@)
