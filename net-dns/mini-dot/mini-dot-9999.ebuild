@@ -7,7 +7,7 @@ MY_PN="tcp_only_forwarder"
 MY_P="${MY_PN}-${PV}"
 
 PYTHON_COMPAT=( python3_{6..9} )
-inherit python-single-r1
+inherit python-single-r1 systemd
 
 DESCRIPTION="Lightweight TCP-only DNS forwarder with DoT support"
 HOMEPAGE="https://github.com/m3047/tcp_only_forwarder"
