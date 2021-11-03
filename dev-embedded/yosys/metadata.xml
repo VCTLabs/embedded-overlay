@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>nerdboy@gentoo.org</email>
+		<name>Stephen L Arnold</name>
+	</maintainer>
+	<longdescription lang="en">
+		Yosys is a framework for RTL synthesis tools with extensive
+		Verilog-2005 support.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">cliffordwolf/yosys</remote-id>
+	</upstream>
+	<use>
+		<flag name="abc">
+			Use external abc tool instead of vendored source.
+		</flag>
+		<flag name="clang">
+			Force clang toolchain with minimal flags.
+		</flag>
+		<flag name="extended-test">
+			Run full testsuite instead of short/simple tests.
+		</flag>
+	</use>
+</pkgmetadata>
