@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="project">
+		<email>nerdboy@gentoo.org</email>
+		<name>Steve Arnold</name>
+	</maintainer>
+	<longdescription lang="en">
+		A nice tool-agnostic wrapper for managing FPGA project tasks
+		(supports both vendor and FOSS toolchains).
+	</longdescription>
+	<upstream>
+		<remote-id type="github">sarnold/chiptools</remote-id>
+	</upstream>
+</pkgmetadata>
