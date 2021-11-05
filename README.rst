@@ -6,7 +6,25 @@
 
 |pre|
 
-VCTLabs portage overlay for embedded and (extra) Python packages.
+Portage overlay for embedded tools and (extra) Python packages.
+
+Interesting/useful items:
+
+* dev-embedded/abc - A system for sequential logic synthesis and formal verification
+* dev-embedded/chiptools - A utility to automate FPGA build and verification
+* dev-embedded/yosys - A framework for Verilog RTL synthesis
+* dev-embedded/redis-ipc - system message bus using redis and json
+* dev-libs/spdlog - Fast C++ logging library
+* dev-libs/libdatrie - An implementation for a double-array Trie library in C
+* dev-libs/ztcli-async - Thin async Python binding around Zerotier cli
+* dev-python/versioningit - Versioning It with your Version In Git
+* net-dns/mini-dot - Lightweight TCP-only DNS forwarder with DoT support
+* net-misc/fpnd - FreePN P2P vpn network stack
+* net-proxy/pyforwarder - Python raw socket proxy with optional SSL/TLS termination
+* sci-electronics/pyVHDLModel - An abstract VHDL language model written in Python
+* sci-electronics/ghdl - The GHDL VHDL simulator
+
+plus lots of other python and networking goodies.
 
 Quick and dirty layman install::
 
