@@ -31,7 +31,6 @@ DEPEND="
 	libevent? ( dev-libs/libevent:= )
 	libuv? ( dev-libs/libuv:= )
 	>=net-dns/unbound-1.5.9:=
-	test? ( dev-libs/check )
 "
 RDEPEND="
 	${DEPEND}
@@ -43,6 +42,7 @@ RDEPEND="
 "
 BDEPEND="
 	doc? ( app-doc/doxygen )
+	test? ( dev-libs/check )
 "
 
 PATCHES=(

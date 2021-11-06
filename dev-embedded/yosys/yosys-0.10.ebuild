@@ -30,9 +30,10 @@ DEPEND="
 	dev-vcs/git
 	dev-lang/tcl:=
 	${PYTHON_DEPS}
+	sci-electronics/iverilog
 	abc? ( dev-embedded/abc )
-	test? ( sci-electronics/iverilog )
 "
+# noqa - test ^^ and runtime need iverilog
 
 BDEPEND="
 	sys-devel/bison

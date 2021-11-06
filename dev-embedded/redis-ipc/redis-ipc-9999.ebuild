@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit autotools ltprune
+inherit autotools
 
 DESCRIPTION="A client library for using redis as IPC msg/event bus."
 HOMEPAGE="https://github.com/VCTLabs/redis-ipc"
@@ -46,9 +46,4 @@ src_configure() {
 	)
 
 	econf "${myeconfargs[@]}"
-}
-
-src_install() {
-	default
-	prune_libtool_files --all
 }
