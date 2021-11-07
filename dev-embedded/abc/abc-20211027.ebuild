@@ -39,10 +39,12 @@ PATCHES=(
 	"${FILESDIR}/${P}-cleanup-makefile-add-shared-libs.patch"
 	"${FILESDIR}/${P}-add-missing-gia-c-to-module-make.patch"
 	"${FILESDIR}/${P}-post-ci-makefile-fix.patch"
+	"${FILESDIR}/${P}-fix-build-with-clang.patch"
 )
 
 src_compile() {
 	tc-export CC CXX AR LD
+	append-flags -Wno-deprecated
 	local myopts
 
 	use debug || myopts+=" OPTFLAGS="

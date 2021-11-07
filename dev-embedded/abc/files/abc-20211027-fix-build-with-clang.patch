@@ -1,0 +1,151 @@
+diff --git a/src/aig/gia/giaIso3.c b/src/aig/gia/giaIso3.c
+index 8bea4bbf..d850e87d 100644
+--- a/src/aig/gia/giaIso3.c
++++ b/src/aig/gia/giaIso3.c
+@@ -177,7 +177,7 @@ Vec_Wec_t * Gia_Iso4Gia( Gia_Man_t * p )
+     Vec_WecForEachLevel( vLevs, vLevel, l )
+     {
+         Gia_Obj_t * pObj;  int i;
+-        int RandC[2] = { Abc_Random(0), Abc_Random(0) };
++        unsigned int RandC[2] = { Abc_Random(0), Abc_Random(0) };
+         if ( l == 0 )
+         {
+             Gia_ManForEachObjVec( vLevel, p, pObj, i )
+diff --git a/src/base/acb/acbTest.c b/src/base/acb/acbTest.c
+index 6290b88e..101841aa 100644
+--- a/src/base/acb/acbTest.c
++++ b/src/base/acb/acbTest.c
+@@ -421,8 +421,8 @@ Gia_Man_t * Acb_NtkGiaDeriveMiter( Gia_Man_t * pOne, Gia_Man_t * pTwo, int Type
+     {
+         for ( i = 0; i < Gia_ManCoNum(pOne); i += 2 )
+         {
+-            int pLitsF[2] = { Gia_ManCo(pOne, i)->Value, Gia_ManCo(pOne, i+1)->Value };
+-            int pLitsS[2] = { Gia_ManCo(pTwo, i)->Value, Gia_ManCo(pTwo, i+1)->Value };
++            int pLitsF[2] = { static_cast<int>(Gia_ManCo(pOne, i)->Value), static_cast<int>(Gia_ManCo(pOne, i+1)->Value) };
++            int pLitsS[2] = { static_cast<int>(Gia_ManCo(pTwo, i)->Value), static_cast<int>(Gia_ManCo(pTwo, i+1)->Value) };
+             Gia_ManAppendCo( pNew, pLitsF[0] );
+             Gia_ManAppendCo( pNew, pLitsS[0] );
+         }
+@@ -431,8 +431,8 @@ Gia_Man_t * Acb_NtkGiaDeriveMiter( Gia_Man_t * pOne, Gia_Man_t * pTwo, int Type
+     {
+         for ( i = 0; i < Gia_ManCoNum(pOne); i += 2 )
+         {
+-            int pLitsF[2] = { Gia_ManCo(pOne, i)->Value, Gia_ManCo(pOne, i+1)->Value };
+-            int pLitsS[2] = { Gia_ManCo(pTwo, i)->Value, Gia_ManCo(pTwo, i+1)->Value };
++            int pLitsF[2] = { static_cast<int>(Gia_ManCo(pTwo, i)->Value), static_cast<int>(Gia_ManCo(pOne, i+1)->Value) };
++            int pLitsS[2] = { static_cast<int>(Gia_ManCo(pTwo, i)->Value), static_cast<int>(Gia_ManCo(pTwo, i+1)->Value) };
+             Gia_ManAppendCo( pNew, pLitsF[1] );
+             Gia_ManAppendCo( pNew, pLitsS[1] );
+         }
+@@ -441,8 +441,8 @@ Gia_Man_t * Acb_NtkGiaDeriveMiter( Gia_Man_t * pOne, Gia_Man_t * pTwo, int Type
+     {
+         for ( i = 0; i < Gia_ManCoNum(pOne); i += 2 )
+         {
+-            int pLitsF[2] = { Gia_ManCo(pOne, i)->Value, Gia_ManCo(pOne, i+1)->Value };
+-            int pLitsS[2] = { Gia_ManCo(pTwo, i)->Value, Gia_ManCo(pTwo, i+1)->Value };
++            int pLitsF[2] = { static_cast<int>(Gia_ManCo(pOne, i)->Value), static_cast<int>(Gia_ManCo(pOne, i+1)->Value) };
++            int pLitsS[2] = { static_cast<int>(Gia_ManCo(pTwo, i)->Value), static_cast<int>(Gia_ManCo(pTwo, i+1)->Value) };
+             Gia_ManAppendCo( pNew, Gia_ManDualCompare( pNew, pLitsF, pLitsS ) );
+         }
+     }
+diff --git a/src/proof/cec/cecSolveG.c b/src/proof/cec/cecSolveG.c
+index 0bb68a7f..64fcac13 100644
+--- a/src/proof/cec/cecSolveG.c
++++ b/src/proof/cec/cecSolveG.c
+@@ -435,7 +435,7 @@ void CecG_CnfNodeAddToSolver( Cec_ManSat_t * p, Gia_Obj_t * pObj )
+ void CecG_ManSatSolverRecycle( Cec_ManSat_t * p )
+ {
+     int Lit;
+-    if ( p->pSat )
++    if ( p->pSat2 )
+     {
+         Gia_Obj_t * pObj;
+         int i;
+@@ -443,20 +443,20 @@ void CecG_ManSatSolverRecycle( Cec_ManSat_t * p )
+             CecG_ObjSetSatNum( p, pObj, 0 );
+         Vec_PtrClear( p->vUsedNodes );
+ //        memset( p->pSatVars, 0, sizeof(int) * Gia_ManObjNumMax(p->pAigTotal) );
+-        sat_solver_stop( p->pSat );
++        sat_solver_stop( p->pSat2 );
+     }
+-    p->pSat = sat_solver_start();
++    p->pSat2 = sat_solver_start();
+     assert( 0 <= p->pPars->SolverType && p->pPars->SolverType <= 2 );
+-    sat_solver_set_jftr( p->pSat, p->pPars->SolverType );
++    sat_solver_set_jftr( p->pSat2, p->pPars->SolverType );
+     //sat_solver_setnvars( p->pSat, 1000 ); // minisat only
+     //p->pSat->factors = ABC_CALLOC( double, p->pSat->cap );
+     // var 0 is not used
+     // var 1 is reserved for const0 node - add the clause
+ 
+ //    p->nSatVars = 0;
+-    CecG_ObjSetSatNum( p, Gia_ManConst0(p->pAig), sat_solver_addvar( p->pSat ) );
++    CecG_ObjSetSatNum( p, Gia_ManConst0(p->pAig), sat_solver_addvar( p->pSat2 ) );
+     Lit = toLitCond( CecG_ObjSatNum( p, Gia_ManConst0(p->pAig) ), 1 );
+-    sat_solver_addclause( p->pSat, &Lit, 1 );
++    sat_solver_addclause( p->pSat2, &Lit, 1 );
+ //    if ( p->pPars->fPolarFlip ) // no need to normalize const0 node (bug fix by SS on 9/17/2012)
+ //        Lit = lit_neg( Lit );
+ 
+diff --git a/src/sat/msat/msatClause.c b/src/sat/msat/msatClause.c
+index 6b1b9e98..3d1fa2fc 100644
+--- a/src/sat/msat/msatClause.c
++++ b/src/sat/msat/msatClause.c
+@@ -522,7 +522,7 @@ void Msat_ClausePrintSymbols( Msat_Clause_t * pC )
+ //        if ( pC->fLearned )
+ //            printf( "Act = %.4f  ", Msat_ClauseReadActivity(pC) );
+         for ( i = 0; i < (int)pC->nSize; i++ )
+-            printf(" "L_LIT, L_lit(pC->pData[i]));
++            printf(" " L_LIT, L_lit(pC->pData[i]));
+     }
+     printf( "\n" );
+ }
+diff --git a/src/sat/msat/msatSolverSearch.c b/src/sat/msat/msatSolverSearch.c
+index b3190e39..3a4298dc 100644
+--- a/src/sat/msat/msatSolverSearch.c
++++ b/src/sat/msat/msatSolverSearch.c
+@@ -52,7 +52,7 @@ int  Msat_SolverAssume( Msat_Solver_t * p, Msat_Lit_t Lit )
+ {
+     assert( Msat_QueueReadSize(p->pQueue) == 0 );
+     if ( p->fVerbose )
+-        printf(L_IND"assume("L_LIT")\n", L_ind, L_lit(Lit));
++        printf(L_IND"assume(" L_LIT")\n", L_ind, L_lit(Lit));
+     Msat_IntVecPush( p->vTrailLim, Msat_IntVecReadSize(p->vTrail) );
+ //    assert( Msat_IntVecReadSize(p->vTrailLim) <= Msat_IntVecReadSize(p->vTrail) + 1 );
+ //    assert( Msat_IntVecReadSize( p->vTrailLim ) < p->nVars );
+@@ -83,7 +83,7 @@ void Msat_SolverUndoOne( Msat_Solver_t * p )
+     Msat_OrderVarUnassigned( p->pOrder, Var );
+ 
+     if ( p->fVerbose )
+-        printf(L_IND"unbind("L_LIT")\n", L_ind, L_lit(Lit)); 
++        printf(L_IND"unbind(" L_LIT")\n", L_ind, L_lit(Lit)); 
+ }
+ 
+ /**Function*************************************************************
+@@ -107,7 +107,7 @@ void Msat_SolverCancel( Msat_Solver_t * p )
+         {
+             Msat_Lit_t Lit;
+             Lit = Msat_IntVecReadEntry( p->vTrail, Msat_IntVecReadEntryLast(p->vTrailLim) ); 
+-            printf(L_IND"cancel("L_LIT")\n", L_ind, L_lit(Lit));
++            printf(L_IND"cancel(" L_LIT")\n", L_ind, L_lit(Lit));
+         }
+     }
+     for ( c = Msat_IntVecReadSize(p->vTrail) - Msat_IntVecPop( p->vTrailLim ); c != 0; c-- )
+@@ -188,7 +188,7 @@ int  Msat_SolverEnqueue( Msat_Solver_t * p, Msat_Lit_t Lit, Msat_Clause_t * pC )
+     if ( p->fVerbose )
+     {
+ //        printf(L_IND"bind("L_LIT")\n", L_ind, L_lit(Lit));
+-        printf(L_IND"bind("L_LIT")  ", L_ind, L_lit(Lit));
++        printf(L_IND"bind(" L_LIT")  ", L_ind, L_lit(Lit));
+         Msat_ClausePrintSymbols( pC );
+     }
+     p->pAssigns[Var] = Lit;
+@@ -513,7 +513,7 @@ void Msat_SolverAnalyze( Msat_Solver_t * p, Msat_Clause_t * pC, Msat_IntVec_t *
+         nReasonSize  = Msat_IntVecReadSize( vLits_out );
+         pReasonArray = Msat_IntVecReadArray( vLits_out );
+         for ( j = 0; j < nReasonSize; j++ ) 
+-            printf(" "L_LIT, L_lit(pReasonArray[j]));
++            printf(" " L_LIT, L_lit(pReasonArray[j]));
+         printf(" } at level %d\n", *pLevel_out); 
+     }
+ }
