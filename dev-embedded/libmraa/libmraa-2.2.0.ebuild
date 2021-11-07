@@ -3,13 +3,13 @@
 
 EAPI=7
 
-CMAKE_IN_SOURCE_BUILD="true"
+#CMAKE_IN_SOURCE_BUILD="true"
 CMAKE_VERBOSE=ON
 
 PYTHON_COMPAT=( python3_{6..9} )
 PYTHON_REQ_USE='threads(+)'
 
-inherit cmake eutils flag-o-matic python-r1 toolchain-funcs
+inherit cmake python-r1 toolchain-funcs
 
 DESCRIPTION="Library for low speed IO in C with bindings for C++, Python, Node.js & Java"
 HOMEPAGE="https://github.com/intel-iot-devkit/mraa"
@@ -18,8 +18,8 @@ SRC_URI="https://github.com/intel-iot-devkit/mraa/archive/v${PV}.tar.gz -> ${P}.
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="doc -examples -java tools"
+KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+IUSE="doc examples java tools"
 
 COMMON_DEPS="${PYTHON_DEPS}
 	doc? ( dev-python/sphinx )
@@ -40,14 +40,21 @@ DEPEND="${COMMON_DEPS}
 
 RDEPEND="${COMMON_DEPS}"
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 S="${WORKDIR}/mraa-${PV}"
 
 RESTRICT="test"
 
+PATCHES=(
+	"${FILESDIR}/${P}-master-pr-build-fixes.patch"
+	"${FILESDIR}/${P}-master-pr-swig.patch"
+)
+
+# disabling onewire causes link failures: undefined reference to `mraa_uart_ow_init'
 src_configure() {
 	tc-export CC CXX AR RANLIB PKG_CONFIG
 	PKG_CONFIG_LIBDIR="${EPREFIX}/usr/$(get_libdir)/pkgconfig"
-	append-cflags -fno-strict-aliasing
 
 	python_setup
 
@@ -56,7 +63,9 @@ src_configure() {
 		-DLIB_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)"
 		-DCMAKE_SKIP_INSTALL_RPATH=ON
 		-DCMAKE_SKIP_RPATH=ON
+		-DBUILDCPP=ON
 		-DBUILDSWIG=ON
+		-DBUILDSWIGNODE=OFF
 		-DBUILDSWIGPYTHON=ON
 		-DBUILDDOC="$(usex doc)"
 		-DBUILDSWIGJAVA="$(usex java)"
@@ -64,7 +73,7 @@ src_configure() {
 		-DENABLEEXAMPLES="$(usex examples)"
 		-DFIRMATA=ON
 		-DUSBPLAT=ON
-		-DONEWIRE=OFF
+		-DONEWIRE=ON
 		-DJSONPLAT=ON
 		-DFTDI4222=OFF
 		-DIMRAA=ON
@@ -73,5 +82,5 @@ src_configure() {
 
 	export GMOCK_PREFIX="${EPREFIX}/usr"
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
