@@ -1,0 +1,95 @@
+From bc02ae5dd22a514e7c4fd2a0883c3f9c95f5d458 Mon Sep 17 00:00:00 2001
+From: Jan Kiszka <jan.kiszka@siemens.com>
+Date: Mon, 13 Sep 2021 08:33:54 +0200
+Subject: [PATCH 8/8] gpio: Silence own use of deprecated mraa_gpio_use_mmaped
+
+The warning is aiming at external use, not our own one. Silence the
+latter by adding an internal service that the deprecated function calls
+and use that service in the remaining mraa use cases.
+
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ api/mraa/gpio.h   | 3 +++
+ api/mraa/gpio.hpp | 2 +-
+ src/gpio/gpio.c   | 8 +++++++-
+ tools/mraa-gpio.c | 4 ++--
+ 4 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/api/mraa/gpio.h b/api/mraa/gpio.h
+index 5973632..ce48f82 100644
+--- a/api/mraa/gpio.h
++++ b/api/mraa/gpio.h
+@@ -288,6 +288,9 @@ mraa_result_t mraa_gpio_owner(mraa_gpio_context dev, mraa_boolean_t owner);
+  */
+ DEPRECATED mraa_result_t mraa_gpio_use_mmaped(mraa_gpio_context dev, mraa_boolean_t mmap);
+ 
++/* remaining internal use only */
++mraa_result_t mraa_gpio_use_mmaped_internal(mraa_gpio_context dev, mraa_boolean_t mmap);
++
+ /**
+  * Get a pin number of the gpio, invalid will return -1
+  *
+diff --git a/api/mraa/gpio.hpp b/api/mraa/gpio.hpp
+index fad439e..c0b546c 100644
+--- a/api/mraa/gpio.hpp
++++ b/api/mraa/gpio.hpp
+@@ -327,7 +327,7 @@ class Gpio
+     Result
+     useMmap(bool enable)
+     {
+-        return (Result) mraa_gpio_use_mmaped(m_gpio, (mraa_boolean_t) enable);
++        return (Result) mraa_gpio_use_mmaped_internal(m_gpio, (mraa_boolean_t) enable);
+     }
+     /**
+      * Get pin number of Gpio. If raw param is True will return the
+diff --git a/src/gpio/gpio.c b/src/gpio/gpio.c
+index 0f0b82b..62ffe9a 100644
+--- a/src/gpio/gpio.c
++++ b/src/gpio/gpio.c
+@@ -1740,7 +1740,7 @@ mraa_gpio_owner(mraa_gpio_context dev, mraa_boolean_t own)
+ }
+ 
+ mraa_result_t
+-mraa_gpio_use_mmaped(mraa_gpio_context dev, mraa_boolean_t mmap_en)
++mraa_gpio_use_mmaped_internal(mraa_gpio_context dev, mraa_boolean_t mmap_en)
+ {
+     if (dev == NULL) {
+         syslog(LOG_ERR, "gpio: use_mmaped: context is invalid");
+@@ -1756,6 +1756,12 @@ mraa_gpio_use_mmaped(mraa_gpio_context dev, mraa_boolean_t mmap_en)
+     return MRAA_ERROR_FEATURE_NOT_IMPLEMENTED;
+ }
+ 
++mraa_result_t
++mraa_gpio_use_mmaped(mraa_gpio_context dev, mraa_boolean_t mmap_en)
++{
++    return mraa_gpio_use_mmaped_internal(dev, mmap_en);
++}
++
+ int
+ mraa_gpio_get_pin(mraa_gpio_context dev)
+ {
+diff --git a/tools/mraa-gpio.c b/tools/mraa-gpio.c
+index 4e0f081..05b9316 100644
+--- a/tools/mraa-gpio.c
++++ b/tools/mraa-gpio.c
+@@ -96,7 +96,7 @@ gpio_set(int pin, int level, mraa_boolean_t raw)
+     if (gpio != NULL) {
+         mraa_gpio_dir(gpio, MRAA_GPIO_OUT);
+         if (raw != 0) {
+-            if (mraa_gpio_use_mmaped(gpio, 1) != MRAA_SUCCESS) {
++            if (mraa_gpio_use_mmaped_internal(gpio, 1) != MRAA_SUCCESS) {
+                 fprintf(stdout,
+                         "mmapped access to gpio %d not supported, falling back to normal mode\n", pin);
+             }
+@@ -114,7 +114,7 @@ gpio_get(int pin, int* level, mraa_boolean_t raw)
+     if (gpio != NULL) {
+         mraa_gpio_dir(gpio, MRAA_GPIO_IN);
+         if (raw != 0) {
+-            if (mraa_gpio_use_mmaped(gpio, 1) != MRAA_SUCCESS) {
++            if (mraa_gpio_use_mmaped_internal(gpio, 1) != MRAA_SUCCESS) {
+                 fprintf(stdout,
+                         "mmapped access to gpio %d not supported, falling back to normal mode\n", pin);
+             }
+-- 
+2.32.0
+

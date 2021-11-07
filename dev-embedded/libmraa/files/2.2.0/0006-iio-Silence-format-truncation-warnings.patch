@@ -1,0 +1,29 @@
+From ede6e87e549777e41926fd3a072dc85b9f1fed0b Mon Sep 17 00:00:00 2001
+From: Jan Kiszka <jan.kiszka@siemens.com>
+Date: Mon, 13 Sep 2021 08:26:41 +0200
+Subject: [PATCH 6/8] iio: Silence format-truncation warnings
+
+Truncation warnings are default-on with many gcc-10 packages but the
+module is fine with the potential truncations of sysfs paths as they
+are.
+
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ src/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 2eb3d75..aa983f4 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -39,6 +39,7 @@ if (NOT PERIPHERALMAN)
+     ${mraa_LIB_SRCS_NOAUTO}
+     ${PROJECT_SOURCE_DIR}/src/iio/iio.c
+   )
++  set_source_files_properties(${PROJECT_SOURCE_DIR}/src/iio/iio.c PROPERTIES COMPILE_OPTIONS "-Wno-format-truncation")
+ endif ()
+ 
+ set (mraa_LIB_X86_SRCS_NOAUTO
+-- 
+2.32.0
+

@@ -1,0 +1,26 @@
+From f4c954ce29ee796a456013671d360891c6ac65bf Mon Sep 17 00:00:00 2001
+From: Jan Kiszka <jan.kiszka@siemens.com>
+Date: Mon, 13 Sep 2021 08:25:39 +0200
+Subject: [PATCH 5/8] iio: Add missing parameter in error log output
+
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ src/iio/iio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/iio/iio.c b/src/iio/iio.c
+index 35162a9..26f116a 100644
+--- a/src/iio/iio.c
++++ b/src/iio/iio.c
+@@ -162,7 +162,7 @@ mraa_iio_get_channel_data(mraa_iio_context dev)
+ 
+         if(chan->bytes <= 0)
+         {
+-            syslog(LOG_ERR, "iio: Channel %d with channel bytes value <= 0");
++            syslog(LOG_ERR, "iio: Channel %d with channel bytes value <= 0", i);
+             return MRAA_IO_SETUP_FAILURE;
+         }
+ 
+-- 
+2.32.0
+

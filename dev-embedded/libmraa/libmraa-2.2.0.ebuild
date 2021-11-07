@@ -46,10 +46,7 @@ S="${WORKDIR}/mraa-${PV}"
 
 RESTRICT="test"
 
-PATCHES=(
-	"${FILESDIR}/${P}-master-pr-build-fixes.patch"
-	"${FILESDIR}/${P}-master-pr-swig.patch"
-)
+PATCHES=( "${FILESDIR}/${PV}" )
 
 # disabling onewire causes link failures: undefined reference to `mraa_uart_ow_init'
 src_configure() {
