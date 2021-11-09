@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>nerdboy@gentoo.org</email>
+		<name>Stephen L Arnold</name>
+	</maintainer>
+	<longdescription lang="en">
+		Convenience/helper library for UserspaceIO
+	</longdescription>
+	<upstream>
+		<remote-id type="github">missinglinkelectronics/libuio</remote-id>
+	</upstream>
+</pkgmetadata>
