@@ -20,5 +20,11 @@
 		<flag name="tools">
 			Build and install executable tools (yosys wants this)
 		</flag>
+		<flag name="clang">
+			Force building with clang toolchain
+		</flag>
+		<flag name="lto">
+			Enable cmake/platform IPO
+		</flag>
 	</use>
 </pkgmetadata>
