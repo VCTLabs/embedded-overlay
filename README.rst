@@ -2,7 +2,7 @@
  embedded-overlay
 ==================
 
-|ci|
+|ci| |repoman|
 
 |pre|
 
@@ -146,6 +146,10 @@ To see a "replay" of any ``rst`` check errors, run::
 .. |ci| image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml/badge.svg
     :target: https://github.com/VCTLabs/embedded-overlay/actions/workflows/main.yml
     :alt: PkgCheck CI status
+
+.. |repoman| image:: https://github.com/VCTLabs/embedded-overlay/actions/workflows/repoman.yml/badge.svg
+    :target: https://github.com/VCTLabs/embedded-overlay/actions/workflows/repoman.yml
+    :alt: RepoMan CI status
 
 .. |pre| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
