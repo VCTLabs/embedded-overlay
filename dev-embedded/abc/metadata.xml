@@ -17,5 +17,8 @@
 		<flag name="cpp">
 			Use C++ namespace for build (you probably want this)
 		</flag>
+		<flag name="tools">
+			Build and install executable tools (yosys wants this)
+		</flag>
 	</use>
 </pkgmetadata>

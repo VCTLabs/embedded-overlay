@@ -7,14 +7,21 @@ inherit flag-o-matic toolchain-funcs
 
 # sadly no upstream tags or releases from gh
 if [[ ${PV} == *9999* ]]; then
-	EGIT_REPO_URI="https://github.com/berkeley-abc/${PN}.git"
+	EGIT_REPO_URI="https://github.com/sarnold/${PN}.git"
+	EGIT_BRANCH="master"
+	#EGIT_COMMIT="e1269f78473a8fd0bf1aefe032f2c9637f2ec97b"
 	inherit git-r3
 else
-	EGIT_COMMIT="d13e33cdd8451ad4ecfcb9093fbaa628f0e6659d"
-	SRC_URI="https://github.com/berkeley-abc/${PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/${PN}-${GH_COMMIT_ID}"
+	GIT_COMMIT="d13e33cdd8451ad4ecfcb9093fbaa628f0e6659d"
+	SRC_URI="https://github.com/berkeley-abc/${PN}/archive/${GIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
-	S="${WORKDIR}"/${PN}-${EGIT_COMMIT}
+	S="${WORKDIR}"/${PN}-${GIT_COMMIT}
+	PATCHES=(
+		"${FILESDIR}/${P}-cleanup-makefile-add-shared-libs.patch"
+		"${FILESDIR}/${P}-add-missing-gia-c-to-module-make.patch"
+		"${FILESDIR}/${P}-post-ci-makefile-fix.patch"
+		"${FILESDIR}/${P}-fix-build-with-clang.patch"
+	)
 fi
 
 DESCRIPTION="A system for sequential logic synthesis and formal verification"
@@ -34,13 +41,6 @@ RDEPEND="${DEPEND}
 	media-gfx/graphviz
 	app-text/gv
 "
-
-PATCHES=(
-	"${FILESDIR}/${P}-cleanup-makefile-add-shared-libs.patch"
-	"${FILESDIR}/${P}-add-missing-gia-c-to-module-make.patch"
-	"${FILESDIR}/${P}-post-ci-makefile-fix.patch"
-	"${FILESDIR}/${P}-fix-build-with-clang.patch"
-)
 
 src_compile() {
 	tc-export CC CXX AR LD
