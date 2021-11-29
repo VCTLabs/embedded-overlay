@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit distutils-r1
 
@@ -14,11 +14,10 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/hexdump.git"
 	EGIT_BRANCH="main"
 	inherit git-r3
-	KEYWORDS=""
 else
 	MY_PV="${PV/_p/-}"
 	SRC_URI="https://github.com/sarnold/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 	S="${WORKDIR}/${PN}-${MY_PV}"
 fi
 
@@ -30,6 +29,7 @@ RDEPEND="${PYTHON_DEPS}"
 
 DEPEND="${PYTHON_DEPS}
 	dev-python/setuptools[${PYTHON_USEDEP}]
+	app-arch/unzip
 	test? ( >=dev-python/pytest-3.0.3[${PYTHON_USEDEP}] )
 "
 
