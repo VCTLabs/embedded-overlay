@@ -3,8 +3,7 @@
 
 EAPI=7
 
-# TODO: Figure out how to test all this and maybe support other versions
-ADA_COMPAT=( gnat_2019 )
+ADA_COMPAT=( gnat_202{0..1} )
 inherit ada llvm
 
 DESCRIPTION="The GHDL VHDL simulator."
