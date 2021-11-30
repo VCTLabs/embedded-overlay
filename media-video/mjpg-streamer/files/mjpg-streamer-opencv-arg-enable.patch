@@ -1,0 +1,75 @@
+From 7bcb72747be8bc5358d9e3d30fb1dec7c3d603cd Mon Sep 17 00:00:00 2001
+From: Stephen L Arnold <nerdboy@gentoo.org>
+Date: Tue, 30 Nov 2021 14:09:18 -0800
+Subject: [PATCH] add support to enable/disable opencv plugin via cmake arg
+
+Signed-off-by: Stephen L Arnold <nerdboy@gentoo.org>
+---
+ mjpg-streamer-experimental/CMakeLists.txt          |  1 +
+ .../plugins/input_opencv/CMakeLists.txt            | 14 +++++++-------
+ .../plugins/input_opencv/README.md                 |  3 +++
+ 3 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e6e67bc..7ec9a0f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,6 +25,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
+ option(BUILD_TESTING "build and run tests" ON)
+ option(ENABLE_WXP_COMPAT "" OFF)
+ option(ENABLE_HTTP_MANAGEMENT "" OFF)
++option(ENABLE_INPUT_OPENCV "" OFF)
+ 
+ # If the user doesn't manually specify a build type, use 'Release'
+ if(NOT CMAKE_BUILD_TYPE)
+diff --git a/plugins/input_opencv/CMakeLists.txt b/plugins/input_opencv/CMakeLists.txt
+index 9adae85..9dede08 100644
+--- a/plugins/input_opencv/CMakeLists.txt
++++ b/plugins/input_opencv/CMakeLists.txt
+@@ -1,22 +1,22 @@
+ 
+ # TODO: which components do I need?
+ # To fix the error: "undefined symbol: _ZN2cv12VideoCaptureC1Ev"
+-find_package(OpenCV COMPONENTS core imgproc highgui videoio)
++if(ENABLE_INPUT_OPENCV)
++    find_package(OpenCV COMPONENTS core imgproc highgui videoio)
++endif()
+ 
+ MJPG_STREAMER_PLUGIN_OPTION(input_opencv "OpenCV input plugin"
+                             ONLYIF OpenCV_FOUND ${OpenCV_VERSION_MAJOR} EQUAL 3)
+ 
+-if (PLUGIN_INPUT_OPENCV)
++if(PLUGIN_INPUT_OPENCV)
+     enable_language(CXX)
+     include_directories(${OpenCV_INCLUDE_DIRS})
+ 
+     MJPG_STREAMER_PLUGIN_COMPILE(input_opencv input_opencv.cpp)
+-    
++
+     target_link_libraries(input_opencv ${OpenCV_LIBS})
+-    
++
+     add_subdirectory(filters/cvfilter_cpp)
+     add_subdirectory(filters/cvfilter_py)
+-    
+-endif()
+-
+ 
++endif()
+diff --git a/plugins/input_opencv/README.md b/plugins/input_opencv/README.md
+index ce4abbf..dc92c25 100644
+--- a/plugins/input_opencv/README.md
++++ b/plugins/input_opencv/README.md
+@@ -5,6 +5,9 @@ This input plugin uses OpenCV to read from supported video sources, optionally
+ running the image through a filter plugin that can be specified on the command
+ line.
+ 
++Enable this plugin by adding `-DENABLE_INPUT_OPENCV` to the cmake build config.
++You must have the OpenCV development packages installed.
++
+ If you're not using the image filtering functionality of this plugin, you're
+ probably better off using some other input plugin as this plugin will probably
+ consume more CPU resources.
+-- 
+2.32.0
+
