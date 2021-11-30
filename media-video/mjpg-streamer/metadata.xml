@@ -26,6 +26,7 @@
 			compatible camera</flag>
 		<flag name="input-http">Plugin that takes http-input</flag>
 		<flag name="input-ptp2">Plugin that sends video stream from PTP2 compatible camera</flag>
+		<flag name="input-opencv">Plugin that reads from supported opencv video sources with optional filtering</flag>
 		<flag name="input-raspicam">Raspberry Pi camera support via the input_raspicam plugin</flag>
 		<flag name="output-file">Plugin that saves received content under given
 			location</flag>
