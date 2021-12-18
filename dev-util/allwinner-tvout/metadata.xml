@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="project">
+	<email>arm@gentoo.org</email>
+	<name>Arm Support</name>
+</maintainer>
+<longdescription lang="en">
+	TV-out wrapper around devmem2 for Allwinner boards with TVE enabled;
+	note register info can be found in R40 datasheet.
+</longdescription>
+<upstream>
+	<remote-id type="github">VCTlabs/allwinner-tvout</remote-id>
+</upstream>
+</pkgmetadata>

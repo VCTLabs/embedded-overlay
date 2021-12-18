@@ -1,0 +1,39 @@
+diff --git a/src/Makefile b/src/Makefile
+index 551eef1..a28d6c9 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -21,6 +21,8 @@
+ WORKDIR = $(shell pwd)
+ SOURCES := $(shell ls *.c)
+ PROJNAME = tvout
++PREFIX ?= /usr/local
++BIN_PATH = bin/Release
+ 
+ CC = gcc
+ CXX = g++
+@@ -54,12 +56,12 @@ OUT_DEBUG = bin/Debug/$(PROJNAME)
+ #RELEASE SETTINGS | EDIT: 3/3
+ ##############################
+ INC_RELEASE = $(INC)
+-CFLAGS_RELEASE = $(CFLAGS) -O2
++CFLAGS_RELEASE = $(CFLAGS)
+ RESINC_RELEASE = $(RESINC)
+ RCFLAGS_RELEASE = $(RCFLAGS)
+ LIBDIR_RELEASE = $(LIBDIR)
+ LIB_RELEASE = $(LIB)
+-LDFLAGS_RELEASE = $(LDFLAGS) -s
++LDFLAGS_RELEASE = $(LDFLAGS)
+ OBJDIR_RELEASE = obj/Release
+ DEP_RELEASE =
+ OUT_RELEASE = bin/Release/$(PROJNAME)
+@@ -80,6 +82,10 @@ all All: debug release
+ clean Clean: cleanDebug cleanRelease
+ rebuild Rebuild: clean debug release
+ 
++install:
++	mkdir -p $(DESTDIR)$(PREFIX)/bin
++	test -e $(BIN_PATH)/$(PROJNAME) && install -m 0755 $(BIN_PATH)/$(PROJNAME) $(DESTDIR)$(PREFIX)/bin
++
+ ######## DEBUG
+ before_debug:
+ 	test -d bin/Debug || mkdir -p bin/Debug
