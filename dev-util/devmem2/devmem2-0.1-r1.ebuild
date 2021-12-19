@@ -22,6 +22,11 @@ IUSE=""
 
 DEPEND=""
 
+PATCHES=(
+	"${FILESDIR}/${P}-cleanup-address-sizing-allow-strict-alignment.patch"
+	"${FILESDIR}/${P}-ensure-word-is-32-bit-add-64-bit-support.patch"
+)
+
 src_compile() {
 	emake CC=$(tc-getCC) || die "make failed..."
 }
