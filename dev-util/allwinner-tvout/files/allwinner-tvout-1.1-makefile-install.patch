@@ -1,22 +1,33 @@
 diff --git a/src/Makefile b/src/Makefile
-index 551eef1..a28d6c9 100644
+index 551eef1..9564ce4 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -21,6 +21,8 @@
+@@ -21,12 +21,14 @@
  WORKDIR = $(shell pwd)
  SOURCES := $(shell ls *.c)
  PROJNAME = tvout
 +PREFIX ?= /usr/local
 +BIN_PATH = bin/Release
  
- CC = gcc
- CXX = g++
+-CC = gcc
+-CXX = g++
+-AR = ar
+-LD = gcc
+-WINDRES = windres
++CC ?= gcc
++CXX ?= g++
++AR ?= ar
++LD ?= gcc
++WINDRES ?= windres
+ 
+ INC =
+ CFLAGS = -Wall -fexceptions
 @@ -54,12 +56,12 @@ OUT_DEBUG = bin/Debug/$(PROJNAME)
  #RELEASE SETTINGS | EDIT: 3/3
  ##############################
  INC_RELEASE = $(INC)
 -CFLAGS_RELEASE = $(CFLAGS) -O2
-+CFLAGS_RELEASE = $(CFLAGS)
++CFLAGS_RELEASE = $(CFLAGS) 
  RESINC_RELEASE = $(RESINC)
  RCFLAGS_RELEASE = $(RCFLAGS)
  LIBDIR_RELEASE = $(LIBDIR)
@@ -37,3 +48,21 @@ index 551eef1..a28d6c9 100644
  ######## DEBUG
  before_debug:
  	test -d bin/Debug || mkdir -p bin/Debug
+@@ -90,7 +96,7 @@ after_debug:
+ debug Debug: before_debug out_debug after_debug
+ 
+ out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
+-	$(LD) $(LDFLAGS_DEBUG) $(LIBDIR_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -o $(OUT_DEBUG)
++	$(CC) $(LDFLAGS_DEBUG) $(LIBDIR_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -o $(OUT_DEBUG)
+ 
+ $(OBJDIR_DEBUG)/%.o: %.c
+ 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c $< -D_DEBUG -o $@
+@@ -111,7 +117,7 @@ after_release:
+ release Release: before_release out_release after_release
+ 
+ out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
+-	$(LD) $(LDFLAGS_RELEASE) $(LIBDIR_RELEASE) $(OBJ_RELEASE) $(LIB_RELEASE) -o $(OUT_RELEASE)
++	$(CC) $(LDFLAGS_RELEASE) $(LIBDIR_RELEASE) $(OBJ_RELEASE) $(LIB_RELEASE) -o $(OUT_RELEASE)
+ 
+ $(OBJDIR_RELEASE)/%.o: %.c
+ 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c $< -o $@
