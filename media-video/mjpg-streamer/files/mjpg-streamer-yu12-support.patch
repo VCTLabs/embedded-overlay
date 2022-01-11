@@ -1,0 +1,152 @@
+From 0c6625bb42c7b93c9a571faab73fa91a81444027 Mon Sep 17 00:00:00 2001
+From: francois_charron <francois.charron.1@gmail.com>
+Date: Sun, 13 Dec 2020 15:44:02 -0500
+Subject: [PATCH 1/7] Add support for YU12
+
+---
+ .../plugins/input_uvc/input_uvc.c             | 14 ++++++-
+ .../plugins/input_uvc/jpeg_utils.c            | 41 +++++++++++++++++++
+ .../plugins/input_uvc/v4l2uvc.c               |  6 +++
+ 3 files changed, 60 insertions(+), 1 deletion(-)
+
+diff --git a/plugins/input_uvc/input_uvc.c b/plugins/input_uvc/input_uvc.c
+index 4ba1b9d..067d7c1 100644
+--- a/plugins/input_uvc/input_uvc.c
++++ b/plugins/input_uvc/input_uvc.c
+@@ -215,6 +215,7 @@ int input_init(input_parameter *param, int id)
+             {"softfps", required_argument, 0, 0},
+             {"timeout", required_argument, 0, 0},
+             {"dv_timings", no_argument, 0, 0},
++            {"yu12", no_argument, 0, 0},
+             {0, 0, 0, 0}
+         };
+ 
+@@ -387,6 +388,12 @@ int input_init(input_parameter *param, int id)
+             DBG("case 42\n");
+             dv_timings = 1;
+             break;
++        #ifndef NO_LIBJPEG
++        case 43:
++            DBG("case 43\n");
++            format = V4L2_PIX_FMT_YUV420;
++            break;
++        #endif
+        default:
+            DBG("default case\n");
+            help();
+@@ -422,9 +429,12 @@ int input_init(input_parameter *param, int id)
+             case V4L2_PIX_FMT_UYVY:
+                 fmtString = "UYVY";
+                 break;
++            case V4L2_PIX_FMT_YUV420:
++                fmtString = "YU12";
++                break;
+             case V4L2_PIX_FMT_RGB24:
+                 fmtString = "RGB24";
+-		break;
++		        break;
+             case V4L2_PIX_FMT_RGB565:
+                 fmtString = "RGB565";
+                 break;
+@@ -544,6 +554,7 @@ void help(void)
+     " [-t | --tvnorm ] ......: set TV-Norm pal, ntsc or secam\n" \
+     " [-u | --uyvy ] ........: Use UYVY format, default: MJPEG (uses more cpu power)\n" \
+     " [-y | --yuv  ] ........: Use YUV format, default: MJPEG (uses more cpu power)\n" \
++    " [--yu12 ] .............: Use YU12 format, default: MJPEG (uses more cpu power)\n" \
+     " [-fourcc ] ............: Use FOURCC codec 'argopt', \n" \
+     "                          currently supported codecs are: RGB24, RGBP \n" \
+     " [-timestamp ]..........: Populate frame timestamp with system time\n" \
+@@ -781,6 +792,7 @@ void *cam_thread(void *arg)
+             #ifndef NO_LIBJPEG
+             if ((pcontext->videoIn->formatIn == V4L2_PIX_FMT_YUYV) ||
+             (pcontext->videoIn->formatIn == V4L2_PIX_FMT_UYVY) ||
++            (pcontext->videoIn->formatIn == V4L2_PIX_FMT_YUV420) ||
+             (pcontext->videoIn->formatIn == V4L2_PIX_FMT_RGB24) ||
+             (pcontext->videoIn->formatIn == V4L2_PIX_FMT_RGB565) ) {
+                 DBG("compressing frame from input: %d\n", (int)pcontext->id);
+diff --git a/plugins/input_uvc/jpeg_utils.c b/plugins/input_uvc/jpeg_utils.c
+index 78e889d..36b23a8 100644
+--- a/plugins/input_uvc/jpeg_utils.c
++++ b/plugins/input_uvc/jpeg_utils.c
+@@ -197,6 +197,47 @@ int compress_image_to_jpeg(struct vdIn *vd, unsigned char *buffer, int size, int
+                 }
+             }
+ 
++            row_pointer[0] = line_buffer;
++            jpeg_write_scanlines(&cinfo, row_pointer, 1);
++        }
++    } else if (vd->formatIn == V4L2_PIX_FMT_YUV420) {
++        // YU12 format:: https://www.kernel.org/doc/html/v4.9/media/uapi/v4l/pixfmt-yuv420.html
++
++        // all Y's are first
++        unsigned char* yplane = yuyv;
++
++        int uvdiv = 2;
++        int uvheight = vd->height / uvdiv;
++        int uvwidth = vd->width / uvdiv;
++
++        // all U's are next
++        unsigned char* uplane = yplane + vd->height * vd->width;
++
++        // finally, all V's are next
++        unsigned char* vplane = uplane + uvheight * uvwidth;
++
++        int y = 0;
++        while(cinfo.next_scanline < vd->height) {
++            int x;
++            unsigned char *ptr = line_buffer;
++
++            for(x = 0; x < vd->width; x++) {
++                int r, g, b;
++                int yc, uc, vc;
++
++                yc = yplane[x + y * vd->width] << 8;
++                uc = uplane[x / uvdiv + y / uvdiv * uvwidth] - 128;
++                vc = vplane[x / uvdiv + y / uvdiv * uvwidth] - 128;
++
++                r = (yc + (359 * vc)) >> 8;
++                g = (yc - (88 * uc) - (183 * vc)) >> 8;
++                b = (yc + (454 * uc)) >> 8;
++
++                *(ptr++) = (r > 255) ? 255 : ((r < 0) ? 0 : r);
++                *(ptr++) = (g > 255) ? 255 : ((g < 0) ? 0 : g);
++                *(ptr++) = (b > 255) ? 255 : ((b < 0) ? 0 : b);
++            }
++            y++;
+             row_pointer[0] = line_buffer;
+             jpeg_write_scanlines(&cinfo, row_pointer, 1);
+         }
+diff --git a/plugins/input_uvc/v4l2uvc.c b/plugins/input_uvc/v4l2uvc.c
+index ee99388..337da89 100644
+--- a/plugins/input_uvc/v4l2uvc.c
++++ b/plugins/input_uvc/v4l2uvc.c
+@@ -248,6 +248,7 @@ static int init_framebuffer(struct vdIn *vd) {
+         case V4L2_PIX_FMT_RGB565: // buffer allocation for non varies on frame size formats
+         case V4L2_PIX_FMT_YUYV:
+         case V4L2_PIX_FMT_UYVY:
++        case V4L2_PIX_FMT_YUV420:
+             vd->framebuffer =
+                 (unsigned char *) calloc(1, (size_t) vd->framesizeIn);
+             break;
+@@ -372,6 +373,10 @@ static int init_v4l2(struct vdIn *vd)
+ 	fprintf(stderr, "    ... Falling back to UYVY mode (consider using -uyvy option). Note that this requires much more CPU power\n");
+ 	vd->formatIn = vd->fmt.fmt.pix.pixelformat;
+         break;
++      case V4L2_PIX_FMT_YUV420:
++	fprintf(stderr, "    ... Falling back to YU12 mode (consider using -yu12 option). Note that this requires much more CPU power\n");
++	vd->formatIn = vd->fmt.fmt.pix.pixelformat;
++        break;
+       case V4L2_PIX_FMT_RGB24:
+ 	fprintf(stderr, "    ... Falling back to RGB24 mode (consider using -fourcc RGB24 option). Note that this requires much more CPU power\n");
+ 	vd->formatIn = vd->fmt.fmt.pix.pixelformat;
+@@ -663,6 +668,7 @@ int uvcGrab(struct vdIn *vd)
+     case V4L2_PIX_FMT_RGB565:
+     case V4L2_PIX_FMT_YUYV:
+     case V4L2_PIX_FMT_UYVY:
++    case V4L2_PIX_FMT_YUV420:
+         if(vd->buf.bytesused > vd->framesizeIn) {
+             memcpy(vd->framebuffer, vd->mem[vd->buf.index], (size_t) vd->framesizeIn);
+         } else {
+-- 
+2.32.0
+

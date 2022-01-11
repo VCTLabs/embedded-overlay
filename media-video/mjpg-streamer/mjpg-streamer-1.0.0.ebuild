@@ -51,6 +51,7 @@ DEPEND="${RDEPEND}
 PATCHES=(
 	"${FILESDIR}/${PN}-cmake-cleanup.patch"
 	"${FILESDIR}/${PN}-opencv-arg-enable.patch"
+	"${FILESDIR}/${PN}-yu12-support.patch"
 )
 
 S="${WORKDIR}/${P}/${PN}-experimental"
@@ -66,7 +67,7 @@ src_prepare() {
 			CMakeLists.txt || die
 	done
 
-	sed -e "s|@LIBDIR@|$(get_libdir)/${PN}/$(get_libdir)|g" \
+	sed -e "s|@LIBDIR@|$(get_libdir)/${PN}|g" \
 		"${FILESDIR}/${PN}.initd" > ${PN}.initd || die
 
 	cmake_src_prepare
@@ -79,6 +80,7 @@ src_configure() {
 		-DENABLE_HTTP_MANAGEMENT=$(usex http-management)
 		-DENABLE_INPUT_OPENCV=$(usex input-opencv)
 		-DBUILD_TESTING=$(usex test)
+		-DMJPG_STREAMER_PLUGIN_INSTALL_PATH="${EPREFIX}/usr/$(get_libdir)/mjpg-streamer"
 	)
 
 	cmake_src_configure
