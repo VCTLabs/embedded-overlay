@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -37,7 +37,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DBUILD_STATIC_LIBS=no
+		-DBUILD_STATIC_LIBS=$(usex static-libs)
 		-DRIPC_BUILD_TESTING=$(usex test)
 		-DRIPC_DISABLE_SOCK_TESTS=$(usex test)
 	)
