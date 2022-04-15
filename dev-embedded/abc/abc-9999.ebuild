@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
@@ -12,7 +12,7 @@ inherit cmake flag-o-matic llvm toolchain-funcs
 # sadly no upstream tags or releases from gh
 if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/${PN}.git"
-	EGIT_BRANCH="codeql"
+	EGIT_BRANCH="master"
 	#EGIT_COMMIT="e1269f78473a8fd0bf1aefe032f2c9637f2ec97b"
 	inherit git-r3
 else
@@ -38,23 +38,25 @@ RESTRICT="!test? ( test )"
 
 LLVM_DEPEND="
 	<sys-devel/llvm-$(( LLVM_MAX_SLOT + 1 )):=
-	lto? ( sys-devel/lld )
+	lto? ( <sys-devel/lld-$(( LLVM_MAX_SLOT + 1 )):= )
 "
 
 DEPEND="
 	clang? ( ${LLVM_DEPEND} )
 	sys-libs/readline:=
 	sys-libs/ncurses:=
+	sys-libs/zlib:=
 "
 
 BDEPEND="
-	clang? ( >=sys-devel/clang-3.5 )
-	!clang? ( >=sys-devel/gcc-4.7 )
+	clang? ( >=sys-devel/clang-9.0 )
+	!clang? ( >=sys-devel/gcc-8.5.0 )
 "
 
 RDEPEND="${DEPEND}
 	sci-visualization/gnuplot
 	media-gfx/graphviz
+	media-libs/libpng
 	app-text/gv
 "
 
@@ -93,15 +95,20 @@ src_configure() {
 
 	export HOST_CC="$(tc-getBUILD_CC)"
 	export HOST_CXX="$(tc-getBUILD_CXX)"
-	tc-export CC CXX LD AR NM OBJDUMP RANLIB PKG_CONFIG
+	tc-export CC CXX LD AR NM OBJDUMP RANLIB
 
 	local mycmakeargs=(
-		-DABC_USE_NAMESPACE=$(usex cpp xxx)
 		-DBUILD_TESTING=$(usex test)
 		-DABC_SKIP_EXE=$(usex !tools)
 		-DABC_ENABLE_LTO=$(usex lto)
+		-DABC_USE_PIC=1
+		-DABC_USE_SONAME=1
 		-DBUILD_SHARED_LIBS=ON
 	)
+
+	if use cpp; then
+		mycmakeargs+=( -DABC_USE_NAMESPACE=xxx )
+	fi
 
 	cmake_src_configure
 }
