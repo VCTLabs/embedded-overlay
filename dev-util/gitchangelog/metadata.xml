@@ -6,7 +6,8 @@
 	<name>Steve Arnold</name>
 </maintainer>
 <longdescription lang="en">
-	Creates a changelog from git log history
+	Create a fancy changelog from git log history (in rst or md) and
+	customize your config with Python callables and regex.
 </longdescription>
 <upstream>
 	<remote-id type="github">sarnold/gitchangelog</remote-id>
