@@ -8,14 +8,14 @@ DISTUTILS_USE_SETUPTOOLS="pyproject.toml"
 inherit distutils-r1
 
 DESCRIPTION="Python implementation of Mustache"
-HOMEPAGE="https://github.com/sarnold/pystache"
+HOMEPAGE="https://github.com/PennyDreadfulMTG/pystache"
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/sarnold/pystache.git"
+	EGIT_REPO_URI="https://github.com/PennyDreadfulMTG/pystache.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
