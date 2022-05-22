@@ -13,9 +13,25 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+IUSE="test"
 
-RDEPEND="
+RDEPEND="${PYTHON_DEPS}
 	dev-python/lxml[${PYTHON_USEDEP}]
 	dev-python/future[${PYTHON_USEDEP}]"
 
+BDEPEND="${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]
+	test? (
+		dev-python/pytest[${PYTHON_USEDEP}]
+		dev-python/pytest-mock[${PYTHON_USEDEP}]
+		dev-python/numpy[${PYTHON_USEDEP}] )"
+
+DOCS=( README.md )
+
+#RESTRICT="!test? ( test )"
 RESTRICT="test"
+
+python_test() {
+	distutils_install_for_testing
+	${PYTHON} -m pytest  || die "tests failed under ${EPYTHON}"
+}
