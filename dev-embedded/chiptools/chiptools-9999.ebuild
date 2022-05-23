@@ -15,7 +15,7 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_BRANCH="develop"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/andreasvc/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/sarnold/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
