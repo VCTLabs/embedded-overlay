@@ -2,10 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="project">
-		<email>python@gentoo.org</email>
-		<name>Python</name>
+		<email>embedded@gentoo.org</email>
+		<name>Embedded Gentoo</name>
 	</maintainer>
-	<stabilize-allarches/>
 	<upstream>
 		<remote-id type="pypi">pymavlink</remote-id>
 	</upstream>
