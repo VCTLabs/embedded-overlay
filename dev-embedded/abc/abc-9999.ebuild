@@ -4,7 +4,7 @@
 EAPI="7"
 
 CMAKE_VERBOSE=ON
-LLVM_VALID_SLOTS=( 12 11 10 )
+LLVM_VALID_SLOTS=( 13 12 11 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
 inherit cmake flag-o-matic llvm toolchain-funcs

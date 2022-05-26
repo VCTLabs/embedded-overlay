@@ -3,7 +3,8 @@
 
 EAPI=7
 
-LLVM_MAX_SLOT=11
+LLVM_VALID_SLOTS=( 13 12 11 )
+LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
 inherit flag-o-matic llvm systemd toolchain-funcs user
 

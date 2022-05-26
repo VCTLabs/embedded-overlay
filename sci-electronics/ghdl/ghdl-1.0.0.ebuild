@@ -3,6 +3,9 @@
 
 EAPI=7
 
+LLVM_VALID_SLOTS=( 13 12 11 )
+LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
+
 ADA_COMPAT=( gnat_202{0..1} )
 inherit ada llvm
 
@@ -16,8 +19,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 RESTRICT="!test? ( test )"
-
-LLVM_MAX_SLOT=11
 
 RDEPEND="${ADA_DEPS}
 	<sys-devel/llvm-$((${LLVM_MAX_SLOT} + 1)):=

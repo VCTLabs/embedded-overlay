@@ -8,4 +8,7 @@
 	<upstream>
 		<remote-id type="pypi">pymavlink</remote-id>
 	</upstream>
+	<use>
+		<flag name="regen">Regenerate new mavlink bindings</flag>
+	</use>
 </pkgmetadata>
