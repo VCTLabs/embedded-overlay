@@ -9,6 +9,6 @@
 	Python daemonizer for Unix, Linux and OS X
 </longdescription>
 <upstream>
-	<remote-id type="github">sarnold/python-daemon</remote-id>
+	<remote-id type="github">sarnold/python-daemonizer</remote-id>
 </upstream>
 </pkgmetadata>
