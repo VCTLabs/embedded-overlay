@@ -23,13 +23,9 @@ fi
 
 LICENSE="CC-BY-SA-3.0"
 SLOT="0"
-IUSE="eventlet gevent"
 
-RDEPEND="${PYTHON_DEPS}
-	eventlet? ( dev-python/eventlet[${PYTHON_USEDEP}] )
-	gevent? ( dev-python/gevent[${PYTHON_USEDEP}] )
-"
-
+# optional rdeps include gevent and eventlet. they may or may not still be
+# useful/working; interfaces have been updated but are still untested.
 BDEPEND="${PYTHON_DEPS}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/versioningit[${PYTHON_USEDEP}]
