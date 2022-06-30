@@ -3,11 +3,9 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..9} )
 PYTHON_REQ_USE="sqlite"
-#DISTUTILS_SINGLE_IMPL=1
 
-DISTUTILS_USE_SETUPTOOLS=no
 inherit distutils-r1 linux-info systemd
 
 DESCRIPTION="Python package for fpnd network daemon"
@@ -38,7 +36,7 @@ RDEPEND="
 
 DEPEND="${PYTHON_DEPS}
 	dev-python/appdirs[${PYTHON_USEDEP}]
-	dev-python/daemon[${PYTHON_USEDEP}]
+	dev-python/daemonizer[${PYTHON_USEDEP}]
 	dev-python/datrie[${PYTHON_USEDEP}]
 	dev-python/schedule[${PYTHON_USEDEP}]
 	dev-python/diskcache[${PYTHON_USEDEP}]
