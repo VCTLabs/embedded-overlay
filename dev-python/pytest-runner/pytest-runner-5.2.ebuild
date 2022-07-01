@@ -12,7 +12,7 @@ HOMEPAGE="https://pypi.org/project/pytest-runner/ https://github.com/pytest-dev/
 SRC_URI="mirror://pypi/p/${PN}/${P}.tar.gz"
 
 LICENSE="MIT"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
+KEYWORDS="amd64 ~arm ~arm64 ~ppc64 ~riscv x86"
 SLOT="0"
 
 BDEPEND="
