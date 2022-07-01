@@ -4,7 +4,7 @@
 EAPI="8"
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( pypy3 python3_{8..10} )
+PYTHON_COMPAT=( pypy3 python3_{8..9} )
 inherit distutils-r1
 
 DESCRIPTION="Adds support for tests during installation of setup.py files"
