@@ -1,8 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI="8"
 
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( pypy3 python3_{8..10} )
 inherit distutils-r1
 
@@ -11,26 +12,19 @@ HOMEPAGE="https://pypi.org/project/pytest-runner/ https://github.com/pytest-dev/
 SRC_URI="mirror://pypi/p/${PN}/${P}.tar.gz"
 
 LICENSE="MIT"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
 SLOT="0"
-IUSE="test"
 
-RDEPEND="dev-python/pytest[${PYTHON_USEDEP}]"
-DEPEND="
-	>=dev-python/setuptools-40.6.3[${PYTHON_USEDEP}]
+BDEPEND="
 	dev-python/setuptools_scm[${PYTHON_USEDEP}]
-	doc? (
-		dev-python/jaraco-packaging[${PYTHON_USEDEP}]
-		dev-python/rst-linker[${PYTHON_USEDEP}]
-	)
-	test? ( ${RDEPEND} )
 "
 
-distutils_enable_sphinx docs
+distutils_enable_sphinx docs \
+	dev-python/jaraco-packaging \
+	dev-python/rst-linker
 
-# Tests require network access to download packages
+distutils_enable_tests pytest
+
+# Tests require network access and unpackaged deps
+# TODO unbreak tests
 RESTRICT="test"
-
-python_test() {
-	esetup.py pytest
-}
