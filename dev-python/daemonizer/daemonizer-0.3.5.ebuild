@@ -1,7 +1,7 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DISTUTILS_USE_SETUPTOOLS=pyproject.toml
 PYTHON_COMPAT=( python3_{8..10} )
@@ -18,7 +18,6 @@ else
 	SRC_URI="https://github.com/sarnold/python-${PN}/releases/download/${PV}/${P}.tar.gz"
 	#SRC_URI="https://github.com/sarnold/python-${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
-	RESTRICT="test"  # no tests in sdist
 fi
 
 LICENSE="CC-BY-SA-3.0"
@@ -27,11 +26,15 @@ SLOT="0"
 # optional rdeps include gevent and eventlet. they may or may not still be
 # useful/working; interfaces have been updated but are still untested.
 BDEPEND="${PYTHON_DEPS}
-	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/versioningit[${PYTHON_USEDEP}]
 "
 
+distutils_enable_tests pytest
+distutils_enable_sphinx \
+	docs/source \
+	dev-python/sphinx_rtd_theme \
+	dev-python/sphinxcontrib-apidoc
+
 python_test() {
-	"${EPYTHON}" -m pytest -v test/test_daemon.py \
-		|| die "Testing failed with ${EPYTHON}"
+	"${EPYTHON}" -m pytest -v test/ || die "Testing failed with ${EPYTHON}"
 }
