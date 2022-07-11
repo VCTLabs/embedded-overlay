@@ -14,7 +14,6 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/freepn/ztcli-async.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/freepn/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
@@ -22,7 +21,6 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE=""
 
 RDEPEND="${PYTHON_DEPS}"
 
