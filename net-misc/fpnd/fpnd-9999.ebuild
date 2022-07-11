@@ -3,9 +3,8 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{7..10} )
 PYTHON_REQ_USE="sqlite"
-#DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 linux-info systemd
 

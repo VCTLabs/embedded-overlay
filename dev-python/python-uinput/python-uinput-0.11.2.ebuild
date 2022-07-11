@@ -1,9 +1,10 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=(python3_{6..9})
+DISTUTILS_USE_SETUPTOOLS=bdepend
+PYTHON_COMPAT=(python3_{8..10})
 
 inherit distutils-r1
 
@@ -13,11 +14,10 @@ HOMEPAGE="http://tjjr.fi/sw/python-uinput/"
 if [[ ${PV} = 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/tuomasjjrasanen/python-uinput"
 	EGIT_BRANCH="master"
-	KEYWORDS=""
 	inherit git-r3
 else
 	SRC_URI="https://github.com/tuomasjjrasanen/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
 LICENSE="GPL-3"

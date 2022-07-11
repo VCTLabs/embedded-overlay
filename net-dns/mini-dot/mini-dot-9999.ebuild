@@ -6,7 +6,7 @@ EAPI=7
 MY_PN="tcp_only_forwarder"
 MY_P="${MY_PN}-${PV}"
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 inherit python-single-r1 systemd
 
 DESCRIPTION="Lightweight TCP-only DNS forwarder with DoT support"

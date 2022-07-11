@@ -1,8 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
-PYTHON_COMPAT=( python3_{6..9} )
+EAPI=8
+PYTHON_COMPAT=( python3_{8..9} )
+DISTUTILS_USE_SETUPTOOLS=no
 
 inherit distutils-r1
 
@@ -13,15 +14,14 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/ansible-assertive"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
-	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.gh.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE=""
+IUSE="examples"
 
 DEPEND="app-admin/ansible[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
@@ -35,7 +35,7 @@ src_compile() {
 }
 
 python_install() {
-	python_export PYTHON_SITEDIR
+	#python_export PYTHON_SITEDIR
 
 	ansible_shared="/usr/share/ansible"
 	ansible_plugins="${ansible_shared}/plugins"
@@ -44,6 +44,15 @@ python_install() {
 	doins callback_plugins/assertive.py
 	insinto "${ansible_plugins}/action"
 	doins action_plugins/assert.py
+}
+
+python_install_all() {
+	if use examples; then
+		docinto examples
+		dodoc -r examples/.
+		docompress -x /usr/share/doc/${PF}/examples
+	fi
+	distutils-r1_python_install_all
 }
 
 pkg_postinst() {

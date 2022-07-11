@@ -3,7 +3,7 @@
 
 EAPI=7
 CMAKE_MAKEFILE_GENERATOR="ninja"
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 DISTUTILS_USE_SETUPTOOLS=bdepend
 
 inherit distutils-r1 cmake
@@ -18,7 +18,6 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/${MY_PN}.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/andreasvc/${MY_PN}/archive/v${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"

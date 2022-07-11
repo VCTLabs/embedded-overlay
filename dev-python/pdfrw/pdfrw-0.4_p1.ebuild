@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
@@ -19,9 +19,9 @@ if [[ ${PV} = 9999* ]]; then
 else
 	MY_PV="${PV/_p/-}"
 	MY_P="${PN}-${MY_PV}"
-	SRC_URI="https://github.com/sarnold/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz
+	SRC_URI="https://github.com/sarnold/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.gh.tar.gz
 		test? ( https://github.com/pmaupin/static_pdfs/archive/${PDFS_COMMIT}.tar.gz
-			-> pdfrw-static_pdfs-${PDFS_COMMIT}.tar.gz )"
+			-> pdfrw-static_pdfs-${PDFS_COMMIT}.gh.tar.gz )"
 	KEYWORDS="~alpha amd64 arm ~arm64 ~hppa ppc ppc64 sparc x86"
 	S="${WORKDIR}/${MY_P}"
 fi
