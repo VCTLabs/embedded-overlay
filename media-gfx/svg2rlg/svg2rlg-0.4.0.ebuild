@@ -3,7 +3,7 @@
 
 EAPI=7
 PYTHON_COMPAT=( python3_{8..10} )
-DISTUTILS_USE_SETUPTOOLS=rdepend
+DISTUTILS_USE_SETUPTOOLS=pyproject.toml
 
 inherit distutils-r1
 
@@ -14,7 +14,6 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/svg2rlg.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
@@ -22,18 +21,14 @@ fi
 
 LICENSE="BSD"
 SLOT="0"
-IUSE="test"
 
 RDEPEND="${PYTHON_DEPS}"
 
 DEPEND="${PYTHON_DEPS}
 	dev-python/reportlab[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	test? (
-		dev-python/nose[${PYTHON_USEDEP}] )
 "
 
-RESTRICT="!test? ( test )"
+distutils_enable_tests nose
 
 python_test() {
 	nosetests -sx test_svg2rlg.py || die "Test failed with ${EPYTHON}"

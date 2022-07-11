@@ -16,7 +16,6 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/pe2mbs/pyforwarder.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"

@@ -13,7 +13,6 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/svg2rlg.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="mirror://pypi/${P:0:1}/${PN}/${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
@@ -30,3 +29,5 @@ DEPEND="${PYTHON_DEPS}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? ( dev-python/pytest[${PYTHON_USEDEP}] )
 "
+
+RESTRICT="!test? ( test )"

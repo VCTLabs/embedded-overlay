@@ -14,10 +14,9 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/deeplook/svglib.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	MY_PV="${PV//_beta/b}"
-	SRC_URI="https://github.com/deeplook/${PN}/archive/v${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
+	SRC_URI="https://github.com/deeplook/${PN}/archive/v${MY_PV}.tar.gz -> ${PN}-${MY_PV}.gh.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 

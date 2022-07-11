@@ -15,7 +15,6 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/freepn/ZeroTierOne.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/zerotier/ZeroTierOne/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="amd64 arm ~arm64 x86"

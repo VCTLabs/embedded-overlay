@@ -52,6 +52,8 @@ DEPEND="${PYTHON_DEPS}
 #	dev-python/pytest-flake8
 #	dev-python/tox
 
+RESTRICT="!test? ( test )"
+
 DOCS=(
 	README.rst
 	README_DNS_privacy.rst
