@@ -15,16 +15,14 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_BRANCH="master"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
+	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${PN}-${PV}.gh.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
 LICENSE="BSD"
 SLOT="0"
 
-RDEPEND="${PYTHON_DEPS}"
-
-DEPEND="${PYTHON_DEPS}
+BDEPEND="${PYTHON_DEPS}
 	dev-python/reportlab[${PYTHON_USEDEP}]
 "
 
