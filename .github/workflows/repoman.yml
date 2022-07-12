@@ -7,13 +7,11 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup master gentoo repository
-      run: |
-        ./.github/setup-master-gentoo.sh
-    - name: Setup and run Repoman
-      run: |
-        ./.github/setup-and-run-repoman.sh
+    repoman:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: lucianposton/repoman-ebuild-qa-action@v1
+              continue-on-error: true
+              with:
+                portage_version: latest
