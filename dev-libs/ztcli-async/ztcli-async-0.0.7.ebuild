@@ -27,3 +27,5 @@ BDEPEND="
 	dev-python/async_timeout[${PYTHON_USEDEP}]
 	dev-python/aiohttp[${PYTHON_USEDEP}]
 "
+
+RESTRICT="test"
