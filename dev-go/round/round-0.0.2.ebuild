@@ -6,9 +6,9 @@ inherit go-module
 
 DESCRIPTION="A command-line tool for rounding images"
 HOMEPAGE="https://github.com/mingrammer/round"
-SRC_URI="https://github.com/mingrammer/round/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/mingrammer/round/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
-LICENSE="MPL-2.0"
+LICENSE="MIT"
 SLOT="0/${PVR}"
 KEYWORDS="amd64"
 
