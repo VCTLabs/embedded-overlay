@@ -1,0 +1,12 @@
+--- a/setup.cfg.orig	2022-08-18 14:48:02.179375365 -0700
++++ b/setup.cfg	2022-08-18 14:38:10.327670755 -0700
+@@ -80,9 +80,6 @@
+ 
+ max-line-length = 96
+ 
+-[tool:pytest]
+-flake8-max-line-length = 96
+-
+ [egg_info]
+ tag_build =
+ tag_date = 0

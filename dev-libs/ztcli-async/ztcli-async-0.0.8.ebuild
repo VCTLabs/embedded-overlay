@@ -31,6 +31,8 @@ BDEPEND="${PYTHON_DEPS}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 "
 
+PATCHES=( "${FILESDIR}/${P}-remove-spurious-pytest-settings.patch" )
+
 DOCS=( README.rst )
 
 RESTRICT="!test? ( test )"
