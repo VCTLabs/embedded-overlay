@@ -30,6 +30,7 @@ HOMEPAGE="https://people.eecs.berkeley.edu/~alanmi/abc/"
 LICENSE="MIT"
 SLOT="0"
 IUSE="+cpp debug static-libs test"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	sys-libs/readline:=

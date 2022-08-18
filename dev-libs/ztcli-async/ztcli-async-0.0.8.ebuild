@@ -22,7 +22,7 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="doc"
+IUSE="doc test"
 
 BDEPEND="${PYTHON_DEPS}
 	dev-python/async_timeout[${PYTHON_USEDEP}]

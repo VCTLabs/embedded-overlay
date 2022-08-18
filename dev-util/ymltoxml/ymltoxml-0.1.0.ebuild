@@ -9,7 +9,10 @@ PYTHON_COMPAT=( python3_{8..10} )
 inherit distutils-r1
 
 DESCRIPTION="Convert between XML files and YAML files."
-HOMEPAGE="https://github.com/sarnold/ymltoxml"
+HOMEPAGE="
+	https://sarnold.github.io/ymltoxml/
+	https://github.com/sarnold/ymltoxml
+"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/ymltoxml.git"
@@ -22,8 +25,8 @@ fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
+RESTRICT="test"  # no tests :(
 IUSE="doc"
-RESTRICT="test"
 
 BDEPEND="${PYTHON_DEPS}
 	dev-python/xmltodict[${PYTHON_USEDEP}]
@@ -34,8 +37,6 @@ BDEPEND="${PYTHON_DEPS}
 "
 
 DOCS=( README.rst )
-
-RESTRICT="test"
 
 distutils_enable_sphinx \
 	docs/source \
