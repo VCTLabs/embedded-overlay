@@ -25,7 +25,7 @@ SLOT="0"
 IUSE="doc test"
 
 BDEPEND="${PYTHON_DEPS}
-	dev-python/async_timeout[${PYTHON_USEDEP}]
+	dev-python/async-timeout[${PYTHON_USEDEP}]
 	dev-python/aiohttp[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
 "
@@ -33,6 +33,8 @@ BDEPEND="${PYTHON_DEPS}
 DOCS=( README.rst )
 
 RESTRICT="!test? ( test )"
+
+distutils_enable_tests pytest
 
 distutils_enable_sphinx \
 	docs/source \
