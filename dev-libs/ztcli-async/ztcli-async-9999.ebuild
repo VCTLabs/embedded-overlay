@@ -25,6 +25,7 @@ SLOT="0"
 IUSE="doc test"
 
 BDEPEND="${PYTHON_DEPS}
+	dev-python/iniconfig[${PYTHON_USEDEP}]
 	dev-python/async-timeout[${PYTHON_USEDEP}]
 	dev-python/aiohttp[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
