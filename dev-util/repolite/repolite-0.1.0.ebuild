@@ -23,7 +23,6 @@ fi
 LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="doc"
-RESTRICT="test"
 
 BDEPEND="${PYTHON_DEPS}
 	dev-python/pyyaml[${PYTHON_USEDEP}]
