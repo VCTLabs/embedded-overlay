@@ -17,12 +17,13 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/sarnold/repolite/releases/download/${PV}/${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm64 ~ppc ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="doc"
+RESTRICT="test"  # no tests :(
 
 BDEPEND="${PYTHON_DEPS}
 	dev-python/pyyaml[${PYTHON_USEDEP}]
@@ -31,8 +32,6 @@ BDEPEND="${PYTHON_DEPS}
 "
 
 DOCS=( README.rst )
-
-RESTRICT="test"
 
 distutils_enable_sphinx \
 	docs/source \
