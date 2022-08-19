@@ -1,9 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
-PYTHON_COMPAT=( python3_{7..10} )
-DISTUTILS_USE_SETUPTOOLS="pyproject.toml"
+EAPI=8
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
@@ -23,16 +23,22 @@ LICENSE="MIT"
 SLOT="0"
 IUSE="test"
 
-BDEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	test? ( dev-python/pyyaml[${PYTHON_USEDEP}] )
+BDEPEND="
+	test? (
+		dev-python/pyyaml[${PYTHON_USEDEP}]
+		dev-python/iniconfig[${PYTHON_USEDEP}]
+	)
 "
-
-RDEPEND="${PYTHON_DEPS}"
 
 RESTRICT="!test? ( test )"
 
+PATCHES=( "${FILESDIR}/${P}-remove-cruft-from-doctesting.patch" )
+
+distutils_enable_tests pytest
+
 python_test() {
-	distutils_install_for_testing
-	pystache-test . || die "Test failed with ${EPYTHON}"
+	epytest --doctest-modules \
+		--doctest-glob='*.rst' \
+		--doctest-glob='*.py' \
+		.
 }

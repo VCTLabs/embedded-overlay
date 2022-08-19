@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
 
 inherit distutils-r1
 
@@ -22,7 +22,7 @@ fi
 LICENSE="BSD"
 SLOT="0"
 
-BDEPEND="${PYTHON_DEPS}
+RDEPEND="${PYTHON_DEPS}
 	dev-python/reportlab[${PYTHON_USEDEP}]
 "
 

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
@@ -24,10 +24,6 @@ fi
 
 LICENSE="AGPL-3"
 SLOT="0"
-
-BDEPEND="${PYTHON_DEPS}
-	app-arch/unzip
-"
 
 python_test() {
 	"${EPYTHON}" "${S}"/src/hexdump/hexdump.py --test \

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
@@ -28,11 +28,13 @@ SLOT="0"
 RESTRICT="test"  # no tests :(
 IUSE="doc"
 
-BDEPEND="${PYTHON_DEPS}
+RDEPEND="
 	dev-python/xmltodict[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/ruamel-yaml[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
+"
+BDEPEND="
 	dev-python/versioningit[${PYTHON_USEDEP}]
 "
 

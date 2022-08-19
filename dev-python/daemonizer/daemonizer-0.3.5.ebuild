@@ -3,13 +3,16 @@
 
 EAPI=8
 
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
 DESCRIPTION="Python daemonizer for Unix, Linux and OS X"
-HOMEPAGE="https://sarnold.github.io/python-daemonizer/"
+HOMEPAGE="
+	https://github.com/sarnold/python-daemonizer
+	https://sarnold.github.io/python-daemonizer/
+"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/python-${PN}.git"
@@ -25,11 +28,21 @@ SLOT="0"
 
 # optional rdeps include gevent and eventlet. they may or may not still be
 # useful/working; interfaces have been updated but are still untested.
-BDEPEND="${PYTHON_DEPS}
+BDEPEND="
 	dev-python/versioningit[${PYTHON_USEDEP}]
+        test? (
+		dev-python/iniconfig[${PYTHON_USEDEP}]
+	)
 "
 
+
+DOCS=( README.rst )
+
+#RESTRICT="!test? ( test )"
+RESTRICT="test"  # tests are timing-sensitive
+
 distutils_enable_tests pytest
+
 distutils_enable_sphinx \
 	docs/source \
 	dev-python/sphinx_rtd_theme \

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
@@ -24,11 +24,13 @@ LICENSE="MIT"
 SLOT="0"
 IUSE="doc test"
 
-BDEPEND="${PYTHON_DEPS}
+RDEPEND="
 	dev-python/iniconfig[${PYTHON_USEDEP}]
 	dev-python/async-timeout[${PYTHON_USEDEP}]
 	dev-python/aiohttp[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]
+"
+BDEPEND="
+	dev-python/versioningit[${PYTHON_USEDEP}]
 "
 
 DOCS=( README.rst )

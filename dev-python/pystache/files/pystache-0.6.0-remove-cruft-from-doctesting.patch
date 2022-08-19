@@ -1,0 +1,21 @@
+--- a/pystache/tests/doctesting.py.orig	2022-08-18 21:50:57.907446095 -0700
++++ b/pystache/tests/doctesting.py	2022-08-18 21:52:23.271208955 -0700
+@@ -11,16 +11,12 @@
+ import sys
+ import traceback
+ 
+-if sys.version_info >= (3,):
+-    # Then pull in modules needed for 2to3 conversion.  The modules
+-    # below are not necessarily available in older versions of Python.
+-    from lib2to3.main import main as lib2to3main  # new in Python 2.6?
+-    from shutil import copyfile
+-
+ from pystache.tests.common import TEXT_DOCTEST_PATHS
+ from pystache.tests.common import get_module_names
+ 
+ 
++# This module is now a stub due to py 3.10 warnings - 18 Aug 2022
++#
+ # This module follows the guidance documented here:
+ #
+ #   http://docs.python.org/library/doctest.html#unittest-api
