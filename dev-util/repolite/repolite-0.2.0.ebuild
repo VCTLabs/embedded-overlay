@@ -22,10 +22,12 @@ fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="doc"
+IUSE="doc lfs"
 RESTRICT="test"  # no tests :(
 
-RDEPEND="${PYTHON_DEPS}
+RDEPEND="
+	dev-vcs/git
+	lfs? ( dev-vcs/git-lfs )
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
 "

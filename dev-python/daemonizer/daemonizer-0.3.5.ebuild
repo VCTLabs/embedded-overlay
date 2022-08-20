@@ -19,7 +19,6 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/sarnold/python-${PN}/releases/download/${PV}/${P}.tar.gz"
-	#SRC_URI="https://github.com/sarnold/python-${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
@@ -35,10 +34,8 @@ BDEPEND="
 	)
 "
 
-
 DOCS=( README.rst )
 
-#RESTRICT="!test? ( test )"
 RESTRICT="test"  # tests are timing-sensitive
 
 distutils_enable_tests pytest
