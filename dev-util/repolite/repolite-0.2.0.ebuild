@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 
-inherit distutils-r1
+inherit distutils-r1 optfeature
 
 DESCRIPTION="Manage a small set of repository dependencies without git submodules."
 HOMEPAGE="https://github.com/sarnold/repolite"
@@ -17,17 +17,16 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/sarnold/repolite/releases/download/${PV}/${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="doc lfs"
+IUSE="doc"
 RESTRICT="test"  # no tests :(
 
 RDEPEND="
 	dev-vcs/git
-	lfs? ( dev-vcs/git-lfs )
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
 "
@@ -42,3 +41,7 @@ distutils_enable_sphinx \
 	dev-python/sphinx_rtd_theme \
 	dev-python/recommonmark \
 	dev-python/sphinxcontrib-apidoc
+
+pkg_postinst() {
+	optfeature "initialize repos with lfs files" dev-vcs/git-lfs
+}
