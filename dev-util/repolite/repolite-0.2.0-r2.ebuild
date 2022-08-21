@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1 optfeature
 
-DESCRIPTION="Manage a small set of repository dependencies without git submodules."
+DESCRIPTION="Light weight git repo dependency manager with per-project YAML configuration."
 HOMEPAGE="https://github.com/sarnold/repolite"
 
 if [[ ${PV} = 9999* ]]; then
@@ -26,13 +26,13 @@ IUSE="doc"
 RESTRICT="test"  # no tests :(
 
 RDEPEND="
-	dev-vcs/git
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
 "
-BDEPEND="
-	dev-python/versioningit[${PYTHON_USEDEP}]
+RDEPEND="${DEPEND}
+	dev-vcs/git
 "
+# needs versioningit if building from git repo source
 
 DOCS=( README.rst )
 
