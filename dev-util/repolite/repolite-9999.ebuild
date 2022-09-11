@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1 optfeature
 
@@ -28,16 +28,15 @@ RESTRICT="test"  # no tests :(
 RDEPEND="
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/munch[${PYTHON_USEDEP}]
-"
-RDEPEND="${DEPEND}
 	dev-vcs/git
 "
 # needs versioningit if building from git repo source
-BDEPEND="
-	$(python_gen_any_dep '
-		>=dev-python/versioningit-2.0.1[${PYTHON_USEDEP}]
-	')
-"
+if [[ ${PV} = 9999* ]]; then
+	BDEPEND="
+		$(python_gen_any_dep '
+			>=dev-python/versioningit-2.0.1[${PYTHON_USEDEP}]
+		')"
+fi
 
 DOCS=( README.rst )
 

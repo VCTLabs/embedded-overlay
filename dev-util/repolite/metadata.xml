@@ -7,7 +7,7 @@
 </maintainer>
 <longdescription lang="en">
 	Lightweight repository manager using yaml config files instead of xml
-	manifest or git submodules.
+	manifest or git submodules, with one or more configurations per project.
 </longdescription>
 <upstream>
 	<remote-id type="github">sarnold/repolite</remote-id>
