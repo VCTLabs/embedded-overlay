@@ -29,7 +29,7 @@ SLOT="0"
 # useful/working; interfaces have been updated but are still untested.
 BDEPEND="
 	dev-python/versioningit[${PYTHON_USEDEP}]
-        test? (
+	test? (
 		dev-python/iniconfig[${PYTHON_USEDEP}]
 	)
 "

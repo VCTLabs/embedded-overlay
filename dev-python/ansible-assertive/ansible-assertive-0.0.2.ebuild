@@ -1,9 +1,10 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=8
+EAPI=7
+
+DISTUTILS_USE_PEP517=no
 PYTHON_COMPAT=( python3_{8..10} )
-#DISTUTILS_USE_SETUPTOOLS=no
 
 inherit distutils-r1
 
@@ -16,27 +17,21 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.gh.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 fi
 
 LICENSE="GPL-3"
 SLOT="0"
 IUSE="examples"
 
-DEPEND="app-admin/ansible[${PYTHON_USEDEP}]"
+DEPEND=">=app-admin/ansible-4.5.0[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
 
 RESTRICT="test"
 
 DOCS=( README.md )
 
-src_compile() {
-	:
-}
-
 python_install() {
-	#python_export PYTHON_SITEDIR
-
 	ansible_shared="/usr/share/ansible"
 	ansible_plugins="${ansible_shared}/plugins"
 	einfo "Using plugin path ${ansible_plugin_path} ..."
@@ -44,6 +39,7 @@ python_install() {
 	doins callback_plugins/assertive.py
 	insinto "${ansible_plugins}/action"
 	doins action_plugins/assert.py
+	python_optimize
 }
 
 python_install_all() {

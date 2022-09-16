@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{7..10} )
+
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
@@ -15,13 +17,19 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/lowks/${PN}/archive/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~riscv ~x86"
 fi
 
 LICENSE="MIT"
 SLOT="0"
+IUSE="test"
+
+RESTRICT="!test? ( test )"
+
 DOCS=( README.rst CHANGELOG.txt )
 
+distutils_enable_tests pytest
+
 python_test() {
-	"${PYTHON}" -m doctest -v minimock.py || die "Test fail with ${EPYTHON}"
+	epytest --doctest-modules .
 }
