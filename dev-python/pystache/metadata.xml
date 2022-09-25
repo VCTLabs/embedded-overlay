@@ -6,9 +6,10 @@
 	<name>Steve Arnold</name>
 </maintainer>
 <longdescription lang="en">
-	Updated Python implementation of Mustache
+	Updated Python implementation of Mustache, a framework-agnostic and
+	logic-free templating system supporting both Markdown and rSt.
 </longdescription>
 <upstream>
-	<remote-id type="github">sarnold/pystache</remote-id>
+	<remote-id type="github">VCTLabs/pystache</remote-id>
 </upstream>
 </pkgmetadata>

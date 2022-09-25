@@ -7,15 +7,15 @@ PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
-DESCRIPTION="Python implementation of Mustache"
-HOMEPAGE="https://github.com/PennyDreadfulMTG/pystache"
+DESCRIPTION="Python implementation of Mustache templating framework."
+HOMEPAGE="https://github.com/VCTLabs/pystache"
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/PennyDreadfulMTG/pystache.git"
+	EGIT_REPO_URI="https://github.com/VCTLabs/pystache.git"
 	EGIT_BRANCH="master"
 	inherit git-r3
 else
-	SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+	SRC_URI="https://github.com/VCTLabs/pystache/releases/download/v${PV}/${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
@@ -31,8 +31,6 @@ BDEPEND="
 "
 
 RESTRICT="!test? ( test )"
-
-PATCHES=( "${FILESDIR}/${P}-remove-cruft-from-doctesting.patch" )
 
 distutils_enable_tests pytest
 
