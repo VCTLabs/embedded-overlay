@@ -1,0 +1,46 @@
+diff --git a/setup.cfg b/setup.cfg
+index 6a2404a..398468b 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -1,6 +1,6 @@
+ [metadata]
+ name = gitchangelog
+-version = attr: gitchangelog.gitchangelog.__version__
++version = attr: gitchangelog.__version__
+ author = Valentin Lab
+ author_email = valentin.lab@kalysto.org
+ description = generates a changelog file from a local git checkout
+diff --git a/src/gitchangelog/gitchangelog.py b/src/gitchangelog/gitchangelog.py
+index 142eb99..9eca54d 100755
+--- a/src/gitchangelog/gitchangelog.py
++++ b/src/gitchangelog/gitchangelog.py
+@@ -483,7 +483,7 @@ class Proc(Popen):
+ 
+ def cmd(command, env=None, shell=True):
+ 
+-    with Popen(
++    process = Popen(
+         command,
+         shell=shell,
+         stdin=PIPE,
+@@ -492,8 +492,10 @@ def cmd(command, env=None, shell=True):
+         close_fds=PLT_CFG['close_fds'],
+         env=env,
+         universal_newlines=False,
+-    ) as p:
+-        out, err = p.communicate()
++    )
++    with process as p:
++        out, err = p.communicate(timeout=10)
++    process.kill()
+ 
+     return (
+         out.decode(getattr(sys.stdout, "encoding", None) or _preferred_encoding),
+@@ -1095,6 +1097,7 @@ class GitRepos:
+         finally:
+             plog.stdout.close()
+             plog.stderr.close()
++            plog.kill()
+ 
+ 
+ def first_matching(section_regexps, string):  # pylint: disable=R1710
