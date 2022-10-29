@@ -6,9 +6,9 @@ EAPI=8
 MY_PV="${PV/_p/-}"
 MY_P="${PN}-${MY_PV}"
 
-CMAKE_MAKEFILE_GENERATOR="emake"
-PYTHON_COMPAT=( python3_{8..9} )
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+CMAKE_MAKEFILE_GENERATOR="ninja"
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1 cmake
 
