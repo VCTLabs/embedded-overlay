@@ -1,13 +1,14 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
-PYTHON_COMPAT=( python3_{7..10} )
-DISTUTULS_USE_SETUPTOOLS="pyproject.toml"
+EAPI=8
+
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
-DESCRIPTION="Creates a changelog from git log history"
+DESCRIPTION="Creates a nicely formatted changelog from git log history"
 HOMEPAGE="https://github.com/sarnold/gitchangelog"
 
 if [[ ${PV} = 9999* ]]; then
@@ -15,27 +16,42 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_BRANCH="master"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/sarnold/${PN}/releases/download/${PV}/${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
 LICENSE="BSD"
 SLOT="0"
-IUSE="test"
+IUSE="doc"
+RESTRICT="!test? ( test )"
 
-BDEPEND="${DEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	test? ( dev-python/nose[${PYTHON_USEDEP}]
-		dev-python/minimock[${PYTHON_USEDEP}] )
+BDEPEND="
+	test? ( dev-python/minimock[${PYTHON_USEDEP}] )
 "
 
-DEPEND="${PYTHON_DEPS}
+RDEPEND="
 	dev-python/pystache[${PYTHON_USEDEP}]
 	dev-python/mako[${PYTHON_USEDEP}]
 "
 
-RESTRICT="!test? ( test )"
+# needs versioningit if building from git repo source
+if [[ ${PV} = 9999* ]]; then
+	BDEPEND="
+		$(python_gen_any_dep '
+			>=dev-python/versioningit-2.0.0[${PYTHON_USEDEP}]
+		')"
+fi
+
+DOCS=( README.rst )
+
+distutils_enable_sphinx \
+	docs/source \
+	dev-python/sphinx_rtd_theme \
+	dev-python/recommonmark \
+	dev-python/sphinxcontrib-apidoc
+
+distutils_enable_tests pytest
 
 python_test() {
-	"${EPYTHON}" -m nose -sx . || die "Testing failed with ${EPYTHON}"
+	epytest --doctest-modules .
 }

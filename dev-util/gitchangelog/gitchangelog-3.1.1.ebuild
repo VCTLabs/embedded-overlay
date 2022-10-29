@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
-DESCRIPTION="Creates a changelog from git log history"
+DESCRIPTION="Creates a nicely formatted changelog from git log history"
 HOMEPAGE="https://github.com/sarnold/gitchangelog"
 
 if [[ ${PV} = 9999* ]]; then
@@ -43,8 +43,6 @@ if [[ ${PV} = 9999* ]]; then
 fi
 
 DOCS=( README.rst )
-
-PATCHES=( "${FILESDIR}/${P}-setup-and-proc-fixes.patch" )
 
 distutils_enable_sphinx \
 	docs/source \
