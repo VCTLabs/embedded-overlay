@@ -1,8 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
+#DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
@@ -13,7 +14,7 @@ HOMEPAGE="https://github.com/sarnold/pdfrw"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/pdfrw.git"
-	EGIT_BRANCH="main"
+	EGIT_BRANCH="master"
 	inherit git-r3
 	KEYWORDS=""
 else
@@ -33,7 +34,7 @@ IUSE="crypt test"
 BDEPEND="dev-python/pillow[${PYTHON_USEDEP}]
 	crypt? ( dev-python/pycryptodome[${PYTHON_USEDEP}] )
 	test? ( dev-python/reportlab[${PYTHON_USEDEP}]
-		>=dev-python/pytest-3.0.3[${PYTHON_USEDEP}] )"
+		dev-python/pytest-xdist[${PYTHON_USEDEP}] )"
 
 RESTRICT="!test? ( test )"
 
@@ -47,12 +48,8 @@ src_unpack() {
 	fi
 }
 
-src_prepare() {
-	# broken upstream (sensitive to reportlab version?)
-	#sed -e 's:test_rl1_platypus:_&:' \
-	#	-i tests/test_examples.py || die
-	eapply "${FILESDIR}/pdfrw-fix-import-collections-warning.patch"
-	use test && eapply "${FILESDIR}/pdfrw-static-fix-import-collections-warning.patch"
-
-	distutils-r1_src_prepare
+python_test() {
+	# speed tests up
+	local -x PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+	epytest -p xdist.plugin -n "$(makeopts_jobs)" . || die
 }
