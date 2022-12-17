@@ -6,7 +6,7 @@ EAPI=7
 LLVM_VALID_SLOTS=( 13 12 11 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
-inherit flag-o-matic llvm systemd toolchain-funcs user
+inherit flag-o-matic llvm systemd toolchain-funcs
 
 HOMEPAGE="https://www.zerotier.com/"
 DESCRIPTION="A software-based managed Ethernet switch for planet Earth"
@@ -17,7 +17,7 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/zerotier/ZeroTierOne/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 arm ~arm64 x86"
+	KEYWORDS="amd64 arm arm64 x86"
 fi
 
 LICENSE="BSL-1.1"
@@ -62,9 +62,6 @@ pkg_pretend() {
 }
 
 pkg_setup() {
-	enewgroup zerotier-one
-	enewuser zerotier-one -1 -1 /var/lib/zerotier-one zerotier-one
-
 	llvm_pkg_setup
 }
 
