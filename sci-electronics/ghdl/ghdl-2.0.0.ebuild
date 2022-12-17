@@ -3,10 +3,11 @@
 
 EAPI=7
 
-LLVM_VALID_SLOTS=( 14 13 )
+LLVM_VALID_SLOTS=( 15 14 13 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
 ADA_COMPAT=( gnat_2021 )
+# should have gcc_12_2_0
 inherit ada llvm
 
 DESCRIPTION="The GHDL VHDL simulator."
