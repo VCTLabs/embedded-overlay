@@ -1,0 +1,22 @@
+Description: Use strsignal() instead of sys_siglist to fix FTBFS with glibc 2.32.
+Author: Logan Rosen <logan@ubuntu.com>
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=979680
+Last-Update: 2021-01-10
+--- a/socket++/fork.cpp
++++ b/socket++/fork.cpp
+@@ -122,13 +122,13 @@
+ 
+   if (WIFSTOPPED (status))
+     cerr << "process " << pid << " gets "
+-      << SYS_SIGLIST [WSTOPSIG (status)] << endl;
++      << strsignal (WSTOPSIG (status)) << endl;
+   else if (WIFEXITED (status))
+     cerr << "process " << pid << " exited with status "
+       << WEXITSTATUS (status) << endl;
+   else if (WIFSIGNALED (status))
+     cerr << "process " << pid << " got "
+-      << SYS_SIGLIST [WTERMSIG (status)] << endl;
++      << strsignal (WTERMSIG (status)) << endl;
+ }
+ 
+ void Fork::ForkProcess::reaper_nohang (int signo)

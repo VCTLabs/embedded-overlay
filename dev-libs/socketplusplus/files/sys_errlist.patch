@@ -1,0 +1,16 @@
+Description: Fix compilation issue on HURD
+ http://www.gnu.org/software/hurd/hurd/porting/guidelines.html#sys_errlist_tt_vs_strerror_tt_
+Author: Mathieu Malaterre <malat@debian.org>
+Forwarded: no
+
+--- socket++-1.12.13.orig/socket++/sockstream.cpp
++++ socket++-1.12.13/socket++/sockstream.cpp
+@@ -127,7 +127,7 @@ using namespace std;
+ const char* sockerr::errstr () const
+ {
+ #ifndef WIN32
+-  return SYS_ERRLIST [err];
++  return strerror(err);
+ #else
+ 	return 0; // TODO
+ #endif

@@ -1,0 +1,39 @@
+From ef6848ef5a9e8eba5f925eea8bc1fc8bd79bdb1b Mon Sep 17 00:00:00 2001
+From: Stephen L Arnold <nerdboy@gentoo.org>
+Date: Fri, 16 Dec 2022 19:40:56 -0800
+Subject: [PATCH] update version and mv configure.in to configure.ac
+
+Signed-off-by: Stephen L Arnold <nerdboy@gentoo.org>
+---
+ configure.in => configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+ rename configure.in => configure.ac (99%)
+
+diff --git a/configure.in b/configure.ac
+similarity index 99%
+rename from configure.in
+rename to configure.ac
+index 88b2580..c5bc3c4 100644
+--- a/configure.in
++++ b/configure.ac
+@@ -3,7 +3,7 @@ dnl Use autoheader on this file to produce config.h.in
+ dnl Then use configure script to generate makefile from Makefile.in
+ 
+ dnl a distinct socket++ file
+-AC_INIT(configure.in)
++AC_INIT(configure.ac)
+ 
+ # Details: http://sources.redhat.com/autobook/autobook/autobook_91.html
+ # +1 : ? : +1  == new interface that does not break old one
+@@ -14,7 +14,7 @@ AC_INIT(configure.in)
+ # CURRENT : REVISION : AGE
+ LIBSOCKET_SO_VERSION=1:2:0
+ 
+-SOCKET_VERSION=1.12.12
++SOCKET_VERSION=1.12.13
+ AC_SUBST(SOCKET_VERSION)
+ AC_SUBST(LIBSOCKET_SO_VERSION)
+ 
+-- 
+2.32.0
+
