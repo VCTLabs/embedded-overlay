@@ -27,9 +27,9 @@ BDEPEND="doc? ( sys-apps/texinfo )"
 DOCS=( README README2 README3 )
 
 PATCHES=(
-	"${FILESDIR}/sys_errlist.patch"
-	"${FILESDIR}/glibc-2.32.patch"
-	"${FILESDIR}/configure-in-fix.patch"
+	"${FILESDIR}/${P}-sys_errlist.patch"
+	"${FILESDIR}/${P}-glibc-2.32.patch"
+	"${FILESDIR}/${P}-configure-in-fix.patch"
 )
 
 RESTRICT="test"
