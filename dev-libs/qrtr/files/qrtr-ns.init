@@ -1,0 +1,14 @@
+#!/sbin/openrc-run
+# Copyright 1999-2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+description="QIPCRTR Name Service"
+pidfile="/run/${SVCNAME}.pid"
+command="/usr/bin/qrtr-ns"
+command_args="-f 1"
+command_background=true
+
+depend() {
+    before pd-mapper
+    use logger
+}
