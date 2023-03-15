@@ -5,12 +5,12 @@ EAPI=7
 
 inherit toolchain-funcs
 
-DESCRIPTION="Qualcomm Protection Domain mapper."
-HOMEPAGE="https://github.com/andersson/pd-mapper"
+DESCRIPTION="Userspace reference for net/qrtr in the Linux kernel."
+HOMEPAGE="https://github.com/andersson/qmic"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/andersson/pd-mapper.git"
+	EGIT_REPO_URI="https://github.com/andersson/qmic.git"
 else
 	SRC_URI="https://github.com/andersson/${PN}/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 	KEYWORDS="~arm ~arm64"
@@ -20,13 +20,7 @@ SLOT="0"
 LICENSE="BSD"
 IUSE=""
 
-BDEPEND="sys-power/qrtr"
-
-src_prepare() {
-	sed -i -e "s|fix)/lib|fix)/$(get_libdir)|g" "${S}"/Makefile
-
-	default
-}
+DEPEND=""
 
 src_compile() {
 	emake CC=$(tc-getCC) prefix="${EPREFIX}/usr" || die "make failed..."
@@ -34,6 +28,4 @@ src_compile() {
 
 src_install() {
 	emake prefix="${EPREFIX}/usr" DESTDIR="${D}" install || die "make install failed..."
-
-	newinitd "${FILESDIR}/${PN}".init "${PN}"
 }

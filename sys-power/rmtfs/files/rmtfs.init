@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+# Copyright 1999-2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+description=""
+pidfile="/run/${SVCNAME}.pid"
+command="/usr/bin/rmtfs"
+command_args="-r -P -s"
+command_background=true
+
+depend() {
+    need qrtr-ns
+    after qrtr-ns
+    use logger
+}

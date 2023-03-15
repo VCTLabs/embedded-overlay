@@ -3,14 +3,14 @@
 
 EAPI=7
 
-inherit toolchain-funcs
+inherit toolchain-funcs udev
 
-DESCRIPTION="Qualcomm Protection Domain mapper."
-HOMEPAGE="https://github.com/andersson/pd-mapper"
+DESCRIPTION="Qualcomm Remote Filesystem Service Implementation"
+HOMEPAGE="https://github.com/andersson/rmtfs"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/andersson/pd-mapper.git"
+	EGIT_REPO_URI="https://github.com/andersson/rmtfs.git"
 else
 	SRC_URI="https://github.com/andersson/${PN}/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 	KEYWORDS="~arm ~arm64"
@@ -20,10 +20,14 @@ SLOT="0"
 LICENSE="BSD"
 IUSE=""
 
-BDEPEND="sys-power/qrtr"
+BDEPEND="sys-power/qmic"
+
+DEPEND="sys-power/qrtr
+	kernel_linux? ( virtual/udev )
+"
 
 src_prepare() {
-	sed -i -e "s|fix)/lib|fix)/$(get_libdir)|g" "${S}"/Makefile
+	sed -i -e "s|fix)/lib|fix)/$(get_libdir)|" "${S}"/Makefile
 
 	default
 }
@@ -35,5 +39,14 @@ src_compile() {
 src_install() {
 	emake prefix="${EPREFIX}/usr" DESTDIR="${D}" install || die "make install failed..."
 
+	use kernel_linux && udev_newrules "${FILESDIR}/${PN}".rules 65-${PN}.rules
 	newinitd "${FILESDIR}/${PN}".init "${PN}"
+}
+
+pkg_postinst() {
+	use kernel_linux && udev_reload
+}
+
+pkg_postrm() {
+	use kernel_linux && udev_reload
 }
