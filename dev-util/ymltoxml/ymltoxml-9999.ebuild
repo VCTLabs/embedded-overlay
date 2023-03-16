@@ -42,6 +42,6 @@ DOCS=( README.rst )
 
 distutils_enable_sphinx \
 	docs/source \
-	dev-python/sphinx_rtd_theme \
+	dev-python/sphinx-rtd-theme \
 	dev-python/recommonmark \
 	dev-python/sphinxcontrib-apidoc

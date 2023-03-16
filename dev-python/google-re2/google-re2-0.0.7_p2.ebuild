@@ -26,7 +26,7 @@ RDEPEND="dev-libs/re2:="
 DEPEND="${RDEPEND}"
 
 BDEPEND="
-	dev-python/setuptools_scm[${PYTHON_USEDEP}]
+	dev-python/setuptools-scm[${PYTHON_USEDEP}]
 	dev-python/pybind11[${PYTHON_USEDEP}]
 	dev-python/six[${PYTHON_USEDEP}]
 	test? (
