@@ -1,7 +1,7 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 _SRCURI_P="${P/%_beta1/-beta.1}"
 
@@ -13,23 +13,30 @@ SRC_URI="https://getdnsapi.net/releases/${_SRCURI_P//./-}/${_SRCURI_P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~arm64 x86"
-IUSE="doc examples +getdns-query +getdns-server-mon +idn libev libevent libuv static-libs stubby test +unbound"
+KEYWORDS="amd64 ~x86"
+IUSE="doc examples +getdns-query +getdns-server-mon gnutls +idn libev libevent libuv static-libs stubby test +unbound"
 
 S="${WORKDIR}/${_SRCURI_P}"
 
 # https://bugs.gentoo.org/661760
 # https://github.com/getdnsapi/getdns/issues/407
+# (As of 1.7.0, seems to need network)
 RESTRICT="test"
+#RESTRICT="!test? ( test )"
 
 DEPEND="
 	dev-libs/libbsd
 	dev-libs/libyaml
 	dev-libs/openssl:=
 	idn? ( net-dns/libidn2:= )
+	gnutls? (
+		net-libs/gnutls:0=[dane,openssl]
+		dev-libs/nettle:0=
+	)
 	libev? ( dev-libs/libev:= )
 	libevent? ( dev-libs/libevent:= )
 	libuv? ( dev-libs/libuv:= )
+	test? ( dev-libs/check )
 	>=net-dns/unbound-1.5.9:=
 "
 RDEPEND="
@@ -42,23 +49,12 @@ RDEPEND="
 "
 BDEPEND="
 	doc? ( app-doc/doxygen )
-	test? ( dev-libs/check )
 "
 
 PATCHES=(
 	"${FILESDIR}/${PN}-1.4.2-stubby.service.patch"
+	"${FILESDIR}/${P}-clang16.patch"
 )
-
-src_prepare() {
-	sed -i -e "s|DESTINATION lib|DESTINATION $(get_libdir)|g" \
-		-e "s|share/doc/getdns|share/doc/${PF}|" \
-		"${S}"/CMakeLists.txt
-	sed -i -e "s|share/doc/stubby|share/doc/${PF}/stubby|g" \
-		"${S}"/stubby/CMakeLists.txt
-
-	eapply_user
-	cmake_src_prepare
-}
 
 src_configure() {
 	local mycmakeargs=(
@@ -70,7 +66,7 @@ src_configure() {
 		-DENABLE_STATIC=$(usex static-libs)
 		-DBUILD_TESTING:BOOL=$(usex test)
 		-DENABLE_UNBOUND_EVENT_API=$(usex unbound)
-		-DUSE_GNUTLS=OFF
+		-DUSE_GNUTLS=$(usex gnutls)
 		-DUSE_LIBEV=$(usex libev)
 		-DUSE_LIBEVENT2=$(usex libevent)
 		-DUSE_LIBIDN2=$(usex idn)
@@ -81,7 +77,6 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	rm -rf "${ED}"/var/run
 	if use stubby; then
 		newinitd "${FILESDIR}"/stubby.initd-r3 stubby
 		newconfd "${FILESDIR}"/stubby.confd-r1 stubby
@@ -94,7 +89,7 @@ src_install() {
 
 pkg_postinst() {
 	if use stubby; then
-		fcaps cap_net_bind_service=ei /usr/bin/stubby
+		fcaps cap_net_bind_service=ei usr/bin/stubby
 		tmpfiles_process stubby.conf
 	fi
 }
