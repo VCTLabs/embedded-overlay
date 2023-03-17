@@ -13,7 +13,7 @@ SRC_URI="https://getdnsapi.net/releases/${_SRCURI_P//./-}/${_SRCURI_P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="amd64 ~arm ~arm64 ~riscv ~x86"
 IUSE="doc examples +getdns-query +getdns-server-mon gnutls +idn libev libevent libuv static-libs stubby test +unbound"
 
 S="${WORKDIR}/${_SRCURI_P}"
@@ -84,6 +84,9 @@ src_install() {
 		newins "${FILESDIR}"/stubby.logrotate stubby
 		systemd_dounit "${S}"/stubby/systemd/stubby.service
 		dotmpfiles "${S}"/stubby/systemd/stubby.conf
+		rm -rf "${ED}"/var/
+		rm -rf "${ED}"/usr/share/doc/stubby
+		newdoc "${S}"/stubby/README.md README-stubby.md
 	fi
 }
 
