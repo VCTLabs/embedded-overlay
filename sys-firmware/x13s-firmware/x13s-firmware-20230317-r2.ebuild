@@ -25,6 +25,11 @@ LICENSE="GPL-2+"
 SLOT="0"
 IUSE=""
 
+DEPEND=""
+RDEPEND="
+	!sys-kernel/linux-firmware[-savedconfig]
+"
+
 src_install() {
 	install -d ${D}/lib/firmware/qca ${D}/lib/firmware/qcom/sc8280xp ${D}/lib/firmware/ath11k/WCN6855/hw2.0/ ${D}/lib/firmware/ath11k/WCN6855/hw2.1/
 	# WLAN firmware - collision with linux-firmware, remove board file from
