@@ -7,7 +7,7 @@ MY_PN="x13s-alarm"
 
 inherit eutils
 
-DESCRIPTION="The missing fw bits for Lenovo thinkpad x13s (temporary)"
+DESCRIPTION="The missing/updated fw bits for Lenovo thinkpad x13s"
 HOMEPAGE="https://github.com/ironrobin/x13s-alarm/tree/trunk/x13s-firmware"
 
 if [[ ${PV} == *9999* ]]; then
@@ -26,10 +26,11 @@ SLOT="0"
 IUSE=""
 
 src_install() {
-	install -d ${D}/lib/firmware/qca ${D}/lib/firmware/qcom/sc8280xp
-	# ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
-	# WLAN firmware - collision with linux-firmware
-	#cp -v x13s-firmware/board-2.bin ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
+	install -d ${D}/lib/firmware/qca ${D}/lib/firmware/qcom/sc8280xp ${D}/lib/firmware/ath11k/WCN6855/hw2.0/ ${D}/lib/firmware/ath11k/WCN6855/hw2.1/
+	# WLAN firmware - collision with linux-firmware, remove board file from
+	# linux-firmware savedconfig file first
+	cp -v x13s-firmware/board-2.bin ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
+	dosym ../hw2.0/board-2.bin /lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin
 	# BT firmware
 	cp -v x13s-firmware/hpnv21.8c ${D}/lib/firmware/qca/
 	# GPU firmware
