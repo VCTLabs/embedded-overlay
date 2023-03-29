@@ -26,9 +26,10 @@ SLOT="0"
 IUSE=""
 
 src_install() {
-	install -d ${D}/lib/firmware/qca ${D}/lib/firmware/qcom/sc8280xp ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
-	# WLAN firmware
-	cp -v x13s-firmware/board-2.bin ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
+	install -d ${D}/lib/firmware/qca ${D}/lib/firmware/qcom/sc8280xp
+	# ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
+	# WLAN firmware - collision with linux-firmware
+	#cp -v x13s-firmware/board-2.bin ${D}/lib/firmware/ath11k/WCN6855/hw2.0/
 	# BT firmware
 	cp -v x13s-firmware/hpnv21.8c ${D}/lib/firmware/qca/
 	# GPU firmware
