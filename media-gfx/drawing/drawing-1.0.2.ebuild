@@ -1,8 +1,8 @@
 # Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
-PYTHON_COMPAT=( python3_{9..10} )
+EAPI=8
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit gnome2-utils meson python-single-r1 xdg
 
@@ -28,9 +28,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 DEPEND="${PYTHON_DEPS}"
 
 RDEPEND="${DEPEND}
-	$(python_gen_cond_dep '
-		>=dev-python/pygobject-3.10.2:3[${PYTHON_MULTI_USEDEP}]
-	')
+	>=dev-python/pygobject-3.10.2:3[cairo]
 	>=dev-libs/glib-2.58:2
 	>=x11-libs/gtk+-3.12:3[introspection]
 	gnome? ( gnome-base/gsettings-desktop-schemas )
