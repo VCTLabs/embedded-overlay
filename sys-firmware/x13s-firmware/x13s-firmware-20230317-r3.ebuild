@@ -42,4 +42,8 @@ src_install() {
 	cp -v x13s-firmware/a690_*  ${D}/lib/firmware/qcom/
 	# audio firmware
 	cp -v x13s-firmware/SC8280XP-LENOVO-X13S-tplg.bin ${D}/lib/firmware/qcom/sc8280xp/
+
+	# include BT bdaddr fix for 6.3+
+	newinitd "${FILESDIR}"/bdaddr-init bdaddr
+	newconfd "${FILESDIR}"/bdaddr-conf bdaddr
 }

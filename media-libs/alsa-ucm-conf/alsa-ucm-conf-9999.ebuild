@@ -11,6 +11,7 @@ HOMEPAGE="https://git.linaro.org/people/srinivas.kandagatla/alsa-ucm-conf.git"
 if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://git.linaro.org/people/srinivas.kandagatla/${PN}.git"
 	EGIT_BRANCH="x13s"
+	#EGIT_COMMIT="f0904c6c49332cafdb731004c19bfd1655cccdcf"
 	inherit git-r3
 else
 	SRC_URI="https://www.alsa-project.org/files/pub/lib/${P}.tar.bz2"

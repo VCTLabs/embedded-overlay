@@ -1,0 +1,5 @@
+# when bluetooth public addr is broken/non-compliant,
+# set set a valid one from vendor address space
+# 88124E is one of 3 that belong to Qualcomm
+#  https://www.adminsub.net/mac-address-finder
+bdaddr="88:12:4e:33:22:11"

@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+description="Applies bdaddr fix (per kernel patch comment)."
+
+depend()
+{
+	before bluetooth
+}
+
+start()
+{
+	: ${bdaddr:=BDADDR}
+
+	ebegin "Setting BDADDR to complete qualcomm vendor string"
+	btmgmt -i hci0 public-addr "$bdaddr"
+	eend $? "Error setting BDADDR $bdaddr" || return $?
+
+	sleep 1
+	return 0
+}
