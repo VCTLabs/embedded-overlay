@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 
 inherit distutils-r1
@@ -27,7 +27,7 @@ BDEPEND="${PYTHON_DEPS}
 	>=dev-python/reportlab-2.6[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]
-	dev-python/importlib_metadata[${PYTHON_USEDEP}]
+	dev-python/importlib-metadata[${PYTHON_USEDEP}]
 	math? ( dev-python/matplotlib[${PYTHON_USEDEP}] )
 	svg? ( dev-python/svglib[${PYTHON_USEDEP}] )
 	sphinx? ( dev-python/sphinx[${PYTHON_USEDEP}] )
