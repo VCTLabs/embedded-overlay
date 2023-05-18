@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python3_{9..11} )
-DISTUTILS_USE_SETUPTOOLS=rdepend
+DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1
 
@@ -20,7 +20,6 @@ IUSE="math sphinx svg"
 BDEPEND="${PYTHON_DEPS}
 	dev-python/jinja[${PYTHON_USEDEP}]
 	dev-python/pillow[${PYTHON_USEDEP}]
-	dev-python/pdfrw[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/pygments[${PYTHON_USEDEP}]
 	dev-python/smartypants[${PYTHON_USEDEP}]

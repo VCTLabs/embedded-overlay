@@ -5,3 +5,6 @@ failures.json
 # vim
 .*.sw[a-z]
 tags
+
+# other
+.tox/
