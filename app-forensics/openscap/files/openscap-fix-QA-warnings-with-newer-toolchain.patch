@@ -1,0 +1,71 @@
+From 5830090eb9c58bd7dacbb5a82934a73fc65b1983 Mon Sep 17 00:00:00 2001
+From: Stephen L Arnold <sarnold@vctlabs.com>
+Date: Wed, 12 Jul 2023 17:30:19 -0700
+Subject: [PATCH] fix QA warnings with newer toolchain, add missing rpm header
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+* mainly implicit declaration of function ‘rpmFreeCrypto’
+
+Signed-off-by: Stephen L Arnold <sarnold@vctlabs.com>
+---
+ src/OVAL/probes/unix/linux/rpminfo_probe.c          | 3 +++
+ src/OVAL/probes/unix/linux/rpmverify_probe.c        | 1 +
+ src/OVAL/probes/unix/linux/rpmverifyfile_probe.c    | 1 +
+ src/OVAL/probes/unix/linux/rpmverifypackage_probe.c | 1 +
+ 4 files changed, 6 insertions(+)
+
+diff --git a/src/OVAL/probes/unix/linux/rpminfo_probe.c b/src/OVAL/probes/unix/linux/rpminfo_probe.c
+index 46ad1d971..1eaf5dfe7 100644
+--- a/src/OVAL/probes/unix/linux/rpminfo_probe.c
++++ b/src/OVAL/probes/unix/linux/rpminfo_probe.c
+@@ -62,6 +62,9 @@
+ /* RPM headers */
+ #include "rpm-helper.h"
+ 
++/* Individual RPM headers */
++#include <rpm/rpmpgp.h>
++
+ /* SEAP */
+ #include "_seap.h"
+ #include <probe-api.h>
+diff --git a/src/OVAL/probes/unix/linux/rpmverify_probe.c b/src/OVAL/probes/unix/linux/rpmverify_probe.c
+index 14ee57d89..4dca3022d 100644
+--- a/src/OVAL/probes/unix/linux/rpmverify_probe.c
++++ b/src/OVAL/probes/unix/linux/rpmverify_probe.c
+@@ -46,6 +46,7 @@
+ /* Individual RPM headers */
+ #include <rpm/rpmfi.h>
+ #include <rpm/rpmcli.h>
++#include <rpm/rpmpgp.h>
+ 
+ /* SEAP */
+ #include <probe-api.h>
+diff --git a/src/OVAL/probes/unix/linux/rpmverifyfile_probe.c b/src/OVAL/probes/unix/linux/rpmverifyfile_probe.c
+index a61f44e39..6273ac9e7 100644
+--- a/src/OVAL/probes/unix/linux/rpmverifyfile_probe.c
++++ b/src/OVAL/probes/unix/linux/rpmverifyfile_probe.c
+@@ -49,6 +49,7 @@
+ /* Individual RPM headers */
+ #include <rpm/rpmfi.h>
+ #include <rpm/rpmcli.h>
++#include <rpm/rpmpgp.h>
+ 
+ /* SEAP */
+ #include <probe-api.h>
+diff --git a/src/OVAL/probes/unix/linux/rpmverifypackage_probe.c b/src/OVAL/probes/unix/linux/rpmverifypackage_probe.c
+index b56fd43d1..df95a17e5 100644
+--- a/src/OVAL/probes/unix/linux/rpmverifypackage_probe.c
++++ b/src/OVAL/probes/unix/linux/rpmverifypackage_probe.c
+@@ -49,6 +49,7 @@
+ /* Individual RPM headers */
+ #include <rpm/rpmfi.h>
+ #include <rpm/rpmcli.h>
++#include <rpm/rpmpgp.h>
+ #include <popt.h>
+ 
+ /* SEAP */
+-- 
+2.41.0
+
