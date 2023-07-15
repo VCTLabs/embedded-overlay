@@ -11,6 +11,8 @@ Portage overlay for embedded tools and (extra) Python packages.
 Interesting/useful items:
 
 * app-forensics/openscap - NIST Certified SCAP 1.2 toolkit
+* app-forensics/scap-security-guide - Baseline compliance content in SCAP formats
+* app-forensics/scap-workbendh - SCAP Scanner And Tailoring Graphical User Interface
 * dev-embedded/abc - A system for sequential logic synthesis and formal verification
 * dev-embedded/chiptools - A utility to automate FPGA build and verification
 * dev-embedded/yosys - A framework for Verilog RTL synthesis
