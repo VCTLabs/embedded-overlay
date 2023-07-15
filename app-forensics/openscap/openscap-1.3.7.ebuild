@@ -20,7 +20,7 @@ fi
 
 LICENSE="LGPL-2.1"
 SLOT="0/1"
-IUSE="+acl +caps debug doc ldap nss +pcre perl python rpm selinux sce sql test +xattr"
+IUSE="+acl +caps debug doc ldap nss +pcre +perl +python rpm selinux sce sql test +xattr"
 
 RDEPEND="!nss? ( dev-libs/libgcrypt:0 )
 	nss? ( dev-libs/nss )
@@ -67,11 +67,11 @@ src_configure() {
 	local mycmakeargs=(
 		-DENABLE_OSCAP_REMEDIATE_SERVICE=OFF
 		-DENABLE_PERL="$(usex perl)"
+		-DENABLE_PYTHON3="$(usex python)"
 		-DOPENSCAP_PROBE_UNIX_GCONF=OFF
 		-DGCONF_LIBRARY=
 		-DENABLE_DOCS="$(usex doc)"
 	)
-
 
 	cmake_src_configure
 }
