@@ -1,0 +1,28 @@
+--- a/src/OscapCapabilities.cpp.orig	2023-07-12 21:05:07.074667400 -0700
++++ b/src/OscapCapabilities.cpp	2023-07-12 21:09:29.019576879 -0700
+@@ -86,7 +86,11 @@
+     if (lines.size() < 1)
+         return; // TODO: Throw exception?
+ 
++#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
++    const QStringList firstLine = lines[0].split(' ', Qt::SkipEmptyParts);
++#else
+     const QStringList firstLine = lines[0].split(' ', QString::SkipEmptyParts);
++#endif
+     const QString& versionCandidate = firstLine.last();
+ 
+     if (!versionCandidate.contains(QRegExp("^([0-9]+\\.){2,}[0-9]+$")))
+--- a/src/RPMOpenHelper.cpp.orig	2023-07-12 21:05:07.074667400 -0700
++++ b/src/RPMOpenHelper.cpp	2023-07-12 21:12:41.832440904 -0700
+@@ -54,7 +54,11 @@
+         static QRegExp tailoringRE("^\\.\\/usr\\/share\\/xml\\/scap\\/[^\\/]+\\/tailoring-xccdf\\.xml+$");
+         static QRegExp inputRE("^\\.\\/usr\\/share\\/xml\\/scap\\/[^\\/]+\\/[^\\/]+\\-(xccdf|ds)\\.xml+$");
+ 
++#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
++        QStringList lines = proc.getStdErrContents().split('\n', Qt::SkipEmptyParts);
++#else
+         QStringList lines = proc.getStdErrContents().split('\n', QString::SkipEmptyParts);
++#endif
+         for (QStringList::const_iterator it = lines.constBegin(); it != lines.constEnd(); ++it)
+         {
+             const QString& line = *it;

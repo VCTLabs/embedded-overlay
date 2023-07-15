@@ -1,0 +1,33 @@
+From: Frank Piat <fpiat@klabs.be>
+Date: Sun, 8 Aug 2021 23:21:19 +0900
+Subject: Fix bug building html user manual
+
+Forwarded: https://github.com/OpenSCAP/scap-workbench/pull/99
+
+===================================================================
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0e98b7f..57d6c5c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -289,7 +289,7 @@ install(FILES "scap-workbench.appdata.xml"
+ if (ASCIIDOC_EXECUTABLE)
+     file(GLOB USER_MANUAL_SCREENSHOTS "${CMAKE_CURRENT_SOURCE_DIR}/doc/user_manual/*.png")
+     add_custom_command(
+-        OUTPUT doc/user_manual.html
++        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/user_manual.html
+         COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/doc
+         COMMAND ${ASCIIDOC_EXECUTABLE} -o ${CMAKE_CURRENT_BINARY_DIR}/doc/user_manual.html -b html5 -a data-uri user_manual.adoc
+         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/doc/user_manual.html ${CMAKE_CURRENT_SOURCE_DIR}/doc/user_manual.html
+@@ -298,7 +298,7 @@ if (ASCIIDOC_EXECUTABLE)
+     )
+     add_custom_target(
+         "docs"
+-        DEPENDS doc/user_manual.html
++        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/user_manual.html
+     )
+     if (SCAP_WORKBENCH_REBUILD_MANUAL)
+         add_dependencies("scap-workbench" "docs")

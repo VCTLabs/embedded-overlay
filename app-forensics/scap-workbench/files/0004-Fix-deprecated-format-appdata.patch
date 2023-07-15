@@ -1,0 +1,150 @@
+From: Hideki Yamane <henrich@debian.org>
+Date: Mon, 9 Aug 2021 00:14:29 +0900
+Subject: Fix deprecated format appdata
+
+---
+ CMakeLists.txt                           |  4 ++--
+ org.open-scap.scap-workbench.appdata.xml | 38 ++++++++++++++++++++++++++++++++
+ scap-workbench.appdata.xml               | 32 ---------------------------
+ scap-workbench.desktop                   | 10 ---------
+ scap_workbench.desktop                   | 10 +++++++++
+ 5 files changed, 50 insertions(+), 44 deletions(-)
+ create mode 100644 org.open-scap.scap-workbench.appdata.xml
+ delete mode 100644 scap-workbench.appdata.xml
+ delete mode 100644 scap-workbench.desktop
+ create mode 100644 scap_workbench.desktop
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e008317..8f11581 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -277,13 +277,13 @@ install(FILES "man/scap-workbench.8"
+ 
+ install(DIRECTORY "share/scap-workbench"
+     DESTINATION "${CMAKE_INSTALL_DATADIR}")
+-install(FILES "scap-workbench.desktop"
++install(FILES "scap_workbench.desktop"
+     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
+ install(FILES "share/pixmaps/scap-workbench.png"
+     DESTINATION "${CMAKE_INSTALL_DATADIR}/pixmaps")
+ install(FILES "share/pixmaps/scap-workbench.svg"
+     DESTINATION "${CMAKE_INSTALL_DATADIR}/pixmaps")
+-install(FILES "scap-workbench.appdata.xml"
++install(FILES "org.open-scap.scap-workbench.appdata.xml"
+     DESTINATION "${CMAKE_INSTALL_DATADIR}/metainfo")
+ 
+ if (ASCIIDOC_EXECUTABLE)
+diff --git a/org.open-scap.scap-workbench.appdata.xml b/org.open-scap.scap-workbench.appdata.xml
+new file mode 100644
+index 0000000..bed9b05
+--- /dev/null
++++ b/org.open-scap.scap-workbench.appdata.xml
+@@ -0,0 +1,38 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<component type="desktop">
++    <id>org.openscap.scap_workbench.desktop</id>
++    <metadata_license>CC0-1.0</metadata_license>
++    <project_license>GPL-3.0+</project_license>
++    <name>SCAP Workbench</name>
++    <summary>A GUI tool that serves as an SCAP scanner and provides tailoring functionality for SCAP content</summary>
++    <description>
++        <p>
++            The main goal of this application is to lower the initial barrier of using SCAP.
++            Therefore, the scope of very narrow - SCAP Workbench only scans a single machine and only with XCCDF/SDS (no direct OVAL evaluation).
++            The assumption is that this is enough for users who want to scan a few machines and users with huge amount of machines to scan will just use scap-workbench to test or hand-tune their content before deploying it with more advanced (and harder to use) tools like spacewalk.
++        </p>
++        <p>Feature highlights:</p>
++        <ul>
++            <li>XCCDF 1.1 and 1.2 support</li>
++            <li>Source Data Stream 1.2 support</li>
++            <li>XCCDF 1.2 Tailoring file support</li>
++            <li>Evaluation of local machine</li>
++            <li>Evaluation of remote machine (using ssh)</li>
++            <li>Limited tailoring support - selection and unselection</li>
++            <li>Saving results as XCCDF 1.1 or 1.2 (depending on input) or ARF 1.1</li>
++        </ul>
++    </description>
++    <screenshots>
++        <screenshot type="default">
++            <image type="source" width="1280" height="720">https://github.com/OpenSCAP/scap-workbench/raw/v1-1/doc/user_manual/default_content_opened.png</image>
++        </screenshot>
++        <screenshot>
++            <image type="source" width="1280" height="720">https://github.com/OpenSCAP/scap-workbench/raw/v1-1/doc/user_manual/intro_screenshot.png</image>
++        </screenshot>
++        <screenshot>
++            <image type="source" width="1280" height="720">https://github.com/OpenSCAP/scap-workbench/raw/v1-1/doc/user_manual/tailoring_undo_history.png</image>
++        </screenshot>
++    </screenshots>
++    <url type="homepage">https://www.open-scap.org/tools/scap-workbench</url>
++    <update_contact>open-scap-list@redhat.com</update_contact>
++</component>
+diff --git a/scap-workbench.appdata.xml b/scap-workbench.appdata.xml
+deleted file mode 100644
+index d4288f3..0000000
+--- a/scap-workbench.appdata.xml
++++ /dev/null
+@@ -1,32 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<application>
+-    <id type="desktop">scap-workbench.desktop</id>
+-    <metadata_license>CC0-1.0</metadata_license>
+-    <project_license>GPL-3.0+</project_license>
+-    <name>SCAP Workbench</name>
+-    <summary>A GUI tool that serves as an SCAP scanner and provides tailoring functionality for SCAP content</summary>
+-    <description>
+-        <p>
+-            The main goal of this application is to lower the initial barrier of using SCAP.
+-            Therefore, the scope of very narrow - SCAP Workbench only scans a single machine and only with XCCDF/SDS (no direct OVAL evaluation).
+-            The assumption is that this is enough for users who want to scan a few machines and users with huge amount of machines to scan will just use scap-workbench to test or hand-tune their content before deploying it with more advanced (and harder to use) tools like spacewalk.
+-        </p>
+-        <p>Feature highlights:</p>
+-        <ul>
+-            <li>XCCDF 1.1 and 1.2 support</li>
+-            <li>Source Data Stream 1.2 support</li>
+-            <li>XCCDF 1.2 Tailoring file support</li>
+-            <li>Evaluation of local machine</li>
+-            <li>Evaluation of remote machine (using ssh)</li>
+-            <li>Limited tailoring support - selection and unselection</li>
+-            <li>Saving results as XCCDF 1.1 or 1.2 (depending on input) or ARF 1.1</li>
+-        </ul>
+-    </description>
+-    <screenshots>
+-        <screenshot type="default" width="1280" height="720">https://github.com/OpenSCAP/scap-workbench/raw/v1-1/doc/user_manual/default_content_opened.png</screenshot>
+-        <screenshot width="1280" height="720">https://github.com/OpenSCAP/scap-workbench/raw/v1-1/doc/user_manual/intro_screenshot.png</screenshot>
+-        <screenshot width="1280" height="720">https://github.com/OpenSCAP/scap-workbench/raw/v1-1/doc/user_manual/tailoring_undo_history.png</screenshot>
+-    </screenshots>
+-    <url type="homepage">https://www.open-scap.org/tools/scap-workbench</url>
+-    <updatecontact>open-scap-list@redhat.com</updatecontact>
+-</application>
+diff --git a/scap-workbench.desktop b/scap-workbench.desktop
+deleted file mode 100644
+index 60b67e4..0000000
+--- a/scap-workbench.desktop
++++ /dev/null
+@@ -1,10 +0,0 @@
+-[Desktop Entry]
+-Type=Application
+-Name=SCAP Workbench
+-GenericName=SCAP Scanner and Profile Editor
+-Comment=GUI tool that allows scanning both local and remote computers using SCAP content of your choice.
+-TryExec=scap-workbench
+-Exec=scap-workbench
+-Icon=scap-workbench
+-Categories=System;
+-X-Desktop-File-Install-Version=0.3
+diff --git a/scap_workbench.desktop b/scap_workbench.desktop
+new file mode 100644
+index 0000000..60b67e4
+--- /dev/null
++++ b/scap_workbench.desktop
+@@ -0,0 +1,10 @@
++[Desktop Entry]
++Type=Application
++Name=SCAP Workbench
++GenericName=SCAP Scanner and Profile Editor
++Comment=GUI tool that allows scanning both local and remote computers using SCAP content of your choice.
++TryExec=scap-workbench
++Exec=scap-workbench
++Icon=scap-workbench
++Categories=System;
++X-Desktop-File-Install-Version=0.3

@@ -1,0 +1,44 @@
+From: Hideki Yamane <henrich@debian.org>
+Date: Sun, 8 Aug 2021 23:21:37 +0900
+Subject: Fix build warning
+
+---
+ src/SaveAsRPMDialog.cpp | 2 +-
+ src/TailoringWindow.cpp | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/SaveAsRPMDialog.cpp b/src/SaveAsRPMDialog.cpp
+index 611d15f..e8d0564 100644
+--- a/src/SaveAsRPMDialog.cpp
++++ b/src/SaveAsRPMDialog.cpp
+@@ -86,7 +86,7 @@ void SaveAsRPMDialog::slotFinished(int result)
+     closure.remove(mScanningSession->getOpenedFilePath());
+     QList<QString> closureOrdered;
+     closureOrdered.append(mScanningSession->getOpenedFilePath());
+-    closureOrdered.append(closure.toList());
++    closureOrdered.append(closure.values());
+ 
+     const QDir cwd = ScanningSession::getCommonAncestorDirectory(closure);
+ 
+diff --git a/src/TailoringWindow.cpp b/src/TailoringWindow.cpp
+index 212416c..58bb6fc 100644
+--- a/src/TailoringWindow.cpp
++++ b/src/TailoringWindow.cpp
+@@ -645,7 +645,7 @@ QString TailoringWindow::getQSettingsKey() const
+ void TailoringWindow::deserializeCollapsedItems()
+ {
+     const QStringList list = mQSettings->value(getQSettingsKey()).toStringList();
+-    mCollapsedItemIds = QSet<QString>::fromList(list);
++    mCollapsedItemIds = QSet<QString>(list.begin(), list.end());
+ }
+ 
+ void TailoringWindow::serializeCollapsedItems()
+@@ -657,7 +657,7 @@ void TailoringWindow::serializeCollapsedItems()
+     }
+     else
+     {
+-        mQSettings->setValue(getQSettingsKey(), QVariant(mCollapsedItemIds.toList()));
++        mQSettings->setValue(getQSettingsKey(), QVariant(mCollapsedItemIds.values()));
+         mQSettings->setValue(getQSettingsKey() + "_lastUsed", QVariant(QDateTime::currentDateTime()));
+     }
+ }
