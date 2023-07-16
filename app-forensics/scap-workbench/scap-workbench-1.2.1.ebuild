@@ -10,7 +10,7 @@ DESCRIPTION="SCAP Scanner And Tailoring Graphical User Interface"
 
 if [[ ${PV} != *9999* ]]; then
 	SRC_URI="https://github.com/OpenSCAP/${PN}/releases/download/${PV}/${P}.tar.bz2"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 else
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/OpenSCAP/openscap.git"
