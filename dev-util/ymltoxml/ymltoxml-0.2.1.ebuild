@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1
 
-DESCRIPTION="Convert between XML files and YAML files."
+DESCRIPTION="Convert between XML files and YAML files (or sort some YAML)."
 HOMEPAGE="
 	https://sarnold.github.io/ymltoxml/
 	https://github.com/sarnold/ymltoxml
@@ -20,7 +20,7 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/sarnold/ymltoxml/releases/download/${PV}/${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1"
