@@ -4,16 +4,17 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..10} )
+PYPI_NO_NORMALIZE=1
+PYPI_PN=sphinxcontrib-apidoc
+PYTHON_COMPAT=( python3_{9..11} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="Sphinx extension for running sphinx-apidoc on each build"
 HOMEPAGE="
 	https://pypi.org/project/sphinxcontrib-apidoc/
 	https://github.com/sphinx-contrib/apidoc/
 "
-SRC_URI="mirror://pypi/${P:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"

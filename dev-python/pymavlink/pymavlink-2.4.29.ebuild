@@ -3,12 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
-inherit distutils-r1
+PYTHON_COMPAT=( python3_{9..11} )
+inherit distutils-r1 pypi
 
 DESCRIPTION="MAVLink protocol streams and log files in Python"
 HOMEPAGE="https://pypi.org/project/pymavlink/"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
