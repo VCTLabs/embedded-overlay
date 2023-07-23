@@ -20,14 +20,13 @@ fi
 
 LICENSE="LGPL-2.1"
 SLOT="0/1"
-IUSE="+acl +caps debug doc ldap nss +pcre +perl +python rpm selinux sce sql test +xattr"
+IUSE="+acl +caps debug doc ldap nss +perl +python rpm selinux sce sql test +xattr"
 
 RDEPEND="!nss? ( dev-libs/libgcrypt:0 )
 	nss? ( dev-libs/nss )
 	acl? ( virtual/acl )
 	caps? ( sys-libs/libcap )
 	ldap? ( net-nds/openldap )
-	pcre? ( dev-libs/libpcre )
 	rpm? ( >=app-arch/rpm-4.9 )
 	sql? ( dev-db/opendbx )
 	xattr? ( sys-apps/attr )
