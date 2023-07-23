@@ -57,7 +57,6 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 PATCHES=(
 	"${FILESDIR}/${PN}-fix-default-perl-install-path.patch"
 	"${FILESDIR}/run-a-minor-testsuite.patch"
-	"${FILESDIR}/${PN}-fix-QA-warnings-with-newer-toolchain.patch"
 )
 
 DOCS=( README.md )
