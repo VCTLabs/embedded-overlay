@@ -40,3 +40,8 @@ python_test() {
 		--doctest-glob='*.py' \
 		.
 }
+
+src_prepare() {
+	sed -i '/sphinx_git/d' "${S}"/setup.cfg "${S}"/docs/source/conf.py
+	default
+}

@@ -4,11 +4,11 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1
 
-DESCRIPTION="Convert between XML files and YAML files."
+DESCRIPTION="Convert between XML files and YAML files (or sort some YAML)."
 HOMEPAGE="
 	https://sarnold.github.io/ymltoxml/
 	https://github.com/sarnold/ymltoxml
@@ -19,8 +19,8 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_BRANCH="main"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/sarnold/ymltoxml/releases/download/${PV}/${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	SRC_URI="https://github.com/sarnold/ymltoxml/archive/${PV}.tar.gz -> ${P}.gh.tar.gz"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1"
@@ -35,7 +35,7 @@ RDEPEND="
 	dev-python/munch[${PYTHON_USEDEP}]
 "
 BDEPEND="
-	dev-python/versioningit[${PYTHON_USEDEP}]
+	dev-python/setuptools-scm[${PYTHON_USEDEP}]
 "
 
 DOCS=( README.rst )
@@ -45,3 +45,10 @@ distutils_enable_sphinx \
 	dev-python/sphinx-rtd-theme \
 	dev-python/recommonmark \
 	dev-python/sphinxcontrib-apidoc
+
+export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
+
+src_prepare() {
+	sed -i '/sphinx_git/d' "${S}"/setup.cfg "${S}"/docs/source/conf.py
+	default
+}

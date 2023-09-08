@@ -44,6 +44,11 @@ distutils_enable_sphinx \
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 
+src_prepare() {
+	sed -i '/sphinx_git/d' "${S}"/setup.cfg "${S}"/docs/source/conf.py
+	default
+}
+
 pkg_postinst() {
 	optfeature "initialize repos with lfs files" dev-vcs/git-lfs
 }
