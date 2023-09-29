@@ -1,7 +1,7 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI=8
 inherit autotools eutils multilib multilib-minimal
 
 DESCRIPTION="An implementation for a double-array Trie library in C."
