@@ -3,8 +3,6 @@
 
 EAPI=8
 
-inherit eutils
-
 DESCRIPTION="The missing alsa UCM bits for Lenovo thinkpad x13s (temporary)"
 HOMEPAGE="https://git.linaro.org/people/srinivas.kandagatla/alsa-ucm-conf.git"
 

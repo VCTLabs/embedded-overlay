@@ -5,8 +5,6 @@ EAPI=8
 
 MY_PN="x13s-alarm"
 
-inherit eutils
-
 DESCRIPTION="The missing fw bits for Lenovo thinkpad x13s (temporary)"
 HOMEPAGE="https://github.com/ironrobin/x13s-alarm/tree/trunk/x13s-firmware"
 

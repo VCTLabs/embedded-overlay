@@ -26,15 +26,14 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="test"
 
-RDEPEND="${PYTHON_DEPS}
+RDEPEND="
 	dev-libs/libdatrie:=
 "
 
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep '>=dev-python/cython-0.20[${PYTHON_USEDEP}]' 'python*')
-	test? ( dev-python/pytest[${PYTHON_USEDEP}]
-		>=dev-python/hypothesis-4.57.1[${PYTHON_USEDEP}] )
+	test? ( >=dev-python/hypothesis-4.57.1[${PYTHON_USEDEP}] )
 "
 
 distutils_enable_tests pytest

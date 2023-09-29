@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit autotools eutils multilib multilib-minimal
+
+inherit autotools multilib multilib-minimal
 
 DESCRIPTION="An implementation for a double-array Trie library in C."
 HOMEPAGE="https://linux.thai.net/~thep/datrie/datrie.html"

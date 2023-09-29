@@ -3,10 +3,10 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 DISTUTILS_USE_SETUPTOOLS=no
 
-inherit eutils flag-o-matic llvm python-single-r1
+inherit flag-o-matic llvm python-single-r1
 
 DESCRIPTION="Yosys - Yosys Open SYnthesis Suite"
 HOMEPAGE="http://www.clifford.at/yosys/"

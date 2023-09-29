@@ -19,8 +19,8 @@ else
 fi
 
 LICENSE="BSD-2"
-SLOT="0/3"
-IUSE="+cxx11 +ack-tracker +wpa2 +dot11 netdev +static-libs"
+SLOT="0/4"
+IUSE="+cxx11 +ack-tracker +wpa2 +dot11 static-libs"
 
 REQUIRED_USE="
 	wpa2? ( dot11 )
@@ -31,16 +31,10 @@ DEPEND="
 	wpa2? ( dev-libs/openssl:0[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}
-	netdev? (
-		acct-group/netdev[${MULTILIB_USEDEP}]
-		sys-auth/polkit[${MULTILIB_USEDEP}]
-	)
 	net-libs/libpcap[${MULTILIB_USEDEP}]
 "
 
 RESTRICT="mirror"
-
-PATCHES=( "${FILESDIR}/${PN}-3.4-multilib-hack.patch" )
 
 src_prepare() {
 	cmake_src_prepare
@@ -57,11 +51,4 @@ multilib_src_configure() {
 	)
 
 	cmake_src_configure
-}
-
-multilib_src_install_all() {
-	if use netdev; then
-		insinto /etc/polkit-1/rules.d/
-		doins "${FILESDIR}"/55-netdev-setcap.rules
-	fi
 }

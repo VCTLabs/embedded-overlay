@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake optfeature
 
 HOMEPAGE="https://www.open-scap.org/tools/openscap-base"
 DESCRIPTION="SCAP Scanner And Tailoring Graphical User Interface"
@@ -18,7 +18,7 @@ fi
 
 LICENSE="GPL-3"
 SLOT="0/3"
-IUSE="gnome"
+IUSE=""
 
 DEPEND="
 	dev-qt/qtcore:5
@@ -29,7 +29,6 @@ DEPEND="
 	app-forensics/openscap
 "
 RDEPEND="${DEPEND}
-	gnome? ( net-misc/ssh-askpass-fullscreen )
 	app-forensics/scap-security-guide
 "
 BDEPEND="virtual/pkgconfig"
@@ -53,4 +52,8 @@ src_configure() {
 	)
 
 	cmake_src_configure
+}
+
+pkg_postinst() {
+        optfeature "SSH_ASKPASS program implementation" lxqt-base/lxqt-openssh-askpass net-misc/ssh-askpass-fullscreen net-misc/x11-ssh-askpass
 }
