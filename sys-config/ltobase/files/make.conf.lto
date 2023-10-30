@@ -1,8 +1,10 @@
-NPROC=$(nproc)
-NUMCPUS=${NTHREADS:-$NPROC}
+# please set the following in the top of make.conf *before* using
+#   OPT_FLAGS to your chosen optimization flags
+#   NTHREADS to the desired number of parallel link threads
 
-LTO_FLAGS="-flto=${NUMCPUS} -fuse-linker-plugin"
-VEC_FLAGS="-ftree-vectorize -fvect-cost-model=cheap"
+LTO="-flto=${NTHREADS}"
+VEC="-ftree-vectorize -fvect-cost-model=cheap"
 GRAPHITE="-fgraphite-identity -floop-nest-optimize"
-TUNE_FLAGS="-fdevirtualize-at-ltrans"
-COMMON_FLAGS="${OPT_FLAGS} ${LTO_FLAGS} ${VEC_FLAGS} ${GRAPHITE} ${TUNE_FLAGS}"
+TUNE="-fdevirtualize-at-ltrans"
+
+COMMON_FLAGS="${OPT_FLAGS} ${LTO} ${VEC} ${GRAPHITE} ${TUNE} -fuse-linker-plugin"
