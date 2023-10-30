@@ -1,0 +1,8 @@
+NPROC=$(nproc)
+NUMCPUS=${NTHREADS:-$NPROC}
+
+LTO_FLAGS="-flto=${NUMCPUS} -fuse-linker-plugin"
+VEC_FLAGS="-ftree-vectorize -fvect-cost-model=cheap"
+GRAPHITE="-fgraphite-identity -floop-nest-optimize"
+TUNE_FLAGS="-fdevirtualize-at-ltrans"
+COMMON_FLAGS="${OPT_FLAGS} ${LTO_FLAGS} ${VEC_FLAGS} ${GRAPHITE} ${TUNE_FLAGS}"
