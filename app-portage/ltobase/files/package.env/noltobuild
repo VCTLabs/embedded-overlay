@@ -3,6 +3,7 @@ sys-apps/sandbox nolto.conf
 dev-libs/gmp nolto.conf
 dev-libs/elfutils nolto.conf
 media-libs/alsa-lib nolto.conf
+media-libs/libaom nolto.conf
 media-sound/pulseaudio nolto.conf
 
 app-admin/keepassxc nolto.conf
