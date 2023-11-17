@@ -65,8 +65,8 @@ SRC_URI+=" https://dev.gentoo.org/~floppym/dist/${P}-backports-r3.tar.xz"
 PATCHES=(
 	"${WORKDIR}/${P}-backports"
 	"${FILESDIR}"/gfxpayload.patch
-	"${FILESDIR}"/grub-2.02_beta2-KERNEL_GLOBS.patch
 	"${FILESDIR}"/grub-2.06-test-words.patch
+	"${FILESDIR}"/grub-2.02_beta2-KERNEL_GLOBS.patch
 	"${FILESDIR}"/grub-2.06-add-blscfg-module.patch
 	"${FILESDIR}"/grub-2.06-add-devicetree-loading.patch
 )

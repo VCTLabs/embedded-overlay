@@ -52,18 +52,14 @@ index e8b01c0d0c..dc75a1c30b 100644
    config=
    for i in "${dirname}/config-${version}" "${dirname}/config-${alt_version}" "/etc/kernels/kernel-config-${version}" ; do
      if test -e "${i}" ; then
---- a/util/grub-mkconfig.in	2023-10-24 14:59:29.335599813 -0700
-+++ b/util/grub-mkconfig.in	2023-10-24 15:01:53.359174438 -0700
-@@ -249,10 +249,11 @@
-   GRUB_INIT_TUNE \
-   GRUB_SAVEDEFAULT \
-   GRUB_ENABLE_CRYPTODISK \
-+  GRUB_LINUX_KERNEL_GLOBS \
+--- a/util/grub-mkconfig.in	2023-11-16 16:41:54.835936994 -0800
++++ b/util/grub-mkconfig.in	2023-11-16 16:42:46.704873969 -0800
+@@ -252,7 +252,8 @@
    GRUB_BADRAM \
    GRUB_OS_PROBER_SKIP_LIST \
--  GRUB_DISABLE_SUBMENU
--export GRUB_LINUX_KERNEL_GLOBS
-+  GRUB_DISABLE_SUBMENU \
+   GRUB_DISABLE_SUBMENU \
+-  GRUB_LINUX_KERNEL_GLOBS
++  GRUB_LINUX_KERNEL_GLOBS \
 +  GRUB_DEFAULT_DTB
  
  if test "x${grub_cfg}" != "x"; then
