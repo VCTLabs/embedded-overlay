@@ -20,6 +20,8 @@ dev-java/icedtea nolto.conf
 dev-lang/erlang nolto.conf
 dev-lang/lua nolto.conf
 dev-lang/perl nolto.conf
+dev-lang/ruby nolto.conf
+dev-ruby/stringio nolto.conf
 dev-lang/rust nolto.conf
 dev-lang/spidermonkey nolto.conf
 dev-python/libvirt-python nolto.conf
@@ -43,7 +45,6 @@ sys-fs/fuse nolto.conf
 sys-libs/libcxxabi nolto.conf
 
 app-crypt/gcr nolto.conf
-dev-lang/ruby nolto.conf
 dev-libs/folks nolto.conf
 dev-libs/libaio nolto.conf
 dev-libs/libbsd nolto.conf
