@@ -12,8 +12,9 @@ if [[ ${PV} == *9999* ]]; then
 	#EGIT_COMMIT="4c2f7dc7aff14090e2b958136660fe3daacfef20"
 	inherit git-r3
 else
-	SRC_URI="https://www.alsa-project.org/files/pub/lib/${P}.tar.bz2"
+	SRC_URI="https://github.com/VCTLabs/${PN}/archive/refs/heads/x13s-volume-fixes.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~m68k ~mips ppc ppc64 ~riscv sparc x86"
+	S="${WORKDIR}/${PN}-x13s-volume-fixes"
 fi
 
 LICENSE="BSD"
