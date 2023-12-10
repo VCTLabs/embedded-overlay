@@ -52,7 +52,7 @@ pkg_setup() {
 src_install() {
     local BASE_CONFIG="env package.env patches"
     local PKG_ENV="link-dl  link-m  noltobuild ruby"
-    local ENV_CONF="nolto.conf  plus-dl.conf  plain.conf"
+    local ENV_CONF="plus-dl.conf plus-m.conf nolto.conf plain.conf"
     dodir /etc/ltobase
     insinto /etc/ltobase
     doins "${FILESDIR}/make.conf.lto"
