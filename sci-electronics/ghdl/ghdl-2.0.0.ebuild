@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-LLVM_VALID_SLOTS=( 15 14 13 )
+LLVM_VALID_SLOTS=( 15 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
 ADA_COMPAT=( gnat_2021 )
