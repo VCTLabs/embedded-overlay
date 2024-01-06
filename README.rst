@@ -26,6 +26,7 @@ Interesting/useful items:
 * net-proxy/pyforwarder - Python raw socket proxy with optional SSL/TLS termination
 * sci-electronics/pyVHDLModel - An abstract VHDL language model written in Python
 * sci-electronics/ghdl - The GHDL VHDL simulator
+* sys-kernel/cross-kernel-bin - simple (cross)hand-built kernel installer (wip)
 
 plus lots of other python and networking goodies (see below for full listing).
 
@@ -59,6 +60,45 @@ Adjust the path in the ``location`` field as needed, then save and exit nano.
 Run the following command to sync the repo::
 
   # emaint sync --repo embedded-overlay
+
+WIP embedded kernel-bin ebuild
+==============================
+
+This is currently a WIP convenience ebuild for installing a generic kernel
+binary on something small/embedded that can't run the full distro-kernel bin
+package.
+
+In this context, "generic kernel" is built using something like the RCN
+`build scripts`_ (forked) or one of the many upstream `kernel builders`_.
+
+
+.. _build scripts: https://github.com/sarnold/arm64-mainline-linux
+.. _kernel builders: https://github.com/RobertCNelson/
+
+To use the cross-kernel-bin ebuild still involves manual work, but at least
+the install/removal is managed. Using the above method produces a set of build
+artifacts in a deploy directory named by KVER. For an arm64 target, the result
+should look something like this::
+
+  $ ls -1 deploy/*6.5.8-arm64-r1*
+  deploy/6.5.8-arm64-r1-dtbs.tar.gz
+  deploy/6.5.8-arm64-r1-modules.tar.gz
+  deploy/6.5.8-arm64-r1.Image
+  deploy/config-6.5.8-arm64-r1
+
+To use the ebuild on an arm64 host with the above build output, the steps 
+are essentially:
+
+* drop the artifacts in your local distfiles
+* (re)generate the ``cross-kernel-bin`` Manifest file
+* emerge ``cross-kernel-bin`` as you normally would
+* if needed, generate your initramfs (eg, dracut)
+* run ``grub-mkconfig`` --or-- update extlinux.conf
+
+.. note:: The grub ebuild in this overlay has the required devicetree patches
+          until they make it into the portage tree.  Otherwise edit the resulting
+          grub.cfg file and manually add a ``devicetree`` entry for each kernel
+          with the full path to the ``.dtb`` file for your device.
 
 Dev tools
 =========
