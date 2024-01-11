@@ -52,15 +52,13 @@ index e8b01c0d0c..dc75a1c30b 100644
    config=
    for i in "${dirname}/config-${version}" "${dirname}/config-${alt_version}" "/etc/kernels/kernel-config-${version}" ; do
      if test -e "${i}" ; then
---- a/util/grub-mkconfig.in.orig	2024-01-10 09:58:10.807862574 -0800
-+++ b/util/grub-mkconfig.in	2024-01-10 10:01:33.957695320 -0800
-@@ -255,8 +255,9 @@
-   GRUB_ENABLE_CRYPTODISK \
+--- a/util/grub-mkconfig.in.orig	2024-01-10 16:47:03.026629218 -0800
++++ b/util/grub-mkconfig.in	2024-01-10 16:50:03.839441161 -0800
+@@ -256,7 +256,8 @@
    GRUB_BADRAM \
    GRUB_OS_PROBER_SKIP_LIST \
--  GRUB_DISABLE_SUBMENU
--export GRUB_LINUX_KERNEL_GLOBS
-+  GRUB_DISABLE_SUBMENU \
+   GRUB_DISABLE_SUBMENU \
+-  GRUB_LINUX_KERNEL_GLOBS
 +  GRUB_LINUX_KERNEL_GLOBS \
 +  GRUB_DEFAULT_DTB
  
