@@ -52,8 +52,8 @@ index e8b01c0d0c..dc75a1c30b 100644
    config=
    for i in "${dirname}/config-${version}" "${dirname}/config-${alt_version}" "/etc/kernels/kernel-config-${version}" ; do
      if test -e "${i}" ; then
---- util/grub-mkconfig.in.orig	2024-01-10 09:58:10.807862574 -0800
-+++ util/grub-mkconfig.in	2024-01-10 10:01:33.957695320 -0800
+--- a/util/grub-mkconfig.in.orig	2024-01-10 09:58:10.807862574 -0800
++++ b/util/grub-mkconfig.in	2024-01-10 10:01:33.957695320 -0800
 @@ -255,8 +255,9 @@
    GRUB_ENABLE_CRYPTODISK \
    GRUB_BADRAM \
