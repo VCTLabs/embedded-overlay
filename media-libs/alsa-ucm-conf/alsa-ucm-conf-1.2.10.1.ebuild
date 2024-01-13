@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/VCTLabs/alsa-ucm-conf.git"
 if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/VCTLabs/alsa-ucm-conf.git"
 	EGIT_BRANCH="x13s-volume-fixes"
-	#EGIT_COMMIT="4c2f7dc7aff14090e2b958136660fe3daacfef20"
+	#EGIT_COMMIT="e8c3e7792336e9f68aa560db8ad19ba06ba786bb"
 	inherit git-r3
 else
 	SRC_URI="https://github.com/VCTLabs/${PN}/archive/refs/heads/x13s-volume-fixes.tar.gz -> ${P}.tar.gz"
