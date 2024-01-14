@@ -1,15 +1,14 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-DESCRIPTION="Latest UCM fix branch for arm64 Lenovo thinkpad laptops, eg x13s"
-HOMEPAGE="https://github.com/VCTLabs/alsa-ucm-conf.git"
+DESCRIPTION="UCM fix branch for arm64 laptops merged in 9999 only"
+HOMEPAGE="https://github.com/alsa-project/alsa-ucm-conf.git"
 
 if [[ ${PV} == *9999* ]]; then
-	EGIT_REPO_URI="https://github.com/VCTLabs/alsa-ucm-conf.git"
-	EGIT_BRANCH="x13s-volume-fixes"
-	#EGIT_COMMIT="4c2f7dc7aff14090e2b958136660fe3daacfef20"
+	EGIT_REPO_URI="https://github.com/alsa-project/alsa-ucm-conf.git"
+	#EGIT_COMMIT="9fd2f06a2c0fdd19b2cdae7d699b18e7d775940f"
 	inherit git-r3
 else
 	SRC_URI="https://www.alsa-project.org/files/pub/lib/${P}.tar.bz2"
