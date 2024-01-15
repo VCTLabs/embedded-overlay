@@ -11,7 +11,7 @@ start()
 	: ${bdaddr:=BDADDR}
 
 	ebegin "Setting BDADDR to complete qualcomm vendor string"
-	btmgmt -i hci0 public-addr "$bdaddr"
+	bluetoothctl mgmt.public-addr "$bdaddr" > /dev/null 2>&1
 	eend $? "Error setting BDADDR $bdaddr" || return $?
 
 	sleep 1

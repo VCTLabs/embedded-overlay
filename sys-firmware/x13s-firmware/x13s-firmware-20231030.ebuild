@@ -25,6 +25,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="
+	net-wireless/bluez
 	sys-kernel/linux-firmware
 "
 RESTRICT="strip test"
