@@ -1,10 +1,10 @@
 #!/sbin/openrc-run
-description="Applies bdaddr fix (per kernel patch comment)."
+description="Set bluetooth public-address (per kernel patch comment)."
 
 depend()
 {
 	after sshd
-	before bluetooth
+	need bluetooth
 }
 
 start()
