@@ -3,6 +3,7 @@ description="Applies bdaddr fix (per kernel patch comment)."
 
 depend()
 {
+	after sshd
 	before bluetooth
 }
 
