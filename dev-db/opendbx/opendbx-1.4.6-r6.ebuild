@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -11,7 +11,7 @@ SRC_URI="https://www.linuxnetworks.de/opendbx/download/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~arm64 ~riscv x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 IUSE="firebird +man +mysql oracle postgres sqlite test"
 # The test programs need manual/interactive use.
 RESTRICT="
@@ -29,7 +29,7 @@ RDEPEND="mysql? ( dev-db/mysql-connector-c:0= )
 DEPEND="${RDEPEND}"
 BDEPEND="
 	man? (
-		app-doc/doxygen
+		app-text/doxygen
 		app-text/docbook2X
 	)
 "

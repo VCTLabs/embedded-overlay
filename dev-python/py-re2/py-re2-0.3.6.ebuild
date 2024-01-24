@@ -3,7 +3,7 @@
 
 EAPI=8
 CMAKE_MAKEFILE_GENERATOR="ninja"
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 DISTUTILS_USE_SETUPTOOLS=bdepend
 
 inherit distutils-r1 cmake
@@ -31,7 +31,7 @@ RESTRICT="!test? ( test )"
 RDEPEND="dev-libs/re2:="
 DEPEND="${RDEPEND}"
 
-BDEPEND=">=dev-util/cmake-3.15
+BDEPEND="
 	dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/pybind11[${PYTHON_USEDEP}]
 	test? (

@@ -20,8 +20,8 @@ RDEPEND="virtual/libiconv
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig
 	doc? (
-		graph? ( app-doc/doxygen[dot] )
-		!graph? ( app-doc/doxygen )
+		graph? ( app-text/doxygen[dot] )
+		!graph? ( app-text/doxygen )
 	)"
 
 REQUIRED_USE="graph? ( doc )"
