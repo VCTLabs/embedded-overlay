@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -33,13 +33,13 @@ RESTRICT="strip test"
 QA_PREBUILT="*"
 
 src_install() {
-	install -d ${D}/lib/firmware/qca ${D}/lib/firmware/qcom/sc8280xp/LENOVO/21BX
+	install -d "${D}"/lib/firmware/qca "${D}"/lib/firmware/qcom/sc8280xp/LENOVO/21BX
 	# BT firmware
-	cp -v x13s-firmware/hpnv21.b8c ${D}/lib/firmware/qca/
+	cp -v x13s-firmware/hpnv21.b8c "${D}"/lib/firmware/qca/
 	# GPU firmware
-	cp -v x13s-firmware/a690_gmu.bin ${D}/lib/firmware/qcom/
+	cp -v x13s-firmware/a690_gmu.bin "${D}"/lib/firmware/qcom/
 	# audio firmware
-	cp -v x13s-firmware/qcvss8280.mbn ${D}/lib/firmware/qcom/sc8280xp/LENOVO/21BX/
+	cp -v x13s-firmware/qcvss8280.mbn "${D}"/lib/firmware/qcom/sc8280xp/LENOVO/21BX/
 
 	# include BT bdaddr fix for 6.3+
 	newinitd "${FILESDIR}"/bdaddr-init bdaddr
