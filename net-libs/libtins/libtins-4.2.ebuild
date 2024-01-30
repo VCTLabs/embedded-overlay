@@ -36,6 +36,10 @@ RDEPEND="${DEPEND}
 
 RESTRICT="mirror"
 
+PATCHES=(
+	"${FILESDIR}/${P}-build-fix-with-gcc-13.patch"
+)
+
 src_prepare() {
 	cmake_src_prepare
 	sed -i '/CMAKE_INSTALL_LIBDIR lib/d' CMakeLists.txt  || die
