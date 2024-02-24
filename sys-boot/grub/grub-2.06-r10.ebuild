@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -25,7 +25,7 @@ GRUB_AUTOGEN=1
 GRUB_AUTORECONF=1
 PYTHON_COMPAT=( python3_{8..11} )
 WANT_LIBTOOL=none
-VERIFY_SIG_OPENPGP_KEY_PATH="${BROOT}"/usr/share/openpgp-keys/dkiper.gpg
+VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/dkiper.gpg
 
 if [[ -n ${GRUB_AUTOGEN} || -n ${GRUB_BOOTSTRAP} ]]; then
 	inherit python-any-r1
@@ -54,7 +54,7 @@ if [[ ${PV} != 9999 ]]; then
 		"
 		S=${WORKDIR}/${P%_*}
 	fi
-	KEYWORDS="amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~riscv ~sparc x86"
+	KEYWORDS="amd64 arm arm64 ~ia64 ppc ppc64 ~riscv sparc x86"
 else
 	inherit git-r3
 	EGIT_REPO_URI="https://git.savannah.gnu.org/git/grub.git"
@@ -107,7 +107,7 @@ BDEPEND="
 	)
 	test? (
 		app-admin/genromfs
-		app-arch/cpio
+		app-alternatives/cpio
 		app-arch/lzop
 		app-emulation/qemu
 		dev-libs/libisoburn
@@ -289,7 +289,7 @@ src_configure() {
 
 src_compile() {
 	# Sandbox bug 404013.
-	use libzfs && addpredict /etc/dfs:/dev/zfs
+	use libzfs && { addpredict /etc/dfs; addpredict /dev/zfs; }
 
 	grub_do emake
 	use doc && grub_do_once emake -C docs html
@@ -312,13 +312,16 @@ src_install() {
 
 	# https://bugs.gentoo.org/231935
 	dostrip -x /usr/lib/grub
+
+	if use elibc_musl; then
+		# https://bugs.gentoo.org/900348
+		QA_CONFIG_IMPL_DECL_SKIP=( re_{compile_pattern,match,search,set_syntax} )
+	fi
 }
 
 pkg_postinst() {
 	elog "For information on how to configure GRUB2 please refer to the guide:"
 	elog "    https://wiki.gentoo.org/wiki/GRUB2_Quick_Start"
-	elog "Add something like the following if you need to set devicetree:"
-	elog "    GRUB_DEFAULT_DTB=marvell/armada-3720-espressobin.dtb"
 
 	if [[ -n ${REPLACING_VERSIONS} ]]; then
 		local v
@@ -336,11 +339,15 @@ pkg_postinst() {
 		optfeature "detecting other operating systems (grub-mkconfig)" sys-boot/os-prober
 		optfeature "creating rescue media (grub-mkrescue)" dev-libs/libisoburn
 		optfeature "enabling RAID device detection" sys-fs/mdadm
+		optfeature "automatically updating GRUB's configuration on each kernel installation" "sys-kernel/installkernel[grub]"
 	fi
 
 	if has_version 'sys-boot/grub:0'; then
 		elog "A migration guide for GRUB Legacy users is available:"
 		elog "    https://wiki.gentoo.org/wiki/GRUB2_Migration"
+		elog ""
+		elog "Add something like the following if you need to set devicetree:"
+		elog "    GRUB_DEFAULT_DTB=marvell/armada-3720-espressobin.dtb"
 	fi
 
 	if has_version sys-boot/os-prober; then
