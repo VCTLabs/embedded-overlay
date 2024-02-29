@@ -168,7 +168,7 @@ and you must fix any errors before you can continue adding/committing.
 
 To see any fatal ``pkgcheck`` errors, run::
 
-  $ tox -ci,replay
+  $ tox -e ci,replay
 
 to see a replay of just the errors that need to be fixed.  Then make the
 appropriate fixes, add the result, and commit.
