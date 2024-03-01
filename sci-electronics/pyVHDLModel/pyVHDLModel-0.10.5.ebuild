@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{8..10} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{9..12} )
 
 inherit distutils-r1
 
@@ -20,7 +21,7 @@ DEPEND="dev-python/decor[${PYTHON_USEDEP}]"
 
 RDEPEND="${DEPEND}"
 
-distutils_enable_tests --install pytest
+distutils_enable_tests pytest
 
 python_test() {
 	cd "${S}"/tests || die

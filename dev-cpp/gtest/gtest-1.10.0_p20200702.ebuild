@@ -4,9 +4,8 @@
 EAPI=8
 
 # Python is required for tests and some build tasks.
-PYTHON_COMPAT=( python3_{8,9,10,11} )
+PYTHON_COMPAT=( python3_{9,10,11,12} )
 
-CMAKE_ECLASS=cmake
 inherit cmake-multilib python-any-r1
 
 GOOGLETEST_COMMIT=aee0f9d9b5b87796ee8a0ab26b7587ec30e8858e
@@ -21,7 +20,7 @@ else
 		URI_PV=${MY_PV:=${GOOGLETEST_COMMIT}}
 	fi
 	SRC_URI="https://github.com/google/googletest/archive/${URI_PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos"
 	S="${WORKDIR}"/googletest-${MY_PV}
 fi
 
