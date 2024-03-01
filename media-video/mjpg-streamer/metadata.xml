@@ -45,5 +45,6 @@
 	</use>
 	<upstream>
 		<remote-id type="sourceforge">mjpg-streamer</remote-id>
+		<remote-id type="github">jacksonliam/mjpg-streamer</remote-id>
 	</upstream>
 </pkgmetadata>

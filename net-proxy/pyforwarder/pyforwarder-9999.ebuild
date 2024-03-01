@@ -3,7 +3,9 @@
 
 EAPI=8
 PYPI_PN="forwarder"
-PYTHON_COMPAT=( python3_{9..11} )
+
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{9..12} )
 MY_P="${PYPI_PN}-${PV}"
 
 inherit distutils-r1
@@ -23,7 +25,6 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE=""
 
 RDEPEND="${PYTHON_DEPS}"
 

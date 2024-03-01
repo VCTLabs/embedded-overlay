@@ -86,7 +86,7 @@ should look something like this::
   deploy/6.5.8-arm64-r1.Image
   deploy/config-6.5.8-arm64-r1
 
-To use the ebuild on an arm64 host with the above build output, the steps 
+To use the ebuild on an arm64 host with the above build output, the steps
 are essentially:
 
 * drop the artifacts in your local distfiles
