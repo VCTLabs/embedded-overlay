@@ -27,8 +27,4 @@ RDEPEND="${PYTHON_DEPS}
 	dev-python/reportlab[${PYTHON_USEDEP}]
 "
 
-distutils_enable_tests nose
-
-python_test() {
-	nosetests -sx test_svg2rlg.py || die "Test failed with ${EPYTHON}"
-}
+distutils_enable_tests pytest
