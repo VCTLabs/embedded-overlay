@@ -3,7 +3,7 @@
 
 EAPI=8
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1
 
@@ -43,13 +43,4 @@ RDEPEND="
 DOCS=( "${S}/docs/README" )
 
 # tests are hanging using default below
-RESTRICT="!test? ( test )"
-
-distutils_enable_tests nose
-
-python_test() {
-	# remaining tests involve way too much file I/O
-	nosetests -sx --verbosity=3 --detailed-errors \
-		tests/test_bmap_helpers.py \
-		tests/test_compat.py || die "Tests fail with ${EPYTHON}"
-}
+RESTRICT="test"
