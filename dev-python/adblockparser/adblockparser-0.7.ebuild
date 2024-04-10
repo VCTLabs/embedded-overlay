@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..12} )
 DISTUTILS_USE_SETUPTOOLS=bdepend
 inherit distutils-r1
 
@@ -22,15 +22,10 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="${PYTHON_DEPS}
-	dev-python/py-re2[${PYTHON_USEDEP}]
-"
-
-DEPEND="
-	test? ( >=dev-python/pytest-3.0.3[${PYTHON_USEDEP}] )
+	dev-python/pyre2[${PYTHON_USEDEP}]
 "
 
 DOCS=( README.rst CHANGES.rst )

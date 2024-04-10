@@ -61,12 +61,27 @@ Run the following command to sync the repo::
 
   # emaint sync --repo embedded-overlay
 
+Updating md5-cache
+------------------
+
+The directory metadata/md5-cache can contain cache files to speed up portage
+when working with ebuilds from the overlay. This overlay does not include
+these files, so it is recommended to generate these yourself. To do that,
+simply run the following as root::
+
+  egencache --update --repo=embedded-overlay
+
+
 WIP embedded kernel-bin ebuild
 ==============================
 
 This is currently a WIP convenience ebuild for installing a generic kernel
 binary on something small/embedded that can't run the full distro-kernel bin
-package.
+package. There are also some experimental github CI kernel builds here:
+
+https://github.com/sarnold/arm64-mainline-linux/releases
+
+Feel free to request a tagged build for something specific.
 
 In this context, "generic kernel" is built using something like the RCN
 `build scripts`_ (forked) or one of the many upstream `kernel builders`_.
@@ -86,11 +101,11 @@ should look something like this::
   deploy/6.5.8-arm64-r1.Image
   deploy/config-6.5.8-arm64-r1
 
-To use the ebuild on an arm64 host with the above build output, the steps
+To use these ebuilds on an arm64 host with your own build output, the steps
 are essentially:
 
 * drop the artifacts in your local distfiles
-* (re)generate the ``cross-kernel-bin`` Manifest file
+* bump the version as needed and (re)generate the ``cross-kernel-bin`` Manifest file
 * emerge ``cross-kernel-bin`` as you normally would
 * if needed, generate your initramfs (eg, dracut)
 * run ``grub-mkconfig`` --or-- update extlinux.conf
@@ -255,7 +270,7 @@ short ebuild listing::
   │   ├── msgpack
   │   ├── pdfrw
   │   ├── picotui
-  │   ├── py-re2
+  │   ├── pyre2
   │   ├── pymavlink
   │   ├── pystache
   │   ├── python-uinput
