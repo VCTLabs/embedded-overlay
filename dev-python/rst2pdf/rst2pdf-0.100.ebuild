@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{9..12} )
 DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
@@ -38,7 +38,7 @@ RESTRICT="test"
 src_install() {
 	distutils-r1_src_install
 	pushd "${S}/doc" > /dev/null
-		rst2man.py rst2pdf.rst output/rst2pdf.1
+		rst2man rst2pdf.rst output/rst2pdf.1
 	popd > /dev/null
 	doman doc/output/rst2pdf.1
 }
