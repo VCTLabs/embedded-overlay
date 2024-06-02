@@ -5,5 +5,7 @@
 	<email>nerdboy@gentoo.org</email>
 	<name>Steve Arnold</name>
 </maintainer>
-<remote-id type="github">ironrobin/x13s-alarm</remote-id>
+<upstream>
+	<remote-id type="github">ironrobin/x13s-alarm</remote-id>
+</upstream>
 </pkgmetadata>

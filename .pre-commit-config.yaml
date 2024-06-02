@@ -8,7 +8,7 @@ repos:
       - id: check-useless-excludes
       - id: check-hooks-apply
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
         exclude: '\.patch$'
@@ -38,6 +38,6 @@ repos:
   # we need some upstream hooks for https://github.com/pkgcore/pkgcheck
   # so use mirror-maker for now
   - repo: https://github.com/sarnold/mirrors-pkgcheck.git
-    rev: v0.10.23
+    rev: v0.10.30
     hooks:
       - id: pkgcheck
