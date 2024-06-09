@@ -6,7 +6,7 @@ EAPI=8
 #CMAKE_IN_SOURCE_BUILD="true"
 CMAKE_VERBOSE=ON
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..12} )
 PYTHON_REQ_USE='threads(+)'
 
 inherit cmake python-r1 toolchain-funcs

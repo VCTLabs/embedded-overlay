@@ -8,7 +8,7 @@ MY_P="${PN}-${MY_PV}"
 
 CMAKE_MAKEFILE_GENERATOR="ninja"
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{9..12} )
 
 inherit distutils-r1 cmake
 
