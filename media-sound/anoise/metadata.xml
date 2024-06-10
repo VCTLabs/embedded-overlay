@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>nerdboy@gentoo.org</email>
+		<name>Steve Arnold</name>
+	</maintainer>
+	<use>
+		<flag name="gui">Include small desktop app GUI panel.</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">rafaelmardojai/blanket</remote-id>
+	</upstream>
+	<longdescription lang="en">
+		Gnome app to play looped sound or noise clips from an icon panel.
+	</longdescription>
+</pkgmetadata>
