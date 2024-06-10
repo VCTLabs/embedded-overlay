@@ -22,6 +22,13 @@ IUSE=""
 
 DEPEND=""
 
+src_configure() {
+	local emesonargs=(
+		-Dqrtr-ns=enabled
+	)
+	meson_src_configure
+}
+
 src_install() {
 	meson_src_install
 	newinitd "${FILESDIR}/${PN}-ns".init "${PN}-ns"
