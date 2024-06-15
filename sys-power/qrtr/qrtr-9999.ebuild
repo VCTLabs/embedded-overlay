@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit toolchain-funcs
+inherit meson toolchain-funcs
 
 DESCRIPTION="Userspace reference for net/qrtr in the Linux kernel."
 HOMEPAGE="https://github.com/andersson/qrtr"
@@ -22,18 +22,14 @@ IUSE=""
 
 DEPEND=""
 
-src_prepare() {
-	sed -i -e "s|fix)/lib|fix)/$(get_libdir)|" "${S}"/Makefile
-
-	default
-}
-
-src_compile() {
-	emake CC=$(tc-getCC) prefix="${EPREFIX}/usr" || die "make failed..."
+src_configure() {
+	local emesonargs=(
+		-Dqrtr-ns=enabled
+	)
+	meson_src_configure
 }
 
 src_install() {
-	emake prefix="${EPREFIX}/usr" DESTDIR="${D}" install || die "make install failed..."
-
+	meson_src_install
 	newinitd "${FILESDIR}/${PN}-ns".init "${PN}-ns"
 }
