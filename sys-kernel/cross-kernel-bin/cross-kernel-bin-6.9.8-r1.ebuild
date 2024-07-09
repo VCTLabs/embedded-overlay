@@ -19,6 +19,7 @@ SRC_URI="
 "
 LICENSE="GPL-2"
 RESTRICT="bindist mirror test strip"
+IUSE="initramfs"
 SLOT="0"
 KEYWORDS="-* ~arm64"
 
@@ -26,6 +27,7 @@ S="${WORKDIR}"
 
 RDEPEND="
 	sys-libs/zlib:0/1
+	initramfs? ( sys-kernel/dracut )
 "
 
 QA_PREBUILT="*"
