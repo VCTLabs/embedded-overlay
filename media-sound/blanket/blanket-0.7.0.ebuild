@@ -4,7 +4,7 @@
 EAPI=8
 PYTHON_COMPAT=( python3_{9..12} )
 
-inherit gnome2-utils meson python-single-r1 xdg
+inherit gnome.org gnome2-utils meson python-single-r1 xdg
 
 DESCRIPTION="An ambient sound player for Gnome desktop"
 HOMEPAGE="https://github.com/rafaelmardojai/blanket"
@@ -20,23 +20,24 @@ fi
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="gnome"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-DEPEND="${PYTHON_DEPS}"
-
-RDEPEND="${DEPEND}
+DEPEND="${PYTHON_DEPS}
 	>=dev-libs/glib-2.76.0:2
-	>=dev-python/pygobject-3.10.2:3[cairo]
 	>=gui-libs/gtk-4.11.3:4[gstreamer,introspection]
 	>=gui-libs/libadwaita-1.4:1[introspection,vala]
-	gnome? ( gnome-base/gsettings-desktop-schemas )
+	>=media-libs/gstreamer-1.4:1.0[introspection]
 "
 
-BDEPEND=">=sys-devel/gettext-0.19.8
-	virtual/pkgconfig
-        dev-util/blueprint-compiler
+RDEPEND="${DEPEND}
+	>=dev-python/pygobject-3.10.2:3[cairo]
+	>=media-libs/gst-plugins-bad-1.4:1.0
+"
+
+BDEPEND="virtual/pkgconfig
+	>=sys-devel/gettext-0.19.8
+        amd64? ( dev-util/blueprint-compiler )
 	dev-util/desktop-file-utils
 	dev-libs/appstream-glib[introspection]
 "
