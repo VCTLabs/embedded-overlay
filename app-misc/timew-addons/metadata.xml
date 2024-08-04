@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>nerdboy@gentoo.org</email>
+	<name>Steve Arnold</name>
+</maintainer>
+<longdescription lang="en">
+	Python indicator GUI for timewarrior
+</longdescription>
+<upstream>
+	<remote-id type="github">sarnold/timew-addons</remote-id>
+</upstream>
+</pkgmetadata>
