@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -8,12 +8,12 @@ PYTHON_COMPAT=( python3_{9..12} )
 
 inherit distutils-r1 xdg-utils
 
-DESCRIPTION="Graphical user interface for monitoring timew status"
+DESCRIPTION="Appindicator GUI for timew control and status monitoring"
 HOMEPAGE="https://github.com/sarnold/timew-addons"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/timew-addons.git"
-	EGIT_BRANCH="main"
+	EGIT_BRANCH="config-data"
 	inherit git-r3
 	KEYWORDS=""
 else
@@ -34,12 +34,12 @@ RDEPEND="${PYTHON_DEPS}
 	x11-libs/libnotify[introspection]
 	virtual/notification-daemon
 	x11-themes/hicolor-icon-theme
-	app-misc/timew
 	gnome? ( gnome-extra/gnome-shell-extension-appindicator )
-	dev-python/xmltodict[${PYTHON_USEDEP}]
+	app-misc/timew-report[${PYTHON_USEDEP}]
 "
 
 BDEPEND="${PYTHON_DEPS}
+	dev-python/munch[${PYTHON_USEDEP}]
 	dev-python/setuptools-scm[${PYTHON_USEDEP}]
 	dev-python/pygobject:3[cairo,${PYTHON_USEDEP}]
 	>=dev-python/pycairo-1.20.0[${PYTHON_USEDEP}]
