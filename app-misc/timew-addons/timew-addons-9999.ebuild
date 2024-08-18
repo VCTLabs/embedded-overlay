@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/sarnold/timew-addons"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/timew-addons.git"
-	EGIT_BRANCH="config-data"
+	EGIT_BRANCH="main"
 	inherit git-r3
 	KEYWORDS=""
 else
