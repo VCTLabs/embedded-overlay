@@ -43,7 +43,7 @@ RDEPEND="${DEPEND}
 		dev-python/pygobject:3[${PYTHON_USEDEP}]
 		dev-python/gst-python[${PYTHON_USEDEP}]
 	')
-	dev-libs/libappindicator[introspection]
+	dev-libs/libayatana-appindicator
 	x11-libs/gtk+:3[introspection]
 	x11-libs/libnotify[introspection]
 	virtual/notification-daemon

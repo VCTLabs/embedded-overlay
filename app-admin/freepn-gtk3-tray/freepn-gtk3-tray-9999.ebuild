@@ -29,7 +29,7 @@ RESTRICT="test"
 
 RDEPEND="${PYTHON_DEPS}
 	>=dev-libs/libdbusmenu-0.6.2[gtk3]
-	dev-libs/libappindicator[introspection]
+	dev-libs/libayatana-appindicator
 	x11-libs/gtk+:3[introspection]
 	x11-libs/libnotify[introspection]
 	virtual/notification-daemon
