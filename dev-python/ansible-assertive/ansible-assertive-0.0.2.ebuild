@@ -17,7 +17,7 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 else
 	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.gh.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv"
 fi
 
 LICENSE="GPL-3"
