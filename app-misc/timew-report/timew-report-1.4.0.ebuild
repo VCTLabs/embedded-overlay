@@ -14,7 +14,7 @@ SRC_URI="https://github.com/lauft/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 
 RDEPEND="${PYTHON_DEPS}
 	app-misc/timew"
