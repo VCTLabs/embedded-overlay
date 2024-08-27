@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{9..12} )
 
-inherit distutils-r1 xdg-utils
+inherit distutils-r1 optfeature xdg-utils
 
 DESCRIPTION="Appindicator GUI for timew control and status monitoring"
 HOMEPAGE="https://github.com/sarnold/timew-addons"
@@ -18,14 +18,13 @@ if [[ ${PV} = 9999* ]]; then
 	KEYWORDS=""
 else
 	SRC_URI="https://github.com/sarnold/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
 LICENSE="GPL-3"
 SLOT="0"
 IUSE="gnome"
 
-# no tests except pylint, so...
 RESTRICT="test"
 
 RDEPEND="${PYTHON_DEPS}
@@ -34,7 +33,6 @@ RDEPEND="${PYTHON_DEPS}
 	x11-libs/libnotify[introspection]
 	virtual/notification-daemon
 	x11-themes/hicolor-icon-theme
-	!arm? ( gnome? ( gnome-extra/gnome-shell-extension-appindicator ) )
 	app-misc/timew-report[${PYTHON_USEDEP}]
 "
 
@@ -53,6 +51,7 @@ BDEPEND="${PYTHON_DEPS}
 export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 
 pkg_postinst() {
+	optfeature "gnome shell appindicator integration" gnome-extra/gnome-shell-extension-appindicator
 	xdg_icon_cache_update
 }
 
