@@ -29,12 +29,16 @@ BDEPEND="${RDEPEND}
 DOCS=( README.md )
 
 # tests are not currently included in pypi source dist
-#RESTRICT="!test? ( test )"
 RESTRICT="test"
 
 export MDEF=/usr/include/mavlink/message_definitions
 
 distutils_enable_tests pytest
+
+src_prepare() {
+    sed -i "/'future'/d" "${S}"/setup.py
+    default
+}
 
 python_prepare_all() {
 	if ! use regen ; then
@@ -44,6 +48,5 @@ python_prepare_all() {
 }
 
 python_test() {
-	#distutils_install_for_testing
-	 PYTHONPATH=.. pytest -vv tests  || die "tests failed under ${EPYTHON}"
+	PYTHONPATH=.. pytest -vv tests  || die "tests failed under ${EPYTHON}"
 }
