@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -23,7 +23,7 @@ BDEPEND="${PYTHON_DEPS}
 	dev-python/pygments[${PYTHON_USEDEP}]
 	dev-python/smartypants[${PYTHON_USEDEP}]
 	>=dev-python/reportlab-2.6[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]
+	dev-python/setuptools-scm[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]
 	dev-python/importlib-metadata[${PYTHON_USEDEP}]
 	math? ( dev-python/matplotlib[${PYTHON_USEDEP}] )
@@ -34,6 +34,8 @@ BDEPEND="${PYTHON_DEPS}
 # restrict tests because: the price is way too high (in both developer time
 # to unhork and cost per megawatt in cpu power)
 RESTRICT="test"
+
+export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 
 src_install() {
 	distutils-r1_src_install
