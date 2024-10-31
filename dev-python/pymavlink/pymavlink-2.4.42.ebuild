@@ -4,6 +4,8 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{9..12} pypy3 )
+DISTUTILS_USE_PEP517=setuptools
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="MAVLink protocol streams and log files in Python"
@@ -16,8 +18,7 @@ IUSE="regen test"
 
 RDEPEND="${PYTHON_DEPS}
 	dev-embedded/mavlink_c
-	dev-python/lxml[${PYTHON_USEDEP}]
-	dev-python/future[${PYTHON_USEDEP}]"
+	dev-python/lxml[${PYTHON_USEDEP}]"
 
 BDEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
@@ -36,8 +37,8 @@ export MDEF=/usr/include/mavlink/message_definitions
 distutils_enable_tests pytest
 
 src_prepare() {
-    sed -i "/'future'/d" "${S}"/setup.py
-    default
+	sed -i "/'future'/d" "${S}"/setup.py
+	default
 }
 
 python_prepare_all() {
