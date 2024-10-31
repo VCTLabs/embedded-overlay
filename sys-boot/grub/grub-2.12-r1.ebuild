@@ -269,7 +269,7 @@ src_configure() {
 	export HOST_LDFLAGS=${LDFLAGS}
 	unset CCASFLAGS CFLAGS CPPFLAGS LDFLAGS
 
-	tc-ld-disable-gold #439082 #466536 #526348
+	tc-ld-force-bfd #439082 #466536 #526348
 	export TARGET_LDFLAGS="${TARGET_LDFLAGS} ${LDFLAGS}"
 	unset LDFLAGS
 
