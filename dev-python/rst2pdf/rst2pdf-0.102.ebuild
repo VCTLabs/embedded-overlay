@@ -18,7 +18,6 @@ IUSE="math sphinx svg"
 
 BDEPEND="${PYTHON_DEPS}
 	dev-python/jinja[${PYTHON_USEDEP}]
-	dev-python/pillow[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/pygments[${PYTHON_USEDEP}]
 	dev-python/smartypants[${PYTHON_USEDEP}]
