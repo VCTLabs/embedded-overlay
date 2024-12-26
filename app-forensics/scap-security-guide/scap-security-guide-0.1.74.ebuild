@@ -17,6 +17,7 @@ if [[ ${PV} != *9999* ]]; then
 else
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ComplianceAsCode/${MY_PN}.git"
+	KEYWORDS=""
 fi
 
 LICENSE="BSD"
@@ -27,7 +28,7 @@ DEPEND="
 	dev-libs/expat
 	dev-libs/libxml2
 	dev-libs/libxslt
-	dev-python/jinja
+	dev-python/jinja2
 	dev-python/pyyaml
 	${PYTHON_DEPS}
 "

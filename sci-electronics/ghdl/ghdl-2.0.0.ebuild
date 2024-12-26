@@ -3,10 +3,10 @@
 
 EAPI=8
 
-LLVM_VALID_SLOTS=( 15 )
+LLVM_VALID_SLOTS=( 17 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
-ADA_COMPAT=( gnat_2021 )
+ADA_COMPAT=( gnat_2021 gcc_12 )
 # should have gcc_12_2_0
 inherit ada llvm
 
@@ -22,7 +22,7 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="${ADA_DEPS}
-	<sys-devel/llvm-$((${LLVM_MAX_SLOT} + 1)):=
+	<llvm-core/llvm-$((${LLVM_MAX_SLOT} + 1)):=
 "
 DEPEND="
 	${RDEPEND}

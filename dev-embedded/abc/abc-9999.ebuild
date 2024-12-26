@@ -4,7 +4,7 @@
 EAPI=8
 
 CMAKE_VERBOSE=ON
-LLVM_VALID_SLOTS=( 15 14 13 12 )
+LLVM_VALID_SLOTS=( 17 16 15 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
 inherit cmake flag-o-matic llvm toolchain-funcs
@@ -30,8 +30,8 @@ IUSE="clang +cpp debug lto test +tools"
 RESTRICT="!test? ( test )"
 
 LLVM_DEPEND="
-	<sys-devel/llvm-$(( LLVM_MAX_SLOT + 1 )):=
-	lto? ( <sys-devel/lld-$(( LLVM_MAX_SLOT + 1 )):= )
+	<llvm-core/llvm-$(( LLVM_MAX_SLOT + 1 )):=
+	lto? ( <llvm-core/lld-$(( LLVM_MAX_SLOT + 1 )):= )
 "
 
 DEPEND="
@@ -42,7 +42,7 @@ DEPEND="
 "
 
 BDEPEND="
-	clang? ( >=sys-devel/clang-9.0 )
+	clang? ( >=llvm-core/clang-9.0 )
 	!clang? ( >=sys-devel/gcc-8.5.0 )
 "
 
@@ -58,7 +58,7 @@ pkg_setup() {
 }
 
 llvm_check_deps() {
-	use clang && has_version "sys-devel/clang:${LLVM_SLOT}"
+	use clang && has_version "llvm-core/clang:${LLVM_SLOT}"
 }
 
 src_configure() {

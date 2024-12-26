@@ -9,5 +9,7 @@
 	<flag name="ansible"></flag>
 	<flag name="bash"></flag>
 </use>
-<remote-id type="github">ComplianceAsCode/content</remote-id>
+<upstream>
+	<remote-id type="github">ComplianceAsCode/content</remote-id>
+</upstream>
 </pkgmetadata>
