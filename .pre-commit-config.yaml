@@ -38,6 +38,6 @@ repos:
   # we need some upstream hooks for https://github.com/pkgcore/pkgcheck
   # so use mirror-maker for now
   - repo: https://github.com/sarnold/mirrors-pkgcheck.git
-    rev: v0.10.31
+    rev: v0.10.33
     hooks:
       - id: pkgcheck
