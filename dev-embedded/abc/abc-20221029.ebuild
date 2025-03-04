@@ -3,11 +3,11 @@
 
 EAPI=8
 
-CMAKE_VERBOSE=ON
-LLVM_VALID_SLOTS=( 15 14 13 12 )
+LLVM_COMPAT=( {15..19} )
+LLVM_VALID_SLOTS=( 19 18 17 16 15 )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
-inherit cmake flag-o-matic llvm toolchain-funcs
+inherit cmake flag-o-matic llvm-r1 toolchain-funcs
 
 # sadly no upstream tags or releases from gh
 if [[ ${PV} == *9999* ]]; then
@@ -30,8 +30,8 @@ IUSE="clang +cpp debug lto test +tools"
 RESTRICT="!test? ( test )"
 
 LLVM_DEPEND="
-	<sys-devel/llvm-$(( LLVM_MAX_SLOT + 1 )):=
-	lto? ( <sys-devel/lld-$(( LLVM_MAX_SLOT + 1 )):= )
+	<llvm-core/llvm-$(( LLVM_MAX_SLOT + 1 )):=
+	lto? ( <llvm-core/lld-$(( LLVM_MAX_SLOT + 1 )):= )
 "
 
 DEPEND="
