@@ -23,7 +23,7 @@ fi
 
 GRUB_AUTOGEN=1
 GRUB_AUTORECONF=1
-PYTHON_COMPAT=( python3_{9..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 WANT_LIBTOOL=none
 VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/dkiper.gpg
 

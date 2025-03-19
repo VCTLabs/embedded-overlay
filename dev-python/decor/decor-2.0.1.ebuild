@@ -5,7 +5,7 @@ EAPI=8
 PYPI_PN="pydecor"
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{9..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 MY_P="decor-${PV}"
 
 inherit distutils-r1 pypi
