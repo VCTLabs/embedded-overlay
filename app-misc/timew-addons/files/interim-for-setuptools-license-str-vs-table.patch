@@ -1,0 +1,13 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 6d80c4d..b874edf 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -13,7 +13,7 @@ readme = "README.rst"
+ 
+ # legacy bits and new both fail in different versions
+ # need workaround until PEP639 has more backend support
+-license = "GPL-3.0-or-later"
++license = {text = "GPL-3.0-or-later"}
+ 
+ authors = [
+     {name = "Stephen Arnold"},

@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/sarnold/timew-addons"
 
 if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/sarnold/timew-addons.git"
-	EGIT_BRANCH="main"
+	EGIT_BRANCH="still-more-docs"
 	inherit git-r3
 	KEYWORDS=""
 else
@@ -47,6 +47,8 @@ BDEPEND="${PYTHON_DEPS}
 #   gnome-extra/gnome-shell-extension-appindicator
 # but for xfce4 you probably want this:
 #   xfce-extra/xfce4-notifyd
+
+PATCHES=( "${FILESDIR}/interim-for-setuptools-license-str-vs-table.patch" )
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 
