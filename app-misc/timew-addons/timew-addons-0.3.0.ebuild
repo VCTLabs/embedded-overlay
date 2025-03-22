@@ -23,7 +23,7 @@ fi
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="gnome"
+IUSE=""
 
 RESTRICT="test"
 
