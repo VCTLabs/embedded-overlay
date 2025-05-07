@@ -4,7 +4,7 @@
 EAPI=8
 
 # Python is required for tests and some build tasks.
-PYTHON_COMPAT=( python3_{8,9,10} )
+PYTHON_COMPAT=( python3_{9..13} )
 
 CMAKE_ECLASS=cmake
 CMAKE_MAKEFILE_GENERATOR='emake'
