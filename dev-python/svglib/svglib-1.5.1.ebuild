@@ -15,8 +15,8 @@ HOMEPAGE="
 "
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/deeplook/svglib.git"
-	EGIT_BRANCH="master"
+	EGIT_REPO_URI="https://github.com/sarnold/svglib.git"
+	EGIT_BRANCH="temp-fixes"
 	inherit git-r3
 else
 	SRC_URI="https://github.com/deeplook/svglib/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"

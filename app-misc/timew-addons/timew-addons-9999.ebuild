@@ -48,8 +48,6 @@ BDEPEND="${PYTHON_DEPS}
 # but for xfce4 you probably want this:
 #   xfce-extra/xfce4-notifyd
 
-PATCHES=( "${FILESDIR}/interim-for-setuptools-license-str-vs-table.patch" )
-
 export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 
 pkg_postinst() {

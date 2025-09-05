@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{10..13} )
 
 inherit distutils-r1
 
@@ -15,8 +15,8 @@ HOMEPAGE="
 "
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/deeplook/svglib.git"
-	EGIT_BRANCH="master"
+	EGIT_REPO_URI="https://github.com/sarnold/svglib.git"
+	EGIT_BRANCH="temp-fixes"
 	inherit git-r3
 else
 	SRC_URI="https://github.com/deeplook/svglib/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
