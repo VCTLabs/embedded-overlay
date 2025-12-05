@@ -1,0 +1,53 @@
+Description: Make the Python module build with scikit-build
+Forwarded: no
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2023-01-05
+
+--- a/src/python/CMakeLists.txt
++++ b/src/python/CMakeLists.txt
+@@ -10,10 +10,11 @@
+ if (NOT SKBUILD)
+     PYTHON_UNSET()
+     SET(Python_ADDITIONAL_VERSIONS 3.0 CACHE INTERNAL "")
+-    FIND_PACKAGE(PythonInterp 3 REQUIRED)
+-    FIND_PACKAGE(PythonLibs 3 REQUIRED)
+ endif (NOT SKBUILD)
+ 
++FIND_PACKAGE(PythonInterp 3 REQUIRED)
++FIND_PACKAGE(PythonLibs 3 REQUIRED)
++
+ EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "from sys import stdout; from sysconfig import get_path; stdout.write(get_path('platlib'))" OUTPUT_VARIABLE PYTHON_INSTALL_DIR)
+ INCLUDE_DIRECTORIES (${PYTHON_INCLUDE_PATH})
+ 
+@@ -58,23 +59,19 @@
+                      )
+ 
+ IF (SKBUILD)
++    EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "import importlib.resources; print(importlib.resources.files('skbuild') / 'resources/cmake', end='')" OUTPUT_VARIABLE PYTHON_SKLIB_CMAKE_DIR)
++    MESSAGE(STATUS "Python skbuild CMake dir is ${PYTHON_SKLIB_CMAKE_DIR}")
++    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PYTHON_SKLIB_CMAKE_DIR}/")
+     find_package(PythonExtensions REQUIRED)
+     python_extension_module(_createrepo_c)
+ ELSE ()
+     TARGET_LINK_LIBRARIES(_createrepo_c ${PYTHON_LIBRARY})
+ ENDIF ()
+ 
+-IF (NOT SKBUILD)
+-    FILE(COPY createrepo_c/__init__.py DESTINATION createrepo_c)
+-ENDIF()
++FILE(COPY createrepo_c/__init__.py DESTINATION createrepo_c)
+ 
+-IF (SKBUILD)
+-    INSTALL(FILES createrepo_c/__init__.py DESTINATION src/python/createrepo_c)
+-    INSTALL(TARGETS _createrepo_c LIBRARY DESTINATION src/python/createrepo_c)
+-ELSE ()
+-    INSTALL(FILES createrepo_c/__init__.py DESTINATION ${PYTHON_INSTALL_DIR}/createrepo_c)
+-    INSTALL(TARGETS _createrepo_c LIBRARY DESTINATION ${PYTHON_INSTALL_DIR}/createrepo_c)
++INSTALL(FILES createrepo_c/__init__.py DESTINATION ${PYTHON_INSTALL_DIR}/createrepo_c)
++INSTALL(TARGETS _createrepo_c LIBRARY DESTINATION ${PYTHON_INSTALL_DIR}/createrepo_c)
+ 
+-    # Version has to be passed as last argument.
+-    INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/utils/setup_for_python_metadata.py install_egg_info --install-dir \$ENV{DESTDIR}/${PYTHON_INSTALL_DIR} ${VERSION})")
+-ENDIF ()
++# Version has to be passed as last argument.
++INSTALL(CODE "EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/utils/setup_for_python_metadata.py install_egg_info --install-dir \$ENV{DESTDIR}/${PYTHON_INSTALL_DIR} ${VERSION})")
