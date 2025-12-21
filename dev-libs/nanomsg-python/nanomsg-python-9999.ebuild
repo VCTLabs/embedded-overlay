@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
+DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1
 
@@ -16,8 +17,10 @@ if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/tonysimpson/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	MY_PV="${PV/_p/-}"
+	SRC_URI="https://github.com/freepn/${PN}/archive/${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	S="${WORKDIR}/${PN}-${MY_PV}"
 fi
 
 LICENSE="MIT"
@@ -32,6 +35,4 @@ DEPEND="${PYTHON_DEPS}
 	test? ( >=dev-python/pytest-3.0.3[${PYTHON_USEDEP}] )
 "
 
-python_test() {
-	py.test -v || die
-}
+distutils_enable_tests pytest
