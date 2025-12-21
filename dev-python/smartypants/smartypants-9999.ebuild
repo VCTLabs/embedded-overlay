@@ -1,10 +1,10 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
-DISTUTILS_USE_SETUPTOOLS=no
+PYTHON_COMPAT=( python3_{10..14} )
+DISTUTILS_USE_PEP517=setuptools
 
 MY_PN="${PN}.py"
 MY_P="${MY_PN}-${PV}"
@@ -28,4 +28,5 @@ LICENSE="MIT"
 SLOT="0"
 IUSE=""
 
+distutils_enable_tests unittest
 distutils_enable_sphinx docs
