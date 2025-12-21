@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
+DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1
 
@@ -11,12 +12,12 @@ DESCRIPTION="Lightweight, pure-Python Text User Interface (TUI) widget toolkit"
 HOMEPAGE="https://github.com/pfalcon/picotui"
 
 if [[ ${PV} = 9999* ]]; then
-	EGIT_REPO_URI="https://github.com/pfalcon/picotui"
+	EGIT_REPO_URI="https://github.com/sarnold/picotui"
 	EGIT_BRANCH="master"
 	inherit git-r3
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/pfalcon/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/sarnold/${PN}/releases/download/v${PV}/${PN}-${PV}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
@@ -31,8 +32,6 @@ DEPEND="${PYTHON_DEPS}
 "
 
 RESTRICT="test"
-
-PATCHES=( "${FILESDIR}/${P}-add-input-text-validation-to-WLabel-widget.patch" )
 
 src_install() {
 	distutils-r1_src_install
