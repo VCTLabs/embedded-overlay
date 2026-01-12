@@ -33,6 +33,7 @@ RDEPEND="${PYTHON_DEPS}
 	x11-libs/libnotify[introspection]
 	virtual/notification-daemon
 	x11-themes/hicolor-icon-theme
+        dev-python/ruamel-yaml[${PYTHON_USEDEP}]
 	app-misc/timew-report[${PYTHON_USEDEP}]
 "
 
