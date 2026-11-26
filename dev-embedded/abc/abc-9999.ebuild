@@ -1,10 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-LLVM_COMPAT=( {15..19} )
-LLVM_VALID_SLOTS=( 19 18 17 16 15 )
+LLVM_COMPAT=( {15..23} )
 LLVM_MAX_SLOT="${LLVM_VALID_SLOTS[0]}"
 
 inherit cmake flag-o-matic llvm-r1 toolchain-funcs
